@@ -59,7 +59,7 @@ class VuHomePage extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w400,
                       fontSize: 15,
                       color: Colors.grey[600],
                       fontFamily: "SecularOne"),
