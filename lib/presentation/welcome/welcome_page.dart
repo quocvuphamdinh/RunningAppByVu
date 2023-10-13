@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:running_app_flutter/presentation/widgets.dart';
+import 'package:get/get.dart';
+import 'package:running_app_flutter/presentation/welcome/welcome_controller.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
+import 'package:running_app_flutter/widgets/core/run_button.dart';
 
-import '../utils/strings.dart';
+import '../../constant/strings.dart';
 
-class VuHomePage extends StatelessWidget {
-  const VuHomePage({Key? key}) : super(key: key);
+class WelcomePage extends GetView<WelcomeController> {
+  const WelcomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +46,18 @@ class VuHomePage extends StatelessWidget {
           ),
           Container(
               margin: const EdgeInsets.only(top: 40),
-              child: buttonPrimary(
-                  context, RunningAppStrings.textCreateAccount, () {})),
+              child: RunButton(
+                  buttonText: RunningAppStrings.textCreateAccount,
+                  onClick: () {
+                    Get.toNamed(AppRoutes.SignUp);
+                  })),
           Container(
               margin: const EdgeInsets.only(top: 10),
-              child:
-                  buttonPrimary(context, RunningAppStrings.textSignIn, () {})),
+              child: RunButton(
+                  buttonText: RunningAppStrings.textSignIn,
+                  onClick: () {
+                    Get.toNamed(AppRoutes.SignUp);
+                  })),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
