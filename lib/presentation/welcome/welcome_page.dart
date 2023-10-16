@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/presentation/welcome/welcome_controller.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/core/run_button.dart';
@@ -17,59 +19,59 @@ class WelcomePage extends GetView<WelcomeController> {
         constraints: const BoxConstraints.expand(),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 20.h),
             child: Image.asset(
               "assets/images/runner.png",
-              height: 200,
-              width: 200,
+              height: 200.h,
+              width: 200.w,
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(10),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
             child: Text(RunningAppStrings.titleApp,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: AppDimens.biggestTextSize,
                     fontWeight: FontWeight.bold,
                     fontFamily: "SecularOne")),
           ),
-          const Padding(
-            padding: EdgeInsets.all(5),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
             child: Text(
               RunningAppStrings.subTitleApp,
               style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 20.sp,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w500,
                   fontFamily: "SecularOne"),
             ),
           ),
           Container(
-              margin: const EdgeInsets.only(top: 40),
+              margin: EdgeInsets.only(top: 40.h, left: 50.w, right: 50.w),
               child: RunButton(
                   buttonText: RunningAppStrings.textCreateAccount,
                   onClick: () {
                     Get.toNamed(AppRoutes.SignUp);
                   })),
           Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: EdgeInsets.only(top: 10.h, left: 50.w, right: 50.w),
               child: RunButton(
                   buttonText: RunningAppStrings.textSignIn,
                   onClick: () {
-                    Get.toNamed(AppRoutes.SignUp);
+                    Get.toNamed(AppRoutes.Login);
                   })),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
                 child: Text(
                   RunningAppStrings.subTitleApp2,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w400,
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       color: Colors.grey[600],
                       fontFamily: "SecularOne"),
                 ),

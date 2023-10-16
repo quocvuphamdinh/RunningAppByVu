@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:running_app_flutter/presentation/login/login_controller.dart';
+import 'package:running_app_flutter/presentation/login/login_page.dart';
 import 'package:running_app_flutter/presentation/sign_up/sign_up_controller.dart';
 import 'package:running_app_flutter/presentation/sign_up/sign_up_page.dart';
 import 'package:running_app_flutter/presentation/welcome/welcome_controller.dart';
@@ -11,6 +13,10 @@ class AppPages {
         name: AppRoutes.Welcome,
         page: () => const WelcomePage(),
         bindings: [WelcomeBinding()]),
+    GetPage(
+        name: AppRoutes.Login,
+        page: () => const LoginPage(),
+        bindings: [LoginBinding()]),
     GetPage(
         name: AppRoutes.SignUp,
         page: () => const SignUpPage(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:running_app_flutter/config/res/app_dimen.dart';
 
 class RunTextShowPassword extends StatelessWidget {
   const RunTextShowPassword({super.key, required this.text, this.onClick});
@@ -9,7 +10,7 @@ class RunTextShowPassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingVer),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

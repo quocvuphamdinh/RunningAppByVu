@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:running_app_flutter/config/res/app_color.dart';
+import 'package:running_app_flutter/config/res/app_dimen.dart';
 
 class RunButton extends StatelessWidget {
   const RunButton({super.key, required this.buttonText, this.onClick});
@@ -9,14 +11,16 @@ class RunButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      padding: const EdgeInsets.all(14),
-      minWidth: MediaQuery.of(context).size.width * 0.6,
+      padding: EdgeInsets.all(AppDimens.smallSpacingHor),
+      minWidth: MediaQuery.of(context).size.width,
+      height: AppDimens.buttonHeight,
       onPressed: onClick,
       child: Text(
         buttonText.toUpperCase(),
-        style: const TextStyle(color: Colors.white),
+        style:
+            TextStyle(color: Colors.white, fontSize: AppDimens.buttonTextSize),
       ),
-      color: Colors.black,
+      color: AppColor.primaryColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
     );
   }

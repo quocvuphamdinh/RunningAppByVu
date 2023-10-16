@@ -33,6 +33,7 @@ class RunTextField extends StatelessWidget {
         width: Get.size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
               keyboardType: textInputType,
