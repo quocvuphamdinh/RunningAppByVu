@@ -8,7 +8,7 @@ class AppColor {
 
   static const Color buttonColor = Color.fromARGB(255, 54, 99, 255);
 
-  static const appBackgroundColor = Color.fromARGB(255, 245, 245, 245);
+  static const appBackgroundColor = Color.fromARGB(255, 255, 255, 255);
   static const disableNavigationItemColor = Color.fromARGB(255, 84, 86, 86);
 
   static const Color checkInProgressDisableColor =

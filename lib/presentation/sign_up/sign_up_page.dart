@@ -13,6 +13,7 @@ class SignUpPage extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
           child: SingleChildScrollView(
         child: Column(
