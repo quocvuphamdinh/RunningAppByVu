@@ -3,7 +3,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 
 class RunButton extends StatelessWidget {
-  const RunButton({super.key, required this.buttonText, this.onClick});
+  const RunButton({super.key, required this.buttonText, required this.onClick});
 
   final String buttonText;
   final Function()? onClick;

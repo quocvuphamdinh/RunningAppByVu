@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
+import 'package:running_app_flutter/presentation/forgot_password/forgot_password_controller.dart';
+import 'package:running_app_flutter/presentation/forgot_password/forgot_password_page.dart';
 import 'package:running_app_flutter/presentation/login/login_controller.dart';
 import 'package:running_app_flutter/presentation/login/login_page.dart';
 import 'package:running_app_flutter/presentation/sign_up/sign_up_controller.dart';
 import 'package:running_app_flutter/presentation/sign_up/sign_up_page.dart';
+import 'package:running_app_flutter/presentation/verification/verification_controller.dart';
+import 'package:running_app_flutter/presentation/verification/verification_page.dart';
 import 'package:running_app_flutter/presentation/welcome/welcome_controller.dart';
 import 'package:running_app_flutter/presentation/welcome/welcome_page.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
@@ -20,6 +24,14 @@ class AppPages {
     GetPage(
         name: AppRoutes.SignUp,
         page: () => const SignUpPage(),
-        bindings: [SignUpBinding()])
+        bindings: [SignUpBinding()]),
+    GetPage(
+        name: AppRoutes.ForgotPassword,
+        page: () => const ForgotPasswordPage(),
+        bindings: [ForgotPasswordBinding()]),
+    GetPage(
+        name: AppRoutes.Verification,
+        page: () => const VerificationPage(),
+        bindings: [VerificationBinding()])
   ];
 }

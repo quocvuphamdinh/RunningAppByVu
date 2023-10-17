@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
+import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/constant/strings.dart';
 import 'package:running_app_flutter/presentation/login/login_controller.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/core/run_button.dart';
 import 'package:running_app_flutter/widgets/core/run_textfield.dart';
 
@@ -23,13 +25,11 @@ class LoginPage extends GetView<LoginController> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: AppDimens.mediumSpacingVer),
-                    child: Image.asset(
-                      "assets/images/runner.png",
-                      height: 200.h,
-                      width: 200.w,
-                    ),
-                  ),
+                      padding: EdgeInsets.only(top: AppDimens.mediumSpacingVer),
+                      child: Image(
+                          image: AppImages.logoImage,
+                          height: 200.h,
+                          width: 200.w)),
                   Padding(
                     padding: EdgeInsets.all(AppDimens.smallSpacingVer),
                     child: Text(RunningAppStrings.titleApp,
@@ -42,20 +42,23 @@ class LoginPage extends GetView<LoginController> {
                   RunTextField(
                       controller: controller.emailController,
                       hintText: "Email"),
-                  Obx(() => RunTextField(
-                        controller: controller.passwordController,
-                        hintText: "Password",
-                        isHidePassword: controller.isHidePassword.value,
-                        isObscureText: true,
-                        onClickSuffixIcon: controller.showPassword,
-                      )),
+                  RunTextField(
+                    controller: controller.passwordController,
+                    hintText: "Password",
+                    isObscureText: true,
+                  ),
                   Padding(
                       padding: EdgeInsets.only(top: 10.h),
                       child: RunButton(buttonText: "Sign In", onClick: () {})),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),
-                    child: Text("Forgot password?",
-                        style: TextStyle(fontSize: AppDimens.largeTextSize)),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.ForgotPassword);
+                      },
+                      child: Text("Forgot password?",
+                          style: TextStyle(fontSize: AppDimens.largeTextSize)),
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

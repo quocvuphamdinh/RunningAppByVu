@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
+import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/presentation/welcome/welcome_controller.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/core/run_button.dart';
@@ -22,8 +23,8 @@ class WelcomePage extends GetView<WelcomeController> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Padding(
             padding: EdgeInsets.only(top: 20.h),
-            child: Image.asset(
-              "assets/images/runner.png",
+            child: Image(
+              image: AppImages.logoImage,
               height: 200.h,
               width: 200.w,
             ),

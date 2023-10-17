@@ -4,24 +4,33 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/widgets/core/run_text_show_password.dart';
 
-class RunTextField extends StatelessWidget {
+class RunTextField extends StatefulWidget {
   const RunTextField(
       {super.key,
       this.hintText,
       required this.controller,
       this.isObscureText,
-      this.isHidePassword,
       this.suffixIcon,
-      this.textInputType,
-      this.onClickSuffixIcon});
+      this.textInputType});
 
   final String? hintText;
   final TextEditingController controller;
   final bool? isObscureText;
-  final bool? isHidePassword;
   final Icon? suffixIcon;
   final TextInputType? textInputType;
-  final Function()? onClickSuffixIcon;
+
+  @override
+  State<RunTextField> createState() => _RunTextFieldState();
+}
+
+class _RunTextFieldState extends State<RunTextField> {
+  var isHidePassword = true;
+
+  _onClickHidePassword() {
+    setState(() {
+      isHidePassword = !isHidePassword;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +45,19 @@ class RunTextField extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextFormField(
-              keyboardType: textInputType,
+              keyboardType: widget.textInputType,
               obscureText: isHidePassword ?? false,
-              controller: controller,
+              controller: widget.controller,
               cursorColor: Colors.black,
               decoration: InputDecoration(
-                suffixIcon: (isObscureText ?? false)
+                suffixIcon: (widget.isObscureText ?? false)
                     ? (!(isHidePassword ?? false)
                         ? RunTextShowPassword(
-                            text: "HIDE", onClick: onClickSuffixIcon)
+                            text: "HIDE", onClick: _onClickHidePassword)
                         : RunTextShowPassword(
-                            text: "SHOW", onClick: onClickSuffixIcon))
-                    : suffixIcon,
-                hintText: hintText,
+                            text: "SHOW", onClick: _onClickHidePassword))
+                    : widget.suffixIcon,
+                hintText: widget.hintText,
                 contentPadding: const EdgeInsets.all(10.0),
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,

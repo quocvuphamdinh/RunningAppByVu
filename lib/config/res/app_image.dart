@@ -12,6 +12,11 @@ class _Icon extends AssetImage {
 }
 
 class AppImages {
+  // Image
+  static const logoImage = _Image("runner.png");
+  static const runnerWhiteImage = _Image("runner_white.png");
+
+  // Icon
   static const success = "assets/images/success.svg";
   static const icDoneSurvey = _Icon("ic_done_survey.png");
 }

@@ -10,33 +10,30 @@ class SignUpBinding extends Bindings {
 }
 
 class SignUpController extends BaseController {
-  final textEmailController = TextEditingController();
-  final textPasswordController = TextEditingController();
-  final textRepeatPasswordController = TextEditingController();
-  final textFullNameController = TextEditingController();
-  final textHeightController = TextEditingController();
-  final textWeightController = TextEditingController();
+  late TextEditingController textEmailController;
+  late TextEditingController textPasswordController;
+  late TextEditingController textRepeatPasswordController;
+  late TextEditingController textFullNameController;
+  late TextEditingController textHeightController;
+  late TextEditingController textWeightController;
 
   RxString selectedValue = "Male".obs;
-  RxBool isHidePassword = true.obs;
-  RxBool isHideRepeatPassword = true.obs;
 
   @override
   void onInit() {
     super.onInit();
+
+    textEmailController = TextEditingController();
+    textPasswordController = TextEditingController();
+    textRepeatPasswordController = TextEditingController();
+    textFullNameController = TextEditingController();
+    textHeightController = TextEditingController();
+    textWeightController = TextEditingController();
   }
 
   void dropDownCallBack(String? selectedValue) {
     if (selectedValue is String) {
       this.selectedValue.value = selectedValue;
     }
-  }
-
-  void showPassword() {
-    isHidePassword.value = !isHidePassword.value;
-  }
-
-  void showRepeatPassword() {
-    isHideRepeatPassword.value = !isHideRepeatPassword.value;
   }
 }

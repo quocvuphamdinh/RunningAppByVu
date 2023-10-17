@@ -43,18 +43,14 @@ class SignUpPage extends GetView<SignUpController> {
                     RunTextField(
                         hintText: "Email",
                         controller: controller.textEmailController),
-                    Obx(() => RunTextField(
+                    RunTextField(
                         hintText: "Password",
                         controller: controller.textPasswordController,
-                        isObscureText: true,
-                        isHidePassword: controller.isHidePassword.value,
-                        onClickSuffixIcon: controller.showPassword)),
-                    Obx(() => RunTextField(
+                        isObscureText: true),
+                    RunTextField(
                         hintText: "Repeat password",
                         controller: controller.textRepeatPasswordController,
-                        isObscureText: true,
-                        isHidePassword: controller.isHideRepeatPassword.value,
-                        onClickSuffixIcon: controller.showRepeatPassword)),
+                        isObscureText: true),
                   ]),
             ),
             Padding(

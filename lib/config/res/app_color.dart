@@ -5,6 +5,7 @@ class AppColor {
   static const Color textPrimaryColor = Color(0xffffffff);
   static const Color lightTextColor = Color(0x80000000);
   static const Color normalTextColor = Colors.black87;
+  static const Color yellowAppColor3 = Color(0xB7862800);
 
   static const Color buttonColor = Color.fromARGB(255, 54, 99, 255);
 

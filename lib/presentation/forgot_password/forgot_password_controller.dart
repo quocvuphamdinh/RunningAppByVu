@@ -2,23 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 
-class LoginBinding extends Bindings {
+class ForgotPasswordBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => LoginController());
+    Get.lazyPut(() => ForgotPasswordController());
   }
 }
 
-class LoginController extends BaseController {
+class ForgotPasswordController extends BaseController {
   late TextEditingController emailController;
-  late TextEditingController passwordController;
-
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
 
     emailController = TextEditingController();
-    passwordController = TextEditingController();
   }
 }
