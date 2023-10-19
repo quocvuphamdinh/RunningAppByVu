@@ -21,8 +21,7 @@ class RunBottomAppBar extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: onArrowClick,
-            child: const Icon(Icons.arrow_back_ios,
-                color: AppColor.textPrimaryColor),
+            child: const Icon(Icons.arrow_back_ios, color: AppColor.whiteColor),
           ),
           Image(
             fit: BoxFit.fill,

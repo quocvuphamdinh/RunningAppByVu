@@ -49,7 +49,11 @@ class LoginPage extends GetView<LoginController> {
                   ),
                   Padding(
                       padding: EdgeInsets.only(top: 10.h),
-                      child: RunButton(buttonText: "Sign In", onClick: () {})),
+                      child: RunButton(
+                          buttonText: "Sign In",
+                          onClick: () {
+                            Get.toNamed(AppRoutes.Run_Main);
+                          })),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),
                     child: GestureDetector(

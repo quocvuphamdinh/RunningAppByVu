@@ -21,4 +21,13 @@ class LoginController extends BaseController {
     emailController = TextEditingController();
     passwordController = TextEditingController();
   }
+
+  void validate() {}
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
+  }
 }

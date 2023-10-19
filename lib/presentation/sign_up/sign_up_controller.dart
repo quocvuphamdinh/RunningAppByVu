@@ -36,4 +36,15 @@ class SignUpController extends BaseController {
       this.selectedValue.value = selectedValue;
     }
   }
+
+  @override
+  void onClose() {
+    textEmailController.dispose();
+    textPasswordController.dispose();
+    textRepeatPasswordController.dispose();
+    textFullNameController.dispose();
+    textHeightController.dispose();
+    textWeightController.dispose();
+    super.onClose();
+  }
 }

@@ -5,4 +5,5 @@ abstract class AppRoutes {
   static const SignUp = "/SignUp";
   static const ForgotPassword = "/ForgotPassword";
   static const Verification = "/Verification";
+  static const Run_Main = "/RunMain";
 }

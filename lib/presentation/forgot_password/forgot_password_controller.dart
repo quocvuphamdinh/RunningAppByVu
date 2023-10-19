@@ -18,4 +18,10 @@ class ForgotPasswordController extends BaseController {
 
     emailController = TextEditingController();
   }
+
+  @override
+  void onClose() {
+    emailController.dispose();
+    super.onClose();
+  }
 }
