@@ -1,6 +1,14 @@
 import 'package:get/get.dart';
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_controller.dart';
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_page.dart';
+import 'package:running_app_flutter/presentation/home/analysis/analysis_controller.dart';
+import 'package:running_app_flutter/presentation/home/analysis/analysis_page.dart';
+import 'package:running_app_flutter/presentation/home/exercise/exercise_controller.dart';
+import 'package:running_app_flutter/presentation/home/exercise/exercise_page.dart';
+import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
+import 'package:running_app_flutter/presentation/home/home_page/home_page.dart';
+import 'package:running_app_flutter/presentation/home/profile/profile_controller.dart';
+import 'package:running_app_flutter/presentation/home/profile/profile_page.dart';
 import 'package:running_app_flutter/presentation/home/run_main_controller.dart';
 import 'package:running_app_flutter/presentation/home/run_main_page.dart';
 import 'package:running_app_flutter/presentation/login/login_controller.dart';
@@ -38,6 +46,22 @@ class AppPages {
     GetPage(
         name: AppRoutes.Run_Main,
         page: () => const RunMainPage(),
-        bindings: [RunMainBinding()])
+        bindings: [RunMainBinding()]),
+    GetPage(
+        name: AppRoutes.Home,
+        page: () => const HomePage(),
+        bindings: [HomeBinding()]),
+    GetPage(
+        name: AppRoutes.Exercise,
+        page: () => const ExercisePage(),
+        bindings: [ExerciseBinding()]),
+    GetPage(
+        name: AppRoutes.Analysis,
+        page: () => const AnalysisPage(),
+        bindings: [AnalysisBinding()]),
+    GetPage(
+        name: AppRoutes.Profile,
+        page: () => const ProfilePage(),
+        bindings: [ProfileBinding()]),
   ];
 }

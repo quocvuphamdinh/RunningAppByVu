@@ -15,8 +15,17 @@ class AppImages {
   // Image
   static const logoImage = _Image("runner.png");
   static const runnerWhiteImage = _Image("runner_white.png");
+  static const activityBackground = _Image("activity_background.jpg");
+  static const walkingBackground = _Image("walking_background.jpg");
 
   // Icon
   static const success = "assets/images/success.svg";
   static const icDoneSurvey = _Icon("ic_done_survey.png");
+  static const icRun = _Icon("ic_run.png");
+  static const icList = _Icon("ic_list.png");
+  static const icAnalysis = _Icon("ic_analysis.png");
+  static const icCaloriesBurn = _Icon("ic_calories_burn.png");
+  static const icMilies = _Icon("ic_milies.png");
+  static const icRunCount = _Icon("ic_run_count.png");
+  static const icTired = _Icon("ic_tired.png");
 }
