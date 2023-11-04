@@ -28,4 +28,7 @@ class AppImages {
   static const icMilies = _Icon("ic_milies.png");
   static const icRunCount = _Icon("ic_run_count.png");
   static const icTired = _Icon("ic_tired.png");
+  static const icRoad = _Icon("ic_road.png");
+  static const icLongestDuration = _Icon("ic_longest_duration.png");
+  static const icBestCaloriesBurned = _Icon("ic_best_calories_burned.png");
 }

@@ -82,14 +82,17 @@ class RunMainPage extends GetView<RunMainController> {
           ),
         ),
         backgroundColor: AppColor.appBackgroundColor,
-        body: IndexedStack(
-          index: controller.selectedPage.value,
-          children: const [
-            HomePage(),
-            ExercisePage(),
-            AnalysisPage(),
-            ProfilePage()
-          ],
+        body: ScrollConfiguration(
+          behavior: const ScrollBehavior().copyWith(overscroll: false),
+          child: IndexedStack(
+            index: controller.selectedPage.value,
+            children: const [
+              HomePage(),
+              ExercisePage(),
+              AnalysisPage(),
+              ProfilePage()
+            ],
+          ),
         )));
   }
 }

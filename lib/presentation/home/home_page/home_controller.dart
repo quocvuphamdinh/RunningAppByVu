@@ -13,7 +13,7 @@ class HomeBinding extends Bindings {
 class HomeController extends BaseController {
   final List<RecentActivityModel> recentActivites = [
     RecentActivityModel(
-        image: AppImages.walkingBackground,
+        activityType: 2,
         title: "Week 1 Day 1",
         runDateTime: "May 29, 16:31",
         distance: 0,
@@ -21,7 +21,7 @@ class HomeController extends BaseController {
         averageSpeed: 0,
         caloriesBurned: 0),
     RecentActivityModel(
-        image: AppImages.activityBackground,
+        activityType: 1,
         title: "Week 1 Day 2",
         iconStatus: AppImages.icTired,
         runDateTime: "May 26, 20:53",

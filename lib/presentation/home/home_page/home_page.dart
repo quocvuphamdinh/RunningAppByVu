@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
+import 'package:running_app_flutter/presentation/home/home_page/widget/best_record_card.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/progress_today_card.dart';
+import 'package:running_app_flutter/presentation/home/home_page/widget/progress_weekly.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/recent_activity_item.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/today_training_card.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
+import 'package:running_app_flutter/widgets/core/text_description.dart';
+import 'package:running_app_flutter/widgets/core/text_more.dart';
+import 'package:running_app_flutter/widgets/core/text_title.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({super.key});
@@ -27,13 +31,8 @@ class HomePage extends GetView<HomeController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Running app",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.primaryColor,
-                      fontSize: 20.sp,
-                      fontFamily: "OsWald"),
+                const TextTitle(
+                  text: "Running App",
                 ),
                 RichText(
                   text: TextSpan(
@@ -65,158 +64,78 @@ class HomePage extends GetView<HomeController> {
             child: Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: AppDimens.aBitSpacingHor),
-              child: ScrollConfiguration(
-                behavior: const ScrollBehavior().copyWith(overscroll: false),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Padding(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: AppDimens.mediumSpacingVer),
-                          child: CircularPercentIndicator(
-                            radius: 110.0.r,
-                            lineWidth: 20.0,
-                            percent: 0.8,
-                            center: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Distance",
-                                  style: TextStyle(
-                                      fontSize: 25.sp,
-                                      fontFamily: "OsWald",
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColor.primaryColor),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: AppDimens.smallSpacingVer),
-                                  child: RichText(
-                                      text: TextSpan(
-                                          text: "0.0",
-                                          style: TextStyle(
-                                              fontSize: 30.sp,
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic,
-                                              color: AppColor.primaryColor),
-                                          children: [
-                                        TextSpan(
-                                            text: " km",
-                                            style: TextStyle(
-                                              fontSize: 15.sp,
-                                              fontWeight: FontWeight.bold,
-                                              color: AppColor.primaryColor,
-                                              fontStyle: FontStyle.italic,
-                                            ))
-                                      ])),
-                                ),
-                                Text(
-                                  "Weekly goal 1km",
-                                  style: TextStyle(
-                                      fontSize: AppDimens.smallTextSize),
-                                )
-                              ],
-                            ),
-                            backgroundColor: AppColor.grey100,
-                            linearGradient: const LinearGradient(colors: [
-                              AppColor.startColor,
-                              AppColor.centerColor,
-                              AppColor.endColor
-                            ]),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "Your progress today",
-                        style: TextStyle(
-                            fontSize: 18.sp,
-                            fontFamily: "OsWald",
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: AppDimens.smallSpacingVer,
-                            bottom: AppDimens.mediumSpacingVer),
-                        child: GridView.count(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          crossAxisSpacing: 20.w,
-                          mainAxisSpacing: 20.h,
-                          crossAxisCount: 2,
-                          childAspectRatio: (Get.width / 2) / 60.h,
-                          children: const [
-                            ProgressTodayCard(
-                                image: AppImages.icCaloriesBurn,
-                                value: 0,
-                                unitType: "Kcl"),
-                            ProgressTodayCard(
-                                image: AppImages.icMilies,
-                                value: 1,
-                                unitType: "Milies"),
-                            ProgressTodayCard(
-                                image: AppImages.icRun,
-                                value: 2,
-                                unitType: "Km/h"),
-                            ProgressTodayCard(
-                                image: AppImages.icRunCount,
-                                value: 3,
-                                unitType: "Run/day")
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Today's training",
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontFamily: "OsWald",
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "More",
-                            style: TextStyle(
-                                color: AppColor.yellow,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.sp),
-                          ),
+                          child: ProgressWeekly()),
+                    ),
+                    const TextDescription(text: "Your progress today"),
+                    Padding(
+                      padding: EdgeInsets.only(
+                          top: AppDimens.smallSpacingVer,
+                          bottom: AppDimens.mediumSpacingVer),
+                      child: GridView.count(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        crossAxisSpacing: 20.w,
+                        mainAxisSpacing: 20.h,
+                        crossAxisCount: 2,
+                        childAspectRatio: (Get.width / 2) / 60.h,
+                        children: const [
+                          ProgressTodayCard(
+                              image: AppImages.icCaloriesBurn,
+                              value: 0,
+                              unitType: "Kcl"),
+                          ProgressTodayCard(
+                              image: AppImages.icMilies,
+                              value: 1,
+                              unitType: "Milies"),
+                          ProgressTodayCard(
+                              image: AppImages.icRun,
+                              value: 2,
+                              unitType: "Km/h"),
+                          ProgressTodayCard(
+                              image: AppImages.icRunCount,
+                              value: 3,
+                              unitType: "Run/day")
                         ],
                       ),
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: AppDimens.smallSpacingVer,
-                            bottom: AppDimens.mediumSpacingVer),
-                        height: 250.h,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: ((context, index) {
-                              return TodayTrainingCard(index: index);
-                            })),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Recent activities",
-                            style: TextStyle(
-                                fontSize: 18.sp,
-                                fontFamily: "OsWald",
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "More",
-                            style: TextStyle(
-                                color: AppColor.yellow,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.sp),
-                          ),
-                        ],
-                      ),
-                      ListView.builder(
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextDescription(text: "Today's training"),
+                        TextMore(),
+                      ],
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: AppDimens.smallSpacingVer,
+                          bottom: AppDimens.mediumSpacingVer),
+                      height: 250.h,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: ((context, index) {
+                            return TodayTrainingCard(index: index);
+                          })),
+                    ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextDescription(text: "Recent activities"),
+                        TextMore(),
+                      ],
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(bottom: AppDimens.smallSpacingVer),
+                      child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: 2,
@@ -224,9 +143,96 @@ class HomePage extends GetView<HomeController> {
                             return RecentActivityItem(
                                 recentActivityModel:
                                     controller.recentActivites[index]);
-                          }))
-                    ],
-                  ),
+                          })),
+                    ),
+                    Text(
+                      "Best records",
+                      style: TextStyle(
+                          fontSize: 18.sp,
+                          fontFamily: "OsWald",
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: AppDimens.smallSpacingVer),
+                      height: 200.h,
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              const Expanded(
+                                child: BestRecordCard(
+                                  image: AppImages.icRoad,
+                                  textValue: "0.249 km",
+                                  description: "Longest distance",
+                                ),
+                              ),
+                              SizedBox(
+                                width: AppDimens.size20,
+                              ),
+                              const Expanded(
+                                child: BestRecordCard(
+                                    image: AppImages.icLongestDuration,
+                                    textValue: "00:00:57",
+                                    description: "Longest duration"),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: AppDimens.size10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                  child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: AppDimens.mediumSpacingHor,
+                                    vertical: AppDimens.smallSpacingVer),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5.r),
+                                  color: AppColor.grey90,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image(
+                                            image:
+                                                AppImages.icBestCaloriesBurned,
+                                            width: AppDimens.iconSmallSize),
+                                        SizedBox(width: AppDimens.size10),
+                                        Text(
+                                          "Best calories burned",
+                                          style: TextStyle(
+                                              color: AppColor.primaryColor,
+                                              fontSize: AppDimens.largeTextSize,
+                                              fontWeight: FontWeight.w800),
+                                        )
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: AppDimens.mediumSpacingHor,
+                                          top: 4.h),
+                                      child: Text(
+                                        "19 kcal",
+                                        style: TextStyle(
+                                            color: AppColor.yellow,
+                                            fontSize: AppDimens.largeTextSize,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ))
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             ),

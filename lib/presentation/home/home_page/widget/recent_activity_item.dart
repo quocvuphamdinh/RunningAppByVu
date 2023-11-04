@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
+import 'package:running_app_flutter/config/res/app_image.dart';
 
 class RecentActivityModel {
-  final ImageProvider image;
+  final int activityType;
   final ImageProvider? iconStatus;
   final String title;
   final String runDateTime;
@@ -15,7 +16,7 @@ class RecentActivityModel {
   final int caloriesBurned;
 
   RecentActivityModel(
-      {required this.image,
+      {required this.activityType,
       this.iconStatus,
       required this.title,
       required this.runDateTime,
@@ -56,7 +57,10 @@ class RecentActivityItem extends StatelessWidget {
             width: Get.width * 0.3,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    fit: BoxFit.cover, image: recentActivityModel.image)),
+                    fit: BoxFit.cover,
+                    image: recentActivityModel.activityType == 1
+                        ? AppImages.activityBackground
+                        : AppImages.walkingBackground)),
           ),
           Expanded(
               child: Padding(
@@ -89,7 +93,7 @@ class RecentActivityItem extends StatelessWidget {
                       fontFamily: "OsWald",
                       fontWeight: FontWeight.bold,
                       color: AppColor.primaryColor,
-                      fontSize: 28.sp,
+                      fontSize: 24.sp,
                       fontStyle: FontStyle.italic),
                 ),
                 Row(
