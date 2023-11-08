@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
@@ -16,6 +15,7 @@ class RunMainPage extends GetView<RunMainController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
+        extendBody: true,
         floatingActionButton: FloatingActionButton(
             backgroundColor: AppColor.grey100,
             onPressed: () {},

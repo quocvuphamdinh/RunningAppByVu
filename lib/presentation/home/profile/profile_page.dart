@@ -11,9 +11,10 @@ class ProfilePage extends GetView<ProfileController> {
     return Scaffold(
       backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
+          bottom: false,
           child: Center(
-        child: Text("Profile Page"),
-      )),
+            child: Text("Profile Page"),
+          )),
     );
   }
 }

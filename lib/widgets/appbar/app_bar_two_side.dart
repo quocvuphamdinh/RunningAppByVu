@@ -12,10 +12,9 @@ class AppBarTwoSide extends StatelessWidget {
       this.widgetRight});
 
   final Widget? widgetLeft;
+  final Widget? widgetRight;
   final Function()? onClickWidgetLeft;
   final Function()? onCLickWidgetRight;
-  final Widget? widgetRight;
-
   @override
   Widget build(BuildContext context) {
     return Container(

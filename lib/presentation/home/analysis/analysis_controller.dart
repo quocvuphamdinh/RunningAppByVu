@@ -8,4 +8,10 @@ class AnalysisBinding extends Bindings {
   }
 }
 
-class AnalysisController extends BaseController {}
+class AnalysisController extends BaseController {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+  }
+}

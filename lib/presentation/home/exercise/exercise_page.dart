@@ -19,76 +19,79 @@ class ExercisePage extends GetView<ExerciseController> {
     return Scaffold(
       backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
+          bottom: false,
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppBarTwoSide(
-            widgetLeft: const TextTitle(
-              text: "Activities",
-            ),
-            widgetRight: Image(
-              image: AppImages.logoImage,
-              width: AppDimens.iconLargeSize,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppDimens.aBitSpacingHor),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.only(bottom: AppDimens.smallSpacingVer),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextDescription(
-                            text: "Walking exercise",
-                          ),
-                          TextMore()
-                        ],
-                      ),
-                    ),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return ExerciseItem(
-                              exerciseItem: controller.walkingExercises[index]);
-                        }),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: AppDimens.smallSpacingVer,
-                          top: AppDimens.smallSpacingVer),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextDescription(
-                            text: "Running exercise",
-                          ),
-                          TextMore()
-                        ],
-                      ),
-                    ),
-                    ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
-                          return ExerciseItem(
-                              exerciseItem: controller.runningExercises[index]);
-                        })
-                  ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppBarTwoSide(
+                widgetLeft: const TextTitle(
+                  text: "Activities",
+                ),
+                widgetRight: Image(
+                  image: AppImages.logoImage,
+                  width: AppDimens.iconLargeSize,
                 ),
               ),
-            ),
-          )
-        ],
-      )),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppDimens.aBitSpacingHor),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              bottom: AppDimens.smallSpacingVer),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextDescription(
+                                text: "Walking exercise",
+                              ),
+                              TextMore()
+                            ],
+                          ),
+                        ),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return ExerciseItem(
+                                  exerciseItem:
+                                      controller.walkingExercises[index]);
+                            }),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: AppDimens.smallSpacingVer,
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TextDescription(
+                                text: "Running exercise",
+                              ),
+                              TextMore()
+                            ],
+                          ),
+                        ),
+                        ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 4,
+                            itemBuilder: (context, index) {
+                              return ExerciseItem(
+                                  exerciseItem:
+                                      controller.runningExercises[index]);
+                            })
+                      ],
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )),
     );
   }
 }
