@@ -7,6 +7,8 @@ import 'package:running_app_flutter/presentation/home/exercise/exercise_controll
 import 'package:running_app_flutter/presentation/home/exercise/exercise_page.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_page.dart';
+import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_controller.dart';
+import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_page.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_controller.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_page.dart';
 import 'package:running_app_flutter/presentation/home/run_main_controller.dart';
@@ -63,5 +65,9 @@ class AppPages {
         name: AppRoutes.Profile,
         page: () => const ProfilePage(),
         bindings: [ProfileBinding()]),
+    GetPage(
+        name: AppRoutes.WeeklyGoalSetting,
+        page: () => const WeeklyGoalSettingPage(),
+        bindings: [WeeklyGoalSettingBinding()]),
   ];
 }

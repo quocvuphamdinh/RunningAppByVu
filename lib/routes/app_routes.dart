@@ -9,4 +9,5 @@ abstract class AppRoutes {
   static const Exercise = "/Exercise";
   static const Analysis = "/Analysis";
   static const Profile = "/Profile";
+  static const WeeklyGoalSetting = "/WeeklyGoalSetting";
 }

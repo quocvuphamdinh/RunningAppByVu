@@ -9,6 +9,7 @@ import 'package:running_app_flutter/presentation/home/home_page/widget/progress_
 import 'package:running_app_flutter/presentation/home/home_page/widget/progress_weekly.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/recent_activity_item.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/today_training_card.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
 import 'package:running_app_flutter/widgets/core/text_description.dart';
@@ -54,7 +55,9 @@ class HomePage extends GetView<HomeController> {
                     )
                   ],
                 ),
-                onCLickWidgetRight: () {},
+                onCLickWidgetRight: () {
+                  Get.toNamed(AppRoutes.WeeklyGoalSetting);
+                },
                 widgetRight: Icon(
                   Icons.info_outline,
                   size: AppDimens.iconMediumSize,
