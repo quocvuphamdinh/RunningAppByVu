@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
@@ -18,19 +17,22 @@ class AnalysisPage extends GetView<AnalysisController> {
       backgroundColor: AppColor.grey80,
       body: SafeArea(
           bottom: false,
-          child: AppBarWithBottomTab(
-            widgetAppBarLeft: const TextTitle(text: "Analysis"),
-            contentWidgetTabBars: [
-              Text(
-                "DAY",
-                style: TextStyle(fontSize: AppDimens.mediumTextSize),
-              ),
-              Text(
-                "MONTH",
-                style: TextStyle(fontSize: AppDimens.mediumTextSize),
-              )
-            ],
-            widgetBodies: const [AnalysisDayPage(), AnalysisMonthPage()],
+          child: Padding(
+            padding: EdgeInsets.only(bottom: AppDimens.mediumSpacingVer),
+            child: AppBarWithBottomTab(
+              widgetAppBarLeft: const TextTitle(text: "Analysis"),
+              contentWidgetTabBars: [
+                Text(
+                  "DAY",
+                  style: TextStyle(fontSize: AppDimens.mediumTextSize),
+                ),
+                Text(
+                  "MONTH",
+                  style: TextStyle(fontSize: AppDimens.mediumTextSize),
+                )
+              ],
+              widgetBodies: const [AnalysisDayPage(), AnalysisMonthPage()],
+            ),
           )),
     );
   }

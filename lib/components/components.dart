@@ -28,4 +28,9 @@ class Components {
     final String response = await rootBundle.loadString(filePath);
     return jsonDecode(response);
   }
+
+  static String convertDateTimeToString(
+      {required DateTime dateTime, String dateFormat = 'dd-MM-yyyy'}) {
+    return DateFormat(dateFormat).format(dateTime);
+  }
 }
