@@ -24,6 +24,7 @@ class ExerciseItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: Get.width,
       margin: EdgeInsets.only(bottom: AppDimens.smallSpacingVer),
       height: 95.h,
       child: Row(
@@ -38,34 +39,36 @@ class ExerciseItem extends StatelessWidget {
                       image: exerciseItem.activityType == 1
                           ? AppImages.activityBackground
                           : AppImages.walkingBackground))),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                exerciseItem.title,
-                style: TextStyle(
-                    color: AppColor.primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: AppDimens.largeTextSize),
-              ),
-              SizedBox(
-                height: AppDimens.size20,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.timer,
-                    size: AppDimens.iconSmallSize,
-                    color: AppColor.grey,
-                  ),
-                  Text(
-                    "${exerciseItem.minuteNumber} min",
-                    style: TextStyle(fontSize: AppDimens.mediumTextSize),
-                  )
-                ],
-              )
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  exerciseItem.title,
+                  style: TextStyle(
+                      color: AppColor.primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: AppDimens.largeTextSize),
+                ),
+                SizedBox(
+                  height: AppDimens.size20,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.timer,
+                      size: AppDimens.iconSmallSize,
+                      color: AppColor.grey,
+                    ),
+                    Text(
+                      "${exerciseItem.minuteNumber} min",
+                      style: TextStyle(fontSize: AppDimens.mediumTextSize),
+                    )
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),

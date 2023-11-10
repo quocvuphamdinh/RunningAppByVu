@@ -6,6 +6,7 @@ import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/presentation/home/exercise/exercise_controller.dart';
 import 'package:running_app_flutter/presentation/home/exercise/widget/exercise_item.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
 import 'package:running_app_flutter/widgets/core/text_description.dart';
 import 'package:running_app_flutter/widgets/core/text_more.dart';
@@ -58,9 +59,14 @@ class ExercisePage extends GetView<ExerciseController> {
                             shrinkWrap: true,
                             itemCount: 4,
                             itemBuilder: (context, index) {
-                              return ExerciseItem(
-                                  exerciseItem:
-                                      controller.walkingExercises[index]);
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.ExerciseDetail);
+                                },
+                                child: ExerciseItem(
+                                    exerciseItem:
+                                        controller.walkingExercises[index]),
+                              );
                             }),
                         Padding(
                           padding: EdgeInsets.only(
@@ -81,9 +87,14 @@ class ExercisePage extends GetView<ExerciseController> {
                             shrinkWrap: true,
                             itemCount: 4,
                             itemBuilder: (context, index) {
-                              return ExerciseItem(
-                                  exerciseItem:
-                                      controller.runningExercises[index]);
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.ExerciseDetail);
+                                },
+                                child: ExerciseItem(
+                                    exerciseItem:
+                                        controller.runningExercises[index]),
+                              );
                             })
                       ],
                     ),

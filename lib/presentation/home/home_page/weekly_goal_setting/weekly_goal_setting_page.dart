@@ -37,6 +37,9 @@ class WeeklyGoalSettingPage extends GetView<WeeklyGoalSettingController> {
                     right: AppDimens.mediumSpacingHor,
                     bottom: AppDimens.mediumSpacingVer),
                 child: Obx(() => NumberPicker(
+                      textMapper: (text) {
+                        return "$text km";
+                      },
                       itemWidth: Get.width,
                       decoration: const BoxDecoration(
                           border: Border(

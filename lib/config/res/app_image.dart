@@ -32,4 +32,5 @@ class AppImages {
   static const icLongestDuration = _Icon("ic_longest_duration.png");
   static const icBestCaloriesBurned = _Icon("ic_best_calories_burned.png");
   static const icCalendar = _Icon("ic_calendar.png");
+  static const icCoolDown = _Icon("ic_cool_down.png");
 }

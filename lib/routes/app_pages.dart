@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:running_app_flutter/presentation/exercise_detail/exercise_detail_controller.dart';
+import 'package:running_app_flutter/presentation/exercise_detail/exercise_detail_page.dart';
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_controller.dart';
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_page.dart';
 import 'package:running_app_flutter/presentation/home/analysis/analysis_controller.dart';
@@ -69,5 +71,9 @@ class AppPages {
         name: AppRoutes.WeeklyGoalSetting,
         page: () => const WeeklyGoalSettingPage(),
         bindings: [WeeklyGoalSettingBinding()]),
+    GetPage(
+        name: AppRoutes.ExerciseDetail,
+        page: () => const ExerciseDetailPage(),
+        bindings: [ExerciseDetailBinding()])
   ];
 }

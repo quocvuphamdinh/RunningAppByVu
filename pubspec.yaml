@@ -44,6 +44,8 @@ dependencies:
   percent_indicator: ^4.2.3
   fl_chart: ^0.64.0
   numberpicker: ^2.1.2
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.6
 
 dev_dependencies:
   flutter_test:

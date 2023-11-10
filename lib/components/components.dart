@@ -33,4 +33,21 @@ class Components {
       {required DateTime dateTime, String dateFormat = 'dd-MM-yyyy'}) {
     return DateFormat(dateFormat).format(dateTime);
   }
+
+  static String getFormattedTimer(
+      {required int ms, bool includeMillis = false}) {
+    var milliseconds = ms;
+    final hours = Duration(milliseconds: milliseconds).inHours;
+    milliseconds -= Duration(hours: hours).inMilliseconds;
+    final minutes = Duration(milliseconds: milliseconds).inMinutes;
+    milliseconds -= Duration(minutes: minutes).inMilliseconds;
+    final seconds = Duration(milliseconds: milliseconds).inSeconds;
+    final f = NumberFormat("00");
+    if (!includeMillis) {
+      return "${f.format(hours)}:${f.format(minutes)}:${f.format(seconds)}";
+    }
+    milliseconds -= Duration(seconds: seconds).inMilliseconds;
+    milliseconds = (milliseconds / 10) as int;
+    return "${f.format(hours)}:${f.format(minutes)}:${f.format(seconds)}:${f.format(milliseconds)}";
+  }
 }

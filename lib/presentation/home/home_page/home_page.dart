@@ -126,7 +126,11 @@ class HomePage extends GetView<HomeController> {
                               scrollDirection: Axis.horizontal,
                               itemCount: 5,
                               itemBuilder: ((context, index) {
-                                return TodayTrainingCard(index: index);
+                                return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(AppRoutes.ExerciseDetail);
+                                    },
+                                    child: TodayTrainingCard(index: index));
                               })),
                         ),
                         const Row(
