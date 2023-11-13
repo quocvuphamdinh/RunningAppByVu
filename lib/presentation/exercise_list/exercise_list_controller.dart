@@ -15,6 +15,9 @@ class ExerciseListController extends BaseController {
   dynamic argumentData = Get.arguments;
 
   RxInt exerciseType = Constant.RUNNING.obs;
+  RxString exerciseTitle = "Exercise List".obs;
+  RxInt totalExerciseCompleted = 0.obs;
+  RxInt totalExercise = 0.obs;
 
   final walkingExercises = [
     Activity(
@@ -57,13 +60,39 @@ class ExerciseListController extends BaseController {
           Workout(name: "Run", duration: 60000),
           Workout(name: "Walk", duration: 60000),
         ],
-        isCompleted: 0)
+        isCompleted: 1)
   ];
 
   @override
   void onInit() {
+    super.onInit();
+
     exerciseType.value =
         argumentData[Constant.EXERCISE_TYPE] ?? Constant.RUNNING;
-    super.onInit();
+    exerciseTitle.value =
+        argumentData[Constant.EXERCISE_TITLE] ?? exerciseTitle.value;
+
+    onInitDataTotal();
+  }
+
+  onInitDataTotal() {
+    var totalCompleted = 0;
+    if (exerciseType.value == Constant.RUNNING) {
+      for (var item in runningExercises) {
+        if (item.isCompleted == 1) {
+          totalCompleted += 1;
+        }
+      }
+    } else {
+      for (var item in walkingExercises) {
+        if (item.isCompleted == 1) {
+          totalCompleted += 1;
+        }
+      }
+    }
+    totalExerciseCompleted.value = totalCompleted;
+    totalExercise.value = exerciseType.value == Constant.RUNNING
+        ? runningExercises.length
+        : walkingExercises.length;
   }
 }

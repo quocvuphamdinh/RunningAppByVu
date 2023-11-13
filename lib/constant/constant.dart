@@ -8,4 +8,5 @@ class Constant {
 
   //string
   static const EXERCISE_TYPE = "EXERCISE_TYPE";
+  static const EXERCISE_TITLE = "EXERCISE_TITLE";
 }

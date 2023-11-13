@@ -13,4 +13,5 @@ abstract class AppRoutes {
   static const ExerciseDetail = '/ExerciseDetail';
   static const ExerciseList = '/ExerciseList';
   static const RecentExercise = '/RecentExercise';
+  static const ResultExerciseRun = '/ResultExerciseRun';
 }

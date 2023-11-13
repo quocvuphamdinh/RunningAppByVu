@@ -36,4 +36,11 @@ class AppImages {
   static const icBestCaloriesBurned = _Icon("ic_best_calories_burned.png");
   static const icCalendar = _Icon("ic_calendar.png");
   static const icCoolDown = _Icon("ic_cool_down.png");
+  static const icAvgSpeedColor = _Icon("ic_avg_speed_color.png");
+  static const icCaloriesColor = _Icon("ic_calories_color.png");
+  static const icCompleteRunColor = _Icon("ic_complete_run.png");
+  static const icDistanceColor = _Icon("ic_distance_color.png");
+  static const icDurationColor = _Icon("ic_duration_color.png");
+  static const icMovingTimeColor = _Icon("ic_moving_time_color.png");
+  static const icCompleted = _Icon("ic_completed.png");
 }

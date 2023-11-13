@@ -36,24 +36,31 @@ class ExerciseListPage extends GetView<ExerciseListController> {
                   EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
               child: Column(
                 children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextTitle(text: "Running App"),
-                      TextDescription(text: "0/0")
-                    ],
-                  ),
+                  Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextTitle(text: controller.exerciseTitle.value),
+                          TextDescription(
+                              text:
+                                  "${controller.totalExerciseCompleted}/${controller.totalExercise}")
+                        ],
+                      )),
+                  SizedBox(height: AppDimens.size20),
                   Expanded(
                     child: Obx(() {
                       var exercises =
                           controller.exerciseType.value == Constant.WALKING
                               ? controller.walkingExercises
                               : controller.runningExercises;
-                      return ListView.builder(
-                          itemCount: exercises.length,
-                          itemBuilder: ((context, index) {
-                            return ExerciseItem(exerciseItem: exercises[index]);
-                          }));
+                      return ScrollConfiguration(
+                          behavior: const ScrollBehavior()
+                              .copyWith(overscroll: false),
+                          child: ListView.builder(
+                              itemCount: exercises.length,
+                              itemBuilder: ((context, index) {
+                                return ExerciseItem(
+                                    exerciseItem: exercises[index]);
+                              })));
                     }),
                   )
                 ],

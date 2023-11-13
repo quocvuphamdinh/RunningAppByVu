@@ -57,7 +57,9 @@ class ExercisePage extends GetView<ExerciseController> {
                                     Get.toNamed(AppRoutes.ExerciseList,
                                         arguments: {
                                           Constant.EXERCISE_TYPE:
-                                              Constant.WALKING
+                                              Constant.WALKING,
+                                          Constant.EXERCISE_TITLE:
+                                              "Walking for weight loss"
                                         });
                                   })
                             ],
@@ -95,7 +97,9 @@ class ExercisePage extends GetView<ExerciseController> {
                                     Get.toNamed(AppRoutes.ExerciseList,
                                         arguments: {
                                           Constant.EXERCISE_TYPE:
-                                              Constant.RUNNING
+                                              Constant.RUNNING,
+                                          Constant.EXERCISE_TITLE:
+                                              "Running for weight loss"
                                         });
                                   })
                             ],

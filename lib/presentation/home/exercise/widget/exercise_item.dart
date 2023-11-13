@@ -21,6 +21,7 @@ class ExerciseItem extends StatelessWidget {
       margin: EdgeInsets.only(bottom: AppDimens.smallSpacingVer),
       height: 95.h,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
@@ -62,7 +63,19 @@ class ExerciseItem extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
+          exerciseItem.isCompleted == 1
+              ? Container(
+                  padding: EdgeInsets.all(2.h),
+                  decoration: BoxDecoration(
+                      color: AppColor.primaryColor,
+                      borderRadius:
+                          BorderRadius.only(bottomLeft: Radius.circular(5.r))),
+                  child: Icon(Icons.check,
+                      size: AppDimens.iconSmallestSize,
+                      color: AppColor.movingTimeColor),
+                )
+              : const SizedBox()
         ],
       ),
     );

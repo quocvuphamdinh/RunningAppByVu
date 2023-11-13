@@ -21,6 +21,8 @@ import 'package:running_app_flutter/presentation/home/run_main_controller.dart';
 import 'package:running_app_flutter/presentation/home/run_main_page.dart';
 import 'package:running_app_flutter/presentation/login/login_controller.dart';
 import 'package:running_app_flutter/presentation/login/login_page.dart';
+import 'package:running_app_flutter/presentation/result_exercise_run/result_exercise_run_controller.dart';
+import 'package:running_app_flutter/presentation/result_exercise_run/result_exercise_run_page.dart';
 import 'package:running_app_flutter/presentation/sign_up/sign_up_controller.dart';
 import 'package:running_app_flutter/presentation/sign_up/sign_up_page.dart';
 import 'package:running_app_flutter/presentation/verification/verification_controller.dart';
@@ -86,6 +88,10 @@ class AppPages {
     GetPage(
         name: AppRoutes.RecentExercise,
         page: () => const RecentExercisePage(),
-        bindings: [RecentExerciseBinding()])
+        bindings: [RecentExerciseBinding()]),
+    GetPage(
+        name: AppRoutes.ResultExerciseRun,
+        page: () => const ResultExerciseRunPage(),
+        bindings: [ResultExerciseRunBinding()])
   ];
 }

@@ -119,7 +119,9 @@ class HomePage extends GetView<HomeController> {
                               child: const TextMore(),
                               onTap: () {
                                 Get.toNamed(AppRoutes.ExerciseList, arguments: {
-                                  Constant.EXERCISE_TYPE: Constant.RUNNING
+                                  Constant.EXERCISE_TYPE: Constant.RUNNING,
+                                  Constant.EXERCISE_TITLE:
+                                      "Running for today training"
                                 });
                               },
                             ),
@@ -157,9 +159,14 @@ class HomePage extends GetView<HomeController> {
                             shrinkWrap: true,
                             itemCount: 2,
                             itemBuilder: ((context, index) {
-                              return RecentActivityItem(
-                                  recentActivity:
-                                      controller.recentActivites[index]);
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.ResultExerciseRun);
+                                },
+                                child: RecentActivityItem(
+                                    recentActivity:
+                                        controller.recentActivites[index]),
+                              );
                             })),
                         Text(
                           "Best records",
