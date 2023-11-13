@@ -1,1 +1,1 @@
-This version of the Running app is using Flutter.
+This version of the Running app is using Flutter by VuPham.
