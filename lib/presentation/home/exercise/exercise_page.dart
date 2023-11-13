@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/presentation/home/exercise/exercise_controller.dart';
 import 'package:running_app_flutter/presentation/home/exercise/widget/exercise_item.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
@@ -44,20 +45,30 @@ class ExercisePage extends GetView<ExerciseController> {
                         Padding(
                           padding: EdgeInsets.only(
                               bottom: AppDimens.smallSpacingVer),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TextDescription(
+                              const TextDescription(
                                 text: "Walking exercise",
                               ),
-                              TextMore()
+                              GestureDetector(
+                                  child: const TextMore(),
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ExerciseList,
+                                        arguments: {
+                                          Constant.EXERCISE_TYPE:
+                                              Constant.WALKING
+                                        });
+                                  })
                             ],
                           ),
                         ),
                         ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: 4,
+                            itemCount: controller.walkingExercises.length < 4
+                                ? controller.walkingExercises.length
+                                : 4,
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
@@ -72,20 +83,30 @@ class ExercisePage extends GetView<ExerciseController> {
                           padding: EdgeInsets.only(
                             bottom: AppDimens.smallSpacingVer,
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TextDescription(
+                              const TextDescription(
                                 text: "Running exercise",
                               ),
-                              TextMore()
+                              GestureDetector(
+                                  child: const TextMore(),
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ExerciseList,
+                                        arguments: {
+                                          Constant.EXERCISE_TYPE:
+                                              Constant.RUNNING
+                                        });
+                                  })
                             ],
                           ),
                         ),
                         ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: 4,
+                            itemCount: controller.runningExercises.length < 4
+                                ? controller.runningExercises.length
+                                : 4,
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {

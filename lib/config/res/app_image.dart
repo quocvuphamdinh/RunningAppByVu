@@ -17,6 +17,7 @@ class AppImages {
   static const runnerWhiteImage = _Image("runner_white.png");
   static const activityBackground = _Image("activity_background.jpg");
   static const walkingBackground = _Image("walking_background.jpg");
+  static const recentExerciseBackground = _Image("background_recent.jpg");
 
   // Icon
   static const success = "assets/images/success.svg";
@@ -27,6 +28,8 @@ class AppImages {
   static const icCaloriesBurn = _Icon("ic_calories_burn.png");
   static const icMilies = _Icon("ic_milies.png");
   static const icRunCount = _Icon("ic_run_count.png");
+  static const icSmiling = _Icon("ic_smiling.png");
+  static const icNotSmiling = _Icon("ic_not_smiling.png");
   static const icTired = _Icon("ic_tired.png");
   static const icRoad = _Icon("ic_road.png");
   static const icLongestDuration = _Icon("ic_longest_duration.png");

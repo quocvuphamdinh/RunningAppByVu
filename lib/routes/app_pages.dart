@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:running_app_flutter/presentation/exercise_detail/exercise_detail_controller.dart';
 import 'package:running_app_flutter/presentation/exercise_detail/exercise_detail_page.dart';
+import 'package:running_app_flutter/presentation/exercise_list/exercise_list_controller.dart';
+import 'package:running_app_flutter/presentation/exercise_list/exercise_list_page.dart';
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_controller.dart';
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_page.dart';
 import 'package:running_app_flutter/presentation/home/analysis/analysis_controller.dart';
@@ -9,6 +11,8 @@ import 'package:running_app_flutter/presentation/home/exercise/exercise_controll
 import 'package:running_app_flutter/presentation/home/exercise/exercise_page.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_page.dart';
+import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/recent_exercise_controller.dart';
+import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/recent_exercise_page.dart';
 import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_page.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_controller.dart';
@@ -74,6 +78,14 @@ class AppPages {
     GetPage(
         name: AppRoutes.ExerciseDetail,
         page: () => const ExerciseDetailPage(),
-        bindings: [ExerciseDetailBinding()])
+        bindings: [ExerciseDetailBinding()]),
+    GetPage(
+        name: AppRoutes.ExerciseList,
+        page: () => const ExerciseListPage(),
+        bindings: [ExerciseListBinding()]),
+    GetPage(
+        name: AppRoutes.RecentExercise,
+        page: () => const RecentExercisePage(),
+        bindings: [RecentExerciseBinding()])
   ];
 }

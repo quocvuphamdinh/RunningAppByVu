@@ -7,17 +7,17 @@ part 'user_activity_detail.g.dart';
 @JsonSerializable()
 class UserActivityDetail {
   final String id;
-  final Run? run;
-  final Activity? activity;
-  final String comment;
-  final int mood;
+  final Run run;
+  final Activity activity;
+  final String? comment;
+  final int? mood;
 
   UserActivityDetail(
       {this.id = '',
-      this.run,
-      this.activity,
-      required this.comment,
-      required this.mood});
+      required this.run,
+      required this.activity,
+      this.comment,
+      this.mood});
 
   factory UserActivityDetail.fromJson(Map<String, dynamic> json) =>
       _$UserActivityDetailFromJson(json);

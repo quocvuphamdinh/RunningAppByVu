@@ -9,18 +9,20 @@ class AppBarTwoSide extends StatelessWidget {
       this.widgetLeft,
       this.onClickWidgetLeft,
       this.onCLickWidgetRight,
-      this.widgetRight});
+      this.widgetRight,
+      this.backgroundColor});
 
   final Widget? widgetLeft;
   final Widget? widgetRight;
   final Function()? onClickWidgetLeft;
   final Function()? onCLickWidgetRight;
+  final Color? backgroundColor;
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(AppDimens.aBitSpacingHor),
       height: 65.h,
-      color: AppColor.appBackgroundColor,
+      color: backgroundColor ?? AppColor.appBackgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

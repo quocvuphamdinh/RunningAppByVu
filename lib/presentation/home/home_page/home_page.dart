@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/best_record_card.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/progress_today_card.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/progress_weekly.dart';
@@ -110,11 +111,18 @@ class HomePage extends GetView<HomeController> {
                             ],
                           ),
                         ),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextDescription(text: "Today's training"),
-                            TextMore(),
+                            const TextDescription(text: "Today's training"),
+                            GestureDetector(
+                              child: const TextMore(),
+                              onTap: () {
+                                Get.toNamed(AppRoutes.ExerciseList, arguments: {
+                                  Constant.EXERCISE_TYPE: Constant.RUNNING
+                                });
+                              },
+                            ),
                           ],
                         ),
                         Container(
@@ -133,11 +141,15 @@ class HomePage extends GetView<HomeController> {
                                     child: TodayTrainingCard(index: index));
                               })),
                         ),
-                        const Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            TextDescription(text: "Recent activities"),
-                            TextMore(),
+                            const TextDescription(text: "Recent activities"),
+                            GestureDetector(
+                                child: const TextMore(),
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.RecentExercise);
+                                }),
                           ],
                         ),
                         ListView.builder(
@@ -146,7 +158,7 @@ class HomePage extends GetView<HomeController> {
                             itemCount: 2,
                             itemBuilder: ((context, index) {
                               return RecentActivityItem(
-                                  recentActivityModel:
+                                  recentActivity:
                                       controller.recentActivites[index]);
                             })),
                         Text(

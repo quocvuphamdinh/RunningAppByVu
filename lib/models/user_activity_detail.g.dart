@@ -9,14 +9,10 @@ part of 'user_activity_detail.dart';
 UserActivityDetail _$UserActivityDetailFromJson(Map<String, dynamic> json) =>
     UserActivityDetail(
       id: json['id'] as String? ?? '',
-      run: json['run'] == null
-          ? null
-          : Run.fromJson(json['run'] as Map<String, dynamic>),
-      activity: json['activity'] == null
-          ? null
-          : Activity.fromJson(json['activity'] as Map<String, dynamic>),
-      comment: json['comment'] as String,
-      mood: json['mood'] as int,
+      run: Run.fromJson(json['run'] as Map<String, dynamic>),
+      activity: Activity.fromJson(json['activity'] as Map<String, dynamic>),
+      comment: json['comment'] as String?,
+      mood: json['mood'] as int?,
     );
 
 Map<String, dynamic> _$UserActivityDetailToJson(UserActivityDetail instance) =>

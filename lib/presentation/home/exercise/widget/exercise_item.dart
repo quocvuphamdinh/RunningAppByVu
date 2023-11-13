@@ -1,25 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:running_app_flutter/components/components.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
-
-class ExerciseItemModel {
-  final int activityType;
-  final String title;
-  final int minuteNumber;
-
-  ExerciseItemModel(
-      {required this.activityType,
-      required this.title,
-      required this.minuteNumber});
-}
+import 'package:running_app_flutter/constant/constant.dart';
+import 'package:running_app_flutter/constant/data_run_types.dart';
+import 'package:running_app_flutter/models/activity.dart';
 
 class ExerciseItem extends StatelessWidget {
   const ExerciseItem({super.key, required this.exerciseItem});
 
-  final ExerciseItemModel exerciseItem;
+  final Activity exerciseItem;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +29,7 @@ class ExerciseItem extends StatelessWidget {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: exerciseItem.activityType == 1
+                      image: exerciseItem.type == Constant.RUNNING
                           ? AppImages.activityBackground
                           : AppImages.walkingBackground))),
           Expanded(
@@ -45,7 +38,7 @@ class ExerciseItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  exerciseItem.title,
+                  exerciseItem.name,
                   style: TextStyle(
                       color: AppColor.primaryColor,
                       fontWeight: FontWeight.bold,
@@ -62,7 +55,7 @@ class ExerciseItem extends StatelessWidget {
                       color: AppColor.grey,
                     ),
                     Text(
-                      "${exerciseItem.minuteNumber} min",
+                      "${Components.getFormattedTimerWithOption(ms: exerciseItem.durationOfWorkouts, option: OptionTimer.MINUTE)} min",
                       style: TextStyle(fontSize: AppDimens.mediumTextSize),
                     )
                   ],

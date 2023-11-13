@@ -1,7 +1,9 @@
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
-import 'package:running_app_flutter/config/res/app_image.dart';
-import 'package:running_app_flutter/presentation/home/home_page/widget/recent_activity_item.dart';
+import 'package:running_app_flutter/models/activity.dart';
+import 'package:running_app_flutter/models/run.dart';
+import 'package:running_app_flutter/models/user_activity_detail.dart';
+import 'package:running_app_flutter/models/workout.dart';
 
 class HomeBinding extends Bindings {
   @override
@@ -11,24 +13,55 @@ class HomeBinding extends Bindings {
 }
 
 class HomeController extends BaseController {
-  final List<RecentActivityModel> recentActivites = [
-    RecentActivityModel(
-        activityType: 2,
-        title: "Week 1 Day 1",
-        runDateTime: "May 29, 16:31",
-        distance: 0,
-        runTime: "00:15",
-        averageSpeed: 0,
-        caloriesBurned: 0),
-    RecentActivityModel(
-        activityType: 1,
-        title: "Week 1 Day 2",
-        iconStatus: AppImages.icTired,
-        runDateTime: "May 26, 20:53",
-        distance: 0.249,
-        runTime: "00:57",
-        averageSpeed: 16.1,
-        caloriesBurned: 19)
+  final List<UserActivityDetail> recentActivites = [
+    UserActivityDetail(
+        run: Run(
+            timestamp: 1699866049,
+            averageSpeedInKilometersPerHour: 16.7,
+            distanceInKilometers: 2222,
+            timeInMillis: 60000,
+            caloriesBurned: 10,
+            isRunWithExercise: 1),
+        comment: "hi vũ",
+        mood: 1,
+        activity: Activity(
+            name: "Week 1 Day 1",
+            type: 0,
+            durationOfWorkouts: 60000,
+            workouts: [Workout(name: "Run", duration: 60000)],
+            isCompleted: 1)),
+    UserActivityDetail(
+        run: Run(
+            timestamp: 1699866049,
+            averageSpeedInKilometersPerHour: 18,
+            distanceInKilometers: 2500,
+            timeInMillis: 120000,
+            caloriesBurned: 15,
+            isRunWithExercise: 1),
+        comment: "hi vũ 2",
+        mood: 2,
+        activity: Activity(
+            name: "Week 1 Day 2",
+            type: 1,
+            durationOfWorkouts: 60000,
+            workouts: [Workout(name: "Run", duration: 60000)],
+            isCompleted: 1)),
+    UserActivityDetail(
+        run: Run(
+            timestamp: 1699866049,
+            averageSpeedInKilometersPerHour: 20.65,
+            distanceInKilometers: 3000,
+            timeInMillis: 180000,
+            caloriesBurned: 20,
+            isRunWithExercise: 1),
+        comment: "hi vũ 3",
+        mood: 3,
+        activity: Activity(
+            name: "Week 1 Day 3",
+            type: 0,
+            durationOfWorkouts: 60000,
+            workouts: [Workout(name: "Run", duration: 60000)],
+            isCompleted: 1))
   ];
   @override
   void onInit() {

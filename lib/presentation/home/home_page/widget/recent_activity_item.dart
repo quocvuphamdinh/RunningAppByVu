@@ -1,37 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:running_app_flutter/components/components.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
-
-class RecentActivityModel {
-  final int activityType;
-  final ImageProvider? iconStatus;
-  final String title;
-  final String runDateTime;
-  final double distance;
-  final String runTime;
-  final double averageSpeed;
-  final int caloriesBurned;
-
-  RecentActivityModel(
-      {required this.activityType,
-      this.iconStatus,
-      required this.title,
-      required this.runDateTime,
-      required this.distance,
-      required this.runTime,
-      required this.averageSpeed,
-      required this.caloriesBurned});
-}
+import 'package:running_app_flutter/constant/constant.dart';
+import 'package:running_app_flutter/models/user_activity_detail.dart';
 
 class RecentActivityItem extends StatelessWidget {
-  const RecentActivityItem({super.key, required this.recentActivityModel});
-  final RecentActivityModel recentActivityModel;
+  const RecentActivityItem({super.key, required this.recentActivity});
+  final UserActivityDetail recentActivity;
 
   @override
   Widget build(BuildContext context) {
+    var dateFormat = DateFormat('MMM');
+    var dateRun = DateTime.fromMillisecondsSinceEpoch(
+        recentActivity.run.timestamp * 1000,
+        isUtc: true);
+    print("dateRun: $dateRun");
+    var runDuration = Components.getFormattedTimer(
+        ms: recentActivity.run.timeInMillis,
+        includeHour: true,
+        includeMinute: true,
+        includeSecond: true);
+    print("dateRun: $runDuration");
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.h),
       height: 100.h,
@@ -46,7 +40,7 @@ class RecentActivityItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    recentActivityModel.title,
+                    recentActivity.activity.name,
                     style: TextStyle(
                         fontSize: AppDimens.mediumTextSize,
                         color: AppColor.whiteColor),
@@ -58,7 +52,7 @@ class RecentActivityItem extends StatelessWidget {
             decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: recentActivityModel.activityType == 1
+                    image: recentActivity.activity.type == 1
                         ? AppImages.activityBackground
                         : AppImages.walkingBackground)),
           ),
@@ -73,22 +67,27 @@ class RecentActivityItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      recentActivityModel.runDateTime,
+                      "${dateFormat.format(dateRun)} ${dateRun.day}, ${Components.convertDateTimeToString(dateTime: dateRun, dateFormat: "HH:mm")}",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColor.primaryColor,
                           fontSize: AppDimens.largeTextSize),
                     ),
-                    recentActivityModel.iconStatus != null
+                    recentActivity.mood != null
                         ? Image(
-                            image: recentActivityModel.iconStatus!,
+                            image: recentActivity.mood! == Constant.SMILING_MOOD
+                                ? AppImages.icSmiling
+                                : (recentActivity.mood! ==
+                                        Constant.NOT_SMILING_MOOD
+                                    ? AppImages.icNotSmiling
+                                    : AppImages.icTired),
                             width: AppDimens.iconSmallSize,
                           )
                         : const SizedBox()
                   ],
                 ),
                 Text(
-                  "${recentActivityModel.distance} km",
+                  "${recentActivity.run.distanceInKilometers / 1000} km",
                   style: TextStyle(
                       fontFamily: "OsWald",
                       fontWeight: FontWeight.bold,
@@ -100,12 +99,13 @@ class RecentActivityItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      recentActivityModel.runTime,
+                      runDuration,
                       style: TextStyle(fontSize: AppDimens.mediumTextSize),
                     ),
-                    Text("${recentActivityModel.averageSpeed} kph",
+                    Text(
+                        "${recentActivity.run.averageSpeedInKilometersPerHour} kph",
                         style: TextStyle(fontSize: AppDimens.mediumTextSize)),
-                    Text("${recentActivityModel.caloriesBurned} kcal",
+                    Text("${recentActivity.run.caloriesBurned} kcal",
                         style: TextStyle(fontSize: AppDimens.mediumTextSize))
                   ],
                 )
