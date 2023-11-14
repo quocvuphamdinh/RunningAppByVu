@@ -5,6 +5,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_controller.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
 import 'package:running_app_flutter/widgets/core/run_button.dart';
 import 'package:running_app_flutter/widgets/core/text_title.dart';
@@ -28,7 +29,9 @@ class ProfilePage extends GetView<ProfileController> {
                   color: AppColor.primaryColor,
                   size: AppDimens.iconSmallSize,
                 ),
-                onCLickWidgetRight: () {},
+                onCLickWidgetRight: () {
+                  Get.toNamed(AppRoutes.EditProfile);
+                },
               ),
               Expanded(
                 child: Padding(
@@ -287,7 +290,9 @@ class ProfilePage extends GetView<ProfileController> {
                               ],
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(AppRoutes.RunHistory);
+                          },
                         ),
                         GestureDetector(
                           child: Container(

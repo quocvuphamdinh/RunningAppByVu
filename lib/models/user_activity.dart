@@ -5,11 +5,11 @@ part 'user_activity.g.dart';
 
 @JsonSerializable()
 class UserActivity {
-  final String id;
-  final Run? run;
-  final String activityId;
-  final String comment;
-  final int mood;
+  String id;
+  Run? run;
+  String activityId;
+  String comment;
+  int mood;
 
   UserActivity(
       {this.id = '',

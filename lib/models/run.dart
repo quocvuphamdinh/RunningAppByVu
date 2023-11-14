@@ -3,14 +3,14 @@ part 'run.g.dart';
 
 @JsonSerializable()
 class Run {
-  final String id;
-  final int timestamp;
-  final double averageSpeedInKilometersPerHour;
-  final int distanceInKilometers;
-  final int timeInMillis;
-  final int caloriesBurned;
-  final String? img;
-  final int isRunWithExercise;
+  String id;
+  int timestamp;
+  double averageSpeedInKilometersPerHour;
+  int distanceInKilometers;
+  int timeInMillis;
+  int caloriesBurned;
+  String? img;
+  int isRunWithExercise;
 
   Run(
       {this.id = '',

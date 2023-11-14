@@ -3,9 +3,9 @@ part 'workout.g.dart';
 
 @JsonSerializable()
 class Workout {
-  final String id;
-  final String name;
-  final int duration;
+  String id;
+  String name;
+  int duration;
 
   Workout({this.id = '', required this.name, required this.duration});
 

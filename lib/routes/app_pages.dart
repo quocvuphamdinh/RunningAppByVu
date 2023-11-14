@@ -15,8 +15,12 @@ import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/
 import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/recent_exercise_page.dart';
 import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_page.dart';
+import 'package:running_app_flutter/presentation/home/profile/edit_profile/edit_profile_controller.dart';
+import 'package:running_app_flutter/presentation/home/profile/edit_profile/edit_profile_page.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_controller.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_page.dart';
+import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_controller.dart';
+import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_page.dart';
 import 'package:running_app_flutter/presentation/home/run_main_controller.dart';
 import 'package:running_app_flutter/presentation/home/run_main_page.dart';
 import 'package:running_app_flutter/presentation/login/login_controller.dart';
@@ -92,6 +96,14 @@ class AppPages {
     GetPage(
         name: AppRoutes.ResultExerciseRun,
         page: () => const ResultExerciseRunPage(),
-        bindings: [ResultExerciseRunBinding()])
+        bindings: [ResultExerciseRunBinding()]),
+    GetPage(
+        name: AppRoutes.EditProfile,
+        page: () => const EditProfilePage(),
+        bindings: [EditProfileBinding()]),
+    GetPage(
+        name: AppRoutes.RunHistory,
+        page: () => const RunHistoryPage(),
+        bindings: [RunHistoryBinding()]),
   ];
 }

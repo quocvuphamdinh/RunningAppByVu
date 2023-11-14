@@ -7,6 +7,7 @@ import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/recent_exercise_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/recent_activity_item.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
 
 class RecentExercisePage extends GetView<RecentExerciseController> {
@@ -134,8 +135,14 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                   child: ListView.builder(
                       itemCount: controller.recentActivites.length,
                       itemBuilder: ((context, index) {
-                        return RecentActivityItem(
-                            recentActivity: controller.recentActivites[index]);
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(AppRoutes.ResultExerciseRun);
+                          },
+                          child: RecentActivityItem(
+                              recentActivity:
+                                  controller.recentActivites[index]),
+                        );
                       })),
                 ),
               ))

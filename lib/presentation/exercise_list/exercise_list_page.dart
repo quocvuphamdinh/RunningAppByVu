@@ -7,6 +7,7 @@ import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/presentation/exercise_list/exercise_list_controller.dart';
 import 'package:running_app_flutter/presentation/home/exercise/widget/exercise_item.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
 import 'package:running_app_flutter/widgets/core/text_description.dart';
 import 'package:running_app_flutter/widgets/core/text_title.dart';
@@ -58,8 +59,13 @@ class ExerciseListPage extends GetView<ExerciseListController> {
                           child: ListView.builder(
                               itemCount: exercises.length,
                               itemBuilder: ((context, index) {
-                                return ExerciseItem(
-                                    exerciseItem: exercises[index]);
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ExerciseDetail);
+                                  },
+                                  child: ExerciseItem(
+                                      exerciseItem: exercises[index]),
+                                );
                               })));
                     }),
                   )

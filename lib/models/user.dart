@@ -3,15 +3,15 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  final String id;
-  final String userName;
-  final String passWord;
-  final String fullName;
-  final String? avartar;
-  final String gender;
-  final int weight;
-  final int height;
-  final int? distanceGoal;
+  String id;
+  String userName;
+  String passWord;
+  String fullName;
+  String? avartar;
+  String gender;
+  int weight;
+  int height;
+  int? distanceGoal;
 
   User(
       {this.id = '',

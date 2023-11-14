@@ -17,8 +17,6 @@ class SignUpController extends BaseController {
   late TextEditingController textHeightController;
   late TextEditingController textWeightController;
 
-  RxString selectedValue = "Male".obs;
-
   @override
   void onInit() {
     super.onInit();
@@ -29,12 +27,6 @@ class SignUpController extends BaseController {
     textFullNameController = TextEditingController();
     textHeightController = TextEditingController();
     textWeightController = TextEditingController();
-  }
-
-  void dropDownCallBack(String? selectedValue) {
-    if (selectedValue is String) {
-      this.selectedValue.value = selectedValue;
-    }
   }
 
   @override

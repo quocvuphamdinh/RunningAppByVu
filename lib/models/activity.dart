@@ -5,12 +5,12 @@ part 'activity.g.dart';
 
 @JsonSerializable()
 class Activity {
-  final String id;
-  final String name;
-  final int type;
-  final int durationOfWorkouts;
-  final List<Workout> workouts;
-  final int isCompleted;
+  String id;
+  String name;
+  int type;
+  int durationOfWorkouts;
+  List<Workout> workouts;
+  int isCompleted;
 
   Activity(
       {this.id = '',

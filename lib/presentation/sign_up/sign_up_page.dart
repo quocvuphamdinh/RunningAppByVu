@@ -5,6 +5,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/presentation/sign_up/sign_up_controller.dart';
 import 'package:running_app_flutter/widgets/core/run_button.dart';
+import 'package:running_app_flutter/widgets/core/run_text_drop_down.dart';
 import 'package:running_app_flutter/widgets/core/run_textfield.dart';
 
 class SignUpPage extends GetView<SignUpController> {
@@ -69,28 +70,11 @@ class SignUpPage extends GetView<SignUpController> {
                   RunTextField(
                       hintText: "Full name",
                       controller: controller.textFullNameController),
-                  Obx(() => Container(
-                      width: Get.size.width,
-                      padding: EdgeInsets.only(left: 10.w),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: Colors.grey[300]),
-                      height: 50.h,
-                      child: DropdownButton<String>(
-                          isExpanded: true,
-                          items: const [
-                            DropdownMenuItem(
-                                child: Text("Male"), value: "Male"),
-                            DropdownMenuItem(
-                                child: Text("Female"), value: "Female"),
-                            DropdownMenuItem(
-                                child: Text("Other"), value: "Other")
-                          ],
-                          onChanged: controller.dropDownCallBack,
-                          value: controller.selectedValue.value,
-                          iconSize: AppDimens.iconLargeSize),
-                      margin:
-                          EdgeInsets.only(bottom: AppDimens.smallSpacingVer))),
+                  RunTextDropDown(listOptions: [
+                    RunTextDropDownModel(name: "Male", value: "Male"),
+                    RunTextDropDownModel(name: "Female", value: "Female"),
+                    RunTextDropDownModel(name: "Other", value: "Other")
+                  ], onSelectedValue: ((selectedValue) {})),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
