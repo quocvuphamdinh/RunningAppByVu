@@ -5,6 +5,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_controller.dart';
 import 'package:running_app_flutter/presentation/home/profile/run_history/widgets/run_history_item.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/core/run_text_drop_down.dart';
 
 class RunOnlyOrWithExercisePage extends GetView<RunHistoryController> {
@@ -51,10 +52,15 @@ class RunOnlyOrWithExercisePage extends GetView<RunHistoryController> {
                       ? controller.runsOnly.length
                       : controller.runWithExercises.length,
                   itemBuilder: ((context, index) {
-                    return RunHistoryItem(
-                      run: !isRunWithExercise
-                          ? controller.runsOnly[index]
-                          : controller.runWithExercises[index],
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.RunHistoryDetail);
+                      },
+                      child: RunHistoryItem(
+                        run: !isRunWithExercise
+                            ? controller.runsOnly[index]
+                            : controller.runWithExercises[index],
+                      ),
                     );
                   }))),
             ),

@@ -15,14 +15,20 @@ import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/
 import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/recent_exercise_page.dart';
 import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/weekly_goal_setting/weekly_goal_setting_page.dart';
+import 'package:running_app_flutter/presentation/home/profile/change_password/change_password_controller.dart';
+import 'package:running_app_flutter/presentation/home/profile/change_password/change_password_page.dart';
 import 'package:running_app_flutter/presentation/home/profile/edit_profile/edit_profile_controller.dart';
 import 'package:running_app_flutter/presentation/home/profile/edit_profile/edit_profile_page.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_controller.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_page.dart';
 import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_controller.dart';
+import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_detail/run_history_detail_page.dart';
+import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_detail/run_history_detail_controller.dart';
 import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_page.dart';
 import 'package:running_app_flutter/presentation/home/run_main_controller.dart';
 import 'package:running_app_flutter/presentation/home/run_main_page.dart';
+import 'package:running_app_flutter/presentation/home/show_image/show_image_controller.dart';
+import 'package:running_app_flutter/presentation/home/show_image/show_image_page.dart';
 import 'package:running_app_flutter/presentation/login/login_controller.dart';
 import 'package:running_app_flutter/presentation/login/login_page.dart';
 import 'package:running_app_flutter/presentation/result_exercise_run/result_exercise_run_controller.dart';
@@ -105,5 +111,17 @@ class AppPages {
         name: AppRoutes.RunHistory,
         page: () => const RunHistoryPage(),
         bindings: [RunHistoryBinding()]),
+    GetPage(
+        name: AppRoutes.RunHistoryDetail,
+        page: () => const RunHistoryDetailPage(),
+        bindings: [RunHistoryDetailBinding()]),
+    GetPage(
+        name: AppRoutes.ChangePassword,
+        page: () => const ChangePasswordPage(),
+        bindings: [ChangePasswordBinding()]),
+    GetPage(
+        name: AppRoutes.ShowImage,
+        page: () => const ShowImagePage(),
+        bindings: [ShowImageBinding()]),
   ];
 }

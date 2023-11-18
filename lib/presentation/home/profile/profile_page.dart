@@ -320,7 +320,9 @@ class ProfilePage extends GetView<ProfileController> {
                               ],
                             ),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Get.toNamed(AppRoutes.ChangePassword);
+                          },
                         ),
                         GestureDetector(
                           child: Container(

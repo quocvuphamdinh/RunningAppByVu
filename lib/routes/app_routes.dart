@@ -16,4 +16,7 @@ abstract class AppRoutes {
   static const ResultExerciseRun = '/ResultExerciseRun';
   static const EditProfile = '/EditProfile';
   static const RunHistory = '/RunHistory';
+  static const RunHistoryDetail = '/RunHistoryDetail';
+  static const ChangePassword = '/ChangePassword';
+  static const ShowImage = '/ShowImage';
 }

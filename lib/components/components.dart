@@ -36,6 +36,12 @@ class Components {
     return DateFormat(dateFormat).format(dateTime);
   }
 
+  static String convertDateTimeMilliesToString(
+      {required int ms, String dateFormat = 'dd-MM-yyyy'}) {
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(ms * 1000, isUtc: true);
+    return DateFormat(dateFormat).format(dateTime);
+  }
+
   static String getFormattedTimer(
       {required int ms,
       bool includeHour = false,

@@ -9,8 +9,10 @@ import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/constant/data_run_types.dart';
 import 'package:running_app_flutter/presentation/result_exercise_run/result_exercise_run_controller.dart';
 import 'package:running_app_flutter/presentation/result_exercise_run/widgets/result_run_data_row.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_three_side.dart';
 import 'package:running_app_flutter/widgets/core/run_button.dart';
+import 'package:running_app_flutter/widgets/core/run_text_no_data.dart';
 import 'package:running_app_flutter/widgets/core/text_title.dart';
 
 class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
@@ -49,22 +51,28 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                               child: Column(
                                 children: [
                                   SizedBox(height: AppDimens.size10),
-                                  Container(
-                                    height: Get.height * 0.3,
-                                    decoration: BoxDecoration(
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            blurStyle: BlurStyle.solid,
-                                            color: Colors.grey,
-                                            offset: Offset(0.0, 1.0), //(x,y)
-                                            blurRadius: 5.0,
-                                          ),
-                                        ],
-                                        image: const DecorationImage(
-                                            image: AppImages.activityBackground,
-                                            fit: BoxFit.cover),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.r))),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(AppRoutes.ShowImage);
+                                    },
+                                    child: Container(
+                                      height: Get.height * 0.3,
+                                      decoration: BoxDecoration(
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              blurStyle: BlurStyle.solid,
+                                              color: Colors.grey,
+                                              offset: Offset(0.0, 1.0), //(x,y)
+                                              blurRadius: 5.0,
+                                            ),
+                                          ],
+                                          image: const DecorationImage(
+                                              image:
+                                                  AppImages.activityBackground,
+                                              fit: BoxFit.cover),
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.r))),
+                                    ),
                                   ),
                                   ResultRunDataRow(
                                     icon: AppImages.icMovingTimeColor,
@@ -302,10 +310,7 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                     ))
                   ],
                 )
-              : Center(
-                  child: Text("No data to show",
-                      style: TextStyle(fontSize: AppDimens.largeTextSize)),
-                ))),
+              : const RunTextNoData())),
     );
   }
 }
