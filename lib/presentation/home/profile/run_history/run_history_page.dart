@@ -18,8 +18,10 @@ class RunHistoryPage extends GetView<RunHistoryController> {
           child: AppBarWithBottomTab(
               widgetAppBarLeft: const TextTitle(text: "Your history run"),
               widgetAppBarRight: Text("Back",
-                  style:
-                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500)),
+                  style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColor.grey)),
               onCLickWidgetAppBarRight: () {
                 Get.back();
               },

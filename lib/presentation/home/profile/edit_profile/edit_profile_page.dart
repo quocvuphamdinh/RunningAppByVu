@@ -24,14 +24,20 @@ class EditProfilePage extends GetView<EditProfileController> {
           AppBarThreeSide(
             widgetLeft: Text(
               "Cancel",
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.grey),
             ),
             onClickWidgetLeft: () {
               Get.back();
             },
             widgetRight: Text(
               "Save",
-              style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColor.grey),
             ),
             onCLickWidgetRight: () {},
             widgetCenter: const TextTitle(text: "Edit Profile"),

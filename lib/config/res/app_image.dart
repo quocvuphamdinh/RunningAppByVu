@@ -44,4 +44,7 @@ class AppImages {
   static const icMovingTimeColor = _Icon("ic_moving_time_color.png");
   static const icCompleted = _Icon("ic_completed.png");
   static const icNotCompleted = _Icon("ic_not_completed.png");
+  static const icDistance = _Icon("ic_distance.png");
+  static const icAvgSpeed = _Icon("ic_average_speed.png");
+  static const icCalories = _Icon("ic_calories.png");
 }

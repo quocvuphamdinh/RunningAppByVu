@@ -55,24 +55,29 @@ class Components {
     milliseconds -= Duration(minutes: minutes).inMilliseconds;
     final seconds = Duration(milliseconds: milliseconds).inSeconds;
     final f = NumberFormat("00");
-    String formattedTimer = "";
+    //String formattedTimer = "";
+    List<String> formattedTimers = [];
     if (includeHour) {
-      formattedTimer += f.format(hours);
+      //formattedTimer += f.format(hours);
+      formattedTimers.add(f.format(hours));
     }
     if (includeMinute) {
-      formattedTimer += ":${f.format(minutes)}";
+      //formattedTimer += ":${f.format(minutes)}";
+      formattedTimers.add(f.format(minutes));
     }
     if (includeSecond) {
-      formattedTimer += ":${f.format(seconds)}";
+      //formattedTimer += ":${f.format(seconds)}";
+      formattedTimers.add(f.format(seconds));
     }
     milliseconds -= Duration(seconds: seconds).inMilliseconds;
     milliseconds = milliseconds ~/ 10;
     if (includeMillis) {
-      formattedTimer += ":${f.format(milliseconds)}";
+      //formattedTimer += ":${f.format(milliseconds)}";
+      formattedTimers.add(f.format(milliseconds));
     }
-    return formattedTimer.isEmpty
+    return formattedTimers.isEmpty //formattedTimer.isEmpty
         ? "${f.format(hours)}:${f.format(minutes)}:${f.format(seconds)}"
-        : formattedTimer;
+        : formattedTimers.join(":"); //formattedTimer;
   }
 
   static String getFormattedTimerWithOption(

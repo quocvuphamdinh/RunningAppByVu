@@ -43,14 +43,14 @@ class HomePage extends GetView<HomeController> {
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: AppColor.primaryColor,
-                              fontSize: AppDimens.mediumTextSize,
+                              fontSize: 16.sp,
                               fontStyle: FontStyle.italic),
                           children: [
                             TextSpan(
                                 text: "Phạm Đình Quốc Vũ",
                                 style: TextStyle(
                                     color: AppColor.textPrimaryColor,
-                                    fontSize: AppDimens.mediumTextSize,
+                                    fontSize: 16.sp,
                                     fontStyle: FontStyle.italic))
                           ]),
                     )

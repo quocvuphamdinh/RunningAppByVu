@@ -7,6 +7,10 @@ import 'package:running_app_flutter/presentation/forgot_password/forgot_password
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_page.dart';
 import 'package:running_app_flutter/presentation/home/analysis/analysis_controller.dart';
 import 'package:running_app_flutter/presentation/home/analysis/analysis_page.dart';
+import 'package:running_app_flutter/presentation/home/execute_run/execute_run_controller.dart';
+import 'package:running_app_flutter/presentation/home/execute_run/execute_run_page.dart';
+import 'package:running_app_flutter/presentation/home/execute_run_exercise/execute_run_exercise_controller.dart';
+import 'package:running_app_flutter/presentation/home/execute_run_exercise/execute_run_exercise_page.dart';
 import 'package:running_app_flutter/presentation/home/exercise/exercise_controller.dart';
 import 'package:running_app_flutter/presentation/home/exercise/exercise_page.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
@@ -123,5 +127,13 @@ class AppPages {
         name: AppRoutes.ShowImage,
         page: () => const ShowImagePage(),
         bindings: [ShowImageBinding()]),
+    GetPage(
+        name: AppRoutes.ExecuteRun,
+        page: () => const ExecuteRunPage(),
+        bindings: [ExecuteRunBinding()]),
+    GetPage(
+        name: AppRoutes.ExecuteRunExercise,
+        page: () => const ExecuteRunExercisePage(),
+        bindings: [ExecuteRunExerciseBinding()]),
   ];
 }

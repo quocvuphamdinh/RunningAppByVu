@@ -19,4 +19,6 @@ abstract class AppRoutes {
   static const RunHistoryDetail = '/RunHistoryDetail';
   static const ChangePassword = '/ChangePassword';
   static const ShowImage = '/ShowImage';
+  static const ExecuteRun = '/ExecuteRun';
+  static const ExecuteRunExercise = '/ExecuteRunExercise';
 }

@@ -11,7 +11,8 @@ class AppBarThreeSide extends StatelessWidget {
       this.onClickWidgetCenter,
       this.onCLickWidgetRight,
       this.widgetRight,
-      this.widgetCenter});
+      this.widgetCenter,
+      this.backgroundColor});
 
   final Widget? widgetLeft;
   final Widget? widgetCenter;
@@ -19,13 +20,14 @@ class AppBarThreeSide extends StatelessWidget {
   final Function()? onClickWidgetLeft;
   final Function()? onClickWidgetCenter;
   final Function()? onCLickWidgetRight;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(AppDimens.aBitSpacingHor),
       height: 65.h,
-      color: AppColor.appBackgroundColor,
+      color: backgroundColor ?? AppColor.appBackgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

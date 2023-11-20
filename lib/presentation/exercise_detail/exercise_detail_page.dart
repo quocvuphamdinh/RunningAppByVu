@@ -5,6 +5,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/presentation/exercise_detail/exercise_detail_controller.dart';
 import 'package:running_app_flutter/presentation/exercise_detail/widget/workout_item.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_three_side.dart';
 import 'package:running_app_flutter/widgets/core/text_title.dart';
 
@@ -26,7 +27,9 @@ class ExerciseDetailPage extends GetView<ExerciseDetailController> {
             },
             widgetCenter: const TextTitle(text: "Week 1 Day 1"),
             widgetRight: Icon(Icons.play_arrow, size: AppDimens.iconSmallSize),
-            onCLickWidgetRight: () {},
+            onCLickWidgetRight: () {
+              Get.toNamed(AppRoutes.ExecuteRunExercise);
+            },
           ),
           Padding(
             padding:

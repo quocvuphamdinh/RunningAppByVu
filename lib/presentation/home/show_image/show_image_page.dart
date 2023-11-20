@@ -20,7 +20,7 @@ class ShowImagePage extends GetView<ShowImageController> {
             children: [
               Expanded(
                 child: InteractiveViewer(
-                  panEnabled: true, // Set it to false
+                  panEnabled: true,
                   minScale: 0.5,
                   maxScale: 2,
                   child: Image(image: AppImages.activityBackground),

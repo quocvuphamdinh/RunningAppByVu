@@ -12,7 +12,8 @@ class AppBarWithBottomTab extends StatefulWidget {
       this.widgetAppBarLeft,
       this.widgetAppBarRight,
       this.onClickWidgetAppBarLeft,
-      this.onCLickWidgetAppBarRight});
+      this.onCLickWidgetAppBarRight,
+      this.backgroundColor});
 
   final List<Widget> widgetBodies;
   final List<Widget> contentWidgetTabBars;
@@ -20,6 +21,7 @@ class AppBarWithBottomTab extends StatefulWidget {
   final Widget? widgetAppBarRight;
   final Function()? onClickWidgetAppBarLeft;
   final Function()? onCLickWidgetAppBarRight;
+  final Color? backgroundColor;
 
   @override
   State<AppBarWithBottomTab> createState() => _AppBarWithBottomTabState();
@@ -43,7 +45,7 @@ class _AppBarWithBottomTabState extends State<AppBarWithBottomTab> {
           width: Get.width,
           padding: EdgeInsets.all(AppDimens.aBitSpacingHor),
           height: 50.h,
-          color: AppColor.appBackgroundColor,
+          color: widget.backgroundColor ?? AppColor.appBackgroundColor,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

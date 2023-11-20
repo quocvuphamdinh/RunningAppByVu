@@ -8,6 +8,7 @@ import 'package:running_app_flutter/presentation/home/exercise/exercise_page.dar
 import 'package:running_app_flutter/presentation/home/home_page/home_page.dart';
 import 'package:running_app_flutter/presentation/home/profile/profile_page.dart';
 import 'package:running_app_flutter/presentation/home/run_main_controller.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 
 class RunMainPage extends GetView<RunMainController> {
   const RunMainPage({super.key});
@@ -18,7 +19,9 @@ class RunMainPage extends GetView<RunMainController> {
         extendBody: true,
         floatingActionButton: FloatingActionButton(
             backgroundColor: AppColor.grey100,
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoutes.ExecuteRun);
+            },
             child: const Image(image: AppImages.icRun)),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
