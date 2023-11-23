@@ -135,7 +135,7 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                   child: ListView.builder(
                       itemCount: controller.recentActivites.length,
                       itemBuilder: ((context, index) {
-                        return GestureDetector(
+                        return InkWell(
                           onTap: () {
                             Get.toNamed(AppRoutes.ResultExerciseRun);
                           },

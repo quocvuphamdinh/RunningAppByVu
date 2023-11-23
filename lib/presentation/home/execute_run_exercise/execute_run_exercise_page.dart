@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/presentation/home/execute_run_exercise/execute_run_exercise_controller.dart';
+import 'package:running_app_flutter/presentation/play_music/play_music_page.dart';
 import 'package:running_app_flutter/widgets/core/run_button_circle.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
@@ -199,7 +201,15 @@ class ExecuteRunExercisePage extends GetView<ExecuteRunExerciseController> {
               },
             )),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                showCupertinoModalPopup(
+                    builder: (context) => Dismissible(
+                        onDismissed: (_) => Navigator.of(context).pop(),
+                        direction: DismissDirection.down,
+                        key: const Key("1"),
+                        child: const PlayMusicPage()),
+                    context: context);
+              },
               child: Container(
                   padding:
                       EdgeInsets.symmetric(vertical: AppDimens.smallSpacingVer),

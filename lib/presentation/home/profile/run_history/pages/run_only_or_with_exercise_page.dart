@@ -52,7 +52,7 @@ class RunOnlyOrWithExercisePage extends GetView<RunHistoryController> {
                       ? controller.runsOnly.length
                       : controller.runWithExercises.length,
                   itemBuilder: ((context, index) {
-                    return GestureDetector(
+                    return InkWell(
                       onTap: () {
                         Get.toNamed(AppRoutes.RunHistoryDetail);
                       },

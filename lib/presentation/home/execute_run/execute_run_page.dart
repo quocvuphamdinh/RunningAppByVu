@@ -7,6 +7,7 @@ import 'package:running_app_flutter/components/components.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/presentation/home/execute_run/execute_run_controller.dart';
+import 'package:running_app_flutter/presentation/play_music/play_music_controller.dart';
 import 'package:running_app_flutter/presentation/play_music/play_music_page.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_three_side.dart';
 import 'package:running_app_flutter/widgets/core/run_button_circle.dart';
@@ -43,14 +44,13 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
                       onDismissed: (_) => Navigator.of(context).pop(),
                       direction: DismissDirection.down,
                       key: const Key("1"),
-                      child: PlayMusicPage(
-                        duration: 60000,
-                      )),
+                      child: const PlayMusicPage()),
                   context: context);
             },
             widgetRight: Icon(Icons.close,
                 size: AppDimens.iconSmallSize, color: AppColor.grey),
             onCLickWidgetRight: () {
+              Get.find<PlayMusicController>().onStopAudioPlayer();
               Get.back();
             },
           ),

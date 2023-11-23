@@ -136,7 +136,7 @@ class HomePage extends GetView<HomeController> {
                               scrollDirection: Axis.horizontal,
                               itemCount: 5,
                               itemBuilder: ((context, index) {
-                                return GestureDetector(
+                                return InkWell(
                                     onTap: () {
                                       Get.toNamed(AppRoutes.ExerciseDetail);
                                     },
@@ -159,7 +159,7 @@ class HomePage extends GetView<HomeController> {
                             shrinkWrap: true,
                             itemCount: 2,
                             itemBuilder: ((context, index) {
-                              return GestureDetector(
+                              return InkWell(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.ResultExerciseRun);
                                 },

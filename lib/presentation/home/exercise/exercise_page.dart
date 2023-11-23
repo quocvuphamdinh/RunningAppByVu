@@ -72,7 +72,7 @@ class ExercisePage extends GetView<ExerciseController> {
                                 ? controller.walkingExercises.length
                                 : 4,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
+                              return InkWell(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.ExerciseDetail);
                                 },
@@ -112,7 +112,7 @@ class ExercisePage extends GetView<ExerciseController> {
                                 ? controller.runningExercises.length
                                 : 4,
                             itemBuilder: (context, index) {
-                              return GestureDetector(
+                              return InkWell(
                                 onTap: () {
                                   Get.toNamed(AppRoutes.ExerciseDetail);
                                 },

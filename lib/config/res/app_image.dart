@@ -47,4 +47,7 @@ class AppImages {
   static const icDistance = _Icon("ic_distance.png");
   static const icAvgSpeed = _Icon("ic_average_speed.png");
   static const icCalories = _Icon("ic_calories.png");
+
+  //gif
+  static const icMusicGif = _Icon("ic_music_gif.gif");
 }

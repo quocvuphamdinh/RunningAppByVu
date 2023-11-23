@@ -59,7 +59,7 @@ class ExerciseListPage extends GetView<ExerciseListController> {
                           child: ListView.builder(
                               itemCount: exercises.length,
                               itemBuilder: ((context, index) {
-                                return GestureDetector(
+                                return InkWell(
                                   onTap: () {
                                     Get.toNamed(AppRoutes.ExerciseDetail);
                                   },
