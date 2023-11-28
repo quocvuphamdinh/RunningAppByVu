@@ -60,10 +60,12 @@ class PlayMusicController extends BaseController {
 
   onClickNext() {
     assetsAudioPlayer.next();
+    isPlaying.value = true;
   }
 
   onClickPre() {
     assetsAudioPlayer.previous();
+    isPlaying.value = true;
   }
 
   onClickPlay() {

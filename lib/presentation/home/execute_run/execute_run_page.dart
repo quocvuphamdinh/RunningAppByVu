@@ -26,6 +26,14 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AppBarThreeSide(
+            widgetLeft: Obx(() => controller.isToggleRun.value
+                ? const Icon(Icons.stop, color: AppColor.redColor)
+                : const SizedBox()),
+            onClickWidgetLeft: () {
+              if (controller.isToggleRun.value) {
+                Get.back();
+              }
+            },
             widgetCenter: Row(
               children: [
                 Components.SVGIcon(
@@ -51,6 +59,7 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
                 size: AppDimens.iconSmallSize, color: AppColor.grey),
             onCLickWidgetRight: () {
               Get.find<PlayMusicController>().onStopAudioPlayer();
+              controller.onDisposeLocationSubscription();
               Get.back();
             },
           ),
@@ -71,10 +80,13 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
           ),
           RunButtonCircle(
               gradients: const [AppColor.startColor, AppColor.endColor],
-              child: Text("Start",
+              child: Obx(() => Text(
+                  controller.isRunning.value ? "Pause" : "Start",
                   style:
-                      TextStyle(fontSize: 16.sp, color: AppColor.whiteColor)),
-              onClick: (() {})),
+                      TextStyle(fontSize: 16.sp, color: AppColor.whiteColor))),
+              onClick: (() {
+                controller.getCurrentLocation(context);
+              })),
           Expanded(
             child: Container(
                 margin: EdgeInsets.symmetric(
@@ -89,13 +101,17 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
                     blurRadius: 5.0,
                   ),
                 ], borderRadius: BorderRadius.all(Radius.circular(5.r))),
-                child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(10.762622, 106.660172), zoom: 50.0),
-                  onMapCreated: (GoogleMapController gooleMapcontroller) {
-                    controller.mapController.complete(gooleMapcontroller);
-                  },
-                )),
+                child: Obx(() => GoogleMap(
+                      polylines: controller.polyline,
+                      markers: Set.of((controller.marker.value != null)
+                          ? [controller.marker.value!]
+                          : []),
+                      initialCameraPosition: const CameraPosition(
+                          target: LatLng(10.762622, 106.660172), zoom: 15.0),
+                      onMapCreated: (GoogleMapController gooleMapcontroller) {
+                        controller.mapController.complete(gooleMapcontroller);
+                      },
+                    ))),
           )
         ],
       )),
