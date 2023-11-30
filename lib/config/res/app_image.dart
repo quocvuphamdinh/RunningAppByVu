@@ -18,6 +18,7 @@ class AppImages {
   static const activityBackground = _Image("activity_background.jpg");
   static const walkingBackground = _Image("walking_background.jpg");
   static const recentExerciseBackground = _Image("background_recent.jpg");
+  static const blackArrow = _Image("black_arrow.png");
 
   // Icon
   static const success = "assets/images/success.svg";

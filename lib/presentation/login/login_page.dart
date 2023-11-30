@@ -52,6 +52,7 @@ class LoginPage extends GetView<LoginController> {
                       child: RunButton(
                           buttonText: "Sign In",
                           onClick: () {
+                            controller.showLoading(messaging: "Login...");
                             Get.toNamed(AppRoutes.Run_Main);
                           })),
                   Padding(

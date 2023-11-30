@@ -16,6 +16,11 @@ import 'package:running_app_flutter/widgets/core/text_title.dart';
 class ExecuteRunPage extends GetView<ExecuteRunController> {
   const ExecuteRunPage({super.key});
 
+  onBack() {
+    Get.find<PlayMusicController>().onStopAudioPlayer();
+    Get.back();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,9 +34,10 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
             widgetLeft: Obx(() => controller.isToggleRun.value
                 ? const Icon(Icons.stop, color: AppColor.redColor)
                 : const SizedBox()),
-            onClickWidgetLeft: () {
+            onClickWidgetLeft: () async {
               if (controller.isToggleRun.value) {
-                Get.back();
+                await controller.saveRun();
+                onBack();
               }
             },
             widgetCenter: Row(
@@ -58,9 +64,11 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
             widgetRight: Icon(Icons.close,
                 size: AppDimens.iconSmallSize, color: AppColor.grey),
             onCLickWidgetRight: () {
-              Get.find<PlayMusicController>().onStopAudioPlayer();
-              controller.onDisposeLocationSubscription();
-              Get.back();
+              if (controller.isToggleRun.value) {
+                controller.showExitRunningDialog(onPressOK: onBack);
+              } else {
+                onBack();
+              }
             },
           ),
           Text(
@@ -72,16 +80,24 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: AppDimens.smallSpacingVer),
-            child: Text(
-              "00:00:00:00",
-              style: TextStyle(
-                  fontSize: AppDimens.headerTitleSize, color: AppColor.grey),
-            ),
+            child: Obx(() => Text(
+                  Components.getFormattedTimer(
+                      ms: controller.runDuration.value.inMilliseconds,
+                      includeHour: true,
+                      includeMinute: true,
+                      includeSecond: true,
+                      includeMillis: true),
+                  style: TextStyle(
+                      fontSize: AppDimens.headerTitleSize,
+                      color: AppColor.grey),
+                )),
           ),
           RunButtonCircle(
               gradients: const [AppColor.startColor, AppColor.endColor],
               child: Obx(() => Text(
-                  controller.isRunning.value ? "Pause" : "Start",
+                  controller.isRunning.value
+                      ? "Pause"
+                      : (controller.isToggleRun.value ? "Resume" : "Start"),
                   style:
                       TextStyle(fontSize: 16.sp, color: AppColor.whiteColor))),
               onClick: (() {

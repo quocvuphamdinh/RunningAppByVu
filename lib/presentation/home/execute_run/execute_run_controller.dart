@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
+import 'package:running_app_flutter/models/run.dart';
 
 class ExecuteRunBinding extends Bindings {
   @override
@@ -24,6 +25,8 @@ class ExecuteRunController extends BaseController {
   final RxSet<Polyline> polyline = <Polyline>{}.obs;
   List<LatLng> latlngs = [];
   late LocationSettings locationSettings;
+  Rx<Duration> runDuration = const Duration().obs;
+  Timer? timer = null;
 
   RxBool isRunning = false.obs;
   RxBool isToggleRun = false.obs;
@@ -41,8 +44,8 @@ class ExecuteRunController extends BaseController {
           forceLocationManager: true,
           intervalDuration: const Duration(milliseconds: 200),
           foregroundNotificationConfig: const ForegroundNotificationConfig(
-            notificationText:
-                "Running App By Vu will continue to receive your location even when you aren't using it",
+            notificationIcon: AndroidResource(name: "runner"),
+            notificationText: "You are running",
             notificationTitle: "Running App By Vu",
             enableWakeLock: true,
           ));
@@ -61,19 +64,83 @@ class ExecuteRunController extends BaseController {
     }
   }
 
+  saveRun() async {
+    // distanceInMeters / 1000f : chia để lấy km
+    //currentTimeInMillies / 1000f : lấy second
+    // currentTimeInMillies / 1000f / 60 : lấy minute
+    // currentTimeInMillies / 1000f / 60 / 60 : lấy hour
+    // vận tốc bằng quãng đường chia cho thời gian
+    stopRun();
+    showLoading(messaging: "Saving...");
+    var controller = await mapController.future;
+    var img = await controller.takeSnapshot();
+    var firstLatLng = latlngs.first;
+    var lastLatLng = latlngs.last;
+    var currentTimeInMillies = runDuration.value.inMilliseconds;
+    var distanceInMeters = Geolocator.distanceBetween(firstLatLng.latitude,
+            firstLatLng.longitude, lastLatLng.latitude, lastLatLng.longitude)
+        .round();
+    var avgSpeed = ((distanceInMeters / 1000) /
+                (currentTimeInMillies / 1000 / 60 / 60) *
+                10)
+            .round() /
+        10;
+    var dateTimestamp = DateTime.now().millisecondsSinceEpoch;
+    //var caloriesBurned = ((distanceInMeters / 1000) * weight).toInt();
+    var caloriesBurned = ((distanceInMeters / 1000) * 65).toInt();
+    var run = Run(
+        // id: "${user?.getUsername()}${user?.getPassword()}$dateTimestamp",
+        id: "$dateTimestamp",
+        timestamp: dateTimestamp,
+        averageSpeedInKilometersPerHour: avgSpeed,
+        distanceInKilometers: distanceInMeters,
+        timeInMillis: currentTimeInMillies,
+        caloriesBurned: caloriesBurned,
+        img: "",
+        isRunWithExercise: 0);
+    if (isShowLoading()) {
+      dismissLoading();
+    }
+    //showSnackBar("Result run", "$run", bgColor: AppColor.redColor);
+  }
+
+  addTime() {
+    const addMilliSecond = 10;
+    final milliSeconds = runDuration.value.inMilliseconds + addMilliSecond;
+    runDuration.value = Duration(milliseconds: milliSeconds);
+  }
+
+  startTimer() {
+    timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+      addTime();
+    });
+  }
+
+  stopTimer() {
+    timer?.cancel();
+  }
+
+  showExitRunningDialog({void Function()? onPressOK}) {
+    showAppDialog(
+        title: "Cancel the Run ?",
+        content:
+            "Are you sure to cancel this run and the data will be deleted ?",
+        button: "OK",
+        onPressed: onPressOK);
+  }
+
   toggleRunning() {
     isRunning.value = !isRunning.value;
     isToggleRun.value = true;
   }
 
   Future<Uint8List> getMarker(BuildContext context) async {
-    ByteData byteData =
-        await DefaultAssetBundle.of(context).load("assets/icons/ic_run.png");
+    ByteData byteData = await DefaultAssetBundle.of(context)
+        .load("assets/images/black_arrow.png");
     return byteData.buffer.asUint8List();
   }
 
-  void updateMarkerAndCircle(Position newLocalData, Uint8List imageData) {
-    toggleRunning();
+  void updateMarkerAndPolylines(Position newLocalData, Uint8List imageData) {
     LatLng latlng = LatLng(newLocalData.latitude, newLocalData.longitude);
     marker.value = Marker(
         markerId: const MarkerId("runner"),
@@ -83,7 +150,7 @@ class ExecuteRunController extends BaseController {
         zIndex: 2,
         flat: true,
         anchor: const Offset(0.5, 0.5),
-        icon: BitmapDescriptor.fromBytes(imageData, size: Size(100, 100)));
+        icon: BitmapDescriptor.fromBytes(imageData, size: const Size(50, 50)));
 
     latlngs.add(latlng);
 
@@ -91,7 +158,7 @@ class ExecuteRunController extends BaseController {
       polylineId: PolylineId(newLocalData.toString()),
       visible: true,
       points: latlngs,
-      color: AppColor.blackColor,
+      color: AppColor.grey,
     ));
     polyline.refresh();
   }
@@ -123,34 +190,46 @@ class ExecuteRunController extends BaseController {
   getCurrentLocation(BuildContext context) async {
     try {
       Uint8List imageData = await getMarker(context);
-      var location = await determinePosition();
+      if (!isToggleRun.value) {
+        showLoading(messaging: "Processing...");
+        var location = await determinePosition();
 
-      updateMarkerAndCircle(location, imageData);
-
-      onDisposeLocationSubscription();
-
-      if (!isGoogleMapDisposed) {
-        var controller = await mapController.future;
-        _locationSubscription =
-            Geolocator.getPositionStream(locationSettings: locationSettings)
-                .listen((Position? position) {
-          if (position != null) {
-            print("Current position - ${DateTime.now()}: $position");
-            controller.animateCamera(CameraUpdate.newCameraPosition(
-                CameraPosition(
-                    bearing: 192.8334901395799,
-                    target: LatLng(position.latitude, position.longitude),
-                    tilt: 0,
-                    zoom: 18.00)));
-            updateMarkerAndCircle(position, imageData);
-          }
-        });
+        updateMarkerAndPolylines(location, imageData);
       }
+      toggleRunning();
+      if (isRunning.value) {
+        startTimer();
+      } else {
+        stopTimer();
+      }
+
+      var controller = await mapController.future;
+      _locationSubscription ??=
+          Geolocator.getPositionStream(locationSettings: locationSettings)
+              .listen((Position? position) {
+        if (position != null && !isGoogleMapDisposed && isRunning.value) {
+          controller.animateCamera(CameraUpdate.newCameraPosition(
+              CameraPosition(
+                  bearing: 192.8334901395799,
+                  target: LatLng(position.latitude, position.longitude),
+                  tilt: 0,
+                  zoom: 18.00)));
+          updateMarkerAndPolylines(position, imageData);
+        }
+        if (isShowLoading()) {
+          dismissLoading();
+        }
+      });
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         debugPrint("Permission Denied");
       }
     }
+  }
+
+  stopRun() {
+    isRunning.value = false;
+    stopTimer();
   }
 
   onDisposeLocationSubscription() {
@@ -167,8 +246,10 @@ class ExecuteRunController extends BaseController {
 
   @override
   void onClose() {
+    polyline.clear();
     onDisposeLocationSubscription();
     onDisposeGoogleMapController();
+    stopTimer();
     super.onClose();
   }
 }

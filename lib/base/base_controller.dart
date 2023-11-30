@@ -150,7 +150,9 @@ class BaseController extends GetxController {
   /// LOADING
   void showLoading({String? messaging, bool dismissOntTap = false}) {
     EasyLoading.show(
-        status: messaging ?? 'processing'.tr, dismissOnTap: dismissOntTap);
+        status: messaging ?? 'processing'.tr,
+        dismissOnTap: dismissOntTap,
+        maskType: EasyLoadingMaskType.black);
   }
 
   /// LOADING

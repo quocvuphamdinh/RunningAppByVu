@@ -25,4 +25,9 @@ class Run {
   factory Run.fromJson(Map<String, dynamic> json) => _$RunFromJson(json);
 
   Map<String, dynamic> toJson() => _$RunToJson(this);
+
+  @override
+  String toString() {
+    return "id: $id - timestamp: $timestamp - avg: $averageSpeedInKilometersPerHour - distance: $distanceInKilometers - timeInMillis: $timeInMillis - caloriesBurned: $caloriesBurned - img: $img - isRunWithExercise: $isRunWithExercise";
+  }
 }

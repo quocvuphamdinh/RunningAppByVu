@@ -27,6 +27,10 @@ class RunMainController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+
+    if (isShowLoading()) {
+      dismissLoading();
+    }
   }
 
   onSelectedPage(int index) {
