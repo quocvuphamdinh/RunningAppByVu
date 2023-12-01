@@ -5,10 +5,20 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/app/app_binding.dart';
 import 'package:running_app_flutter/routes/app_pages.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
+import 'package:running_app_flutter/services/local_storage.dart';
+import 'package:running_app_flutter/utils/dependency.dart';
 
 void main() async {
+  DependencyInjection.init();
   WidgetsFlutterBinding.ensureInitialized();
+  await initServices();
   runApp(const MyApp());
+}
+
+initServices() async {
+  print('Starting services ...');
+  await Get.putAsync(() => LocalStorageService().init());
+  print('All services started...');
 }
 
 class MyApp extends StatelessWidget {

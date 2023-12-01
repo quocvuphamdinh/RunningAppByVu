@@ -73,7 +73,7 @@ class ExecuteRunExerciseController extends BaseController {
           intervalDuration: const Duration(milliseconds: 200),
           foregroundNotificationConfig: const ForegroundNotificationConfig(
             notificationIcon: AndroidResource(name: "runner"),
-            notificationText: "You are running",
+            notificationText: "You are running with exercise",
             notificationTitle: "Running App By Vu",
             enableWakeLock: true,
           ));

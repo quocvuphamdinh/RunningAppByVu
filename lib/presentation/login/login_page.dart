@@ -52,8 +52,15 @@ class LoginPage extends GetView<LoginController> {
                       child: RunButton(
                           buttonText: "Sign In",
                           onClick: () {
-                            controller.showLoading(messaging: "Login...");
-                            Get.toNamed(AppRoutes.Run_Main);
+                            if (controller.login()) {
+                              controller.showLoading(messaging: "Login...");
+                              Get.toNamed(AppRoutes.Run_Main);
+                            } else {
+                              controller.showAppDialog(
+                                  title: "Login",
+                                  button: "OK",
+                                  content: "Login failed !");
+                            }
                           })),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 20.h),

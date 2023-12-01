@@ -70,11 +70,15 @@ class SignUpPage extends GetView<SignUpController> {
                   RunTextField(
                       hintText: "Full name",
                       controller: controller.textFullNameController),
-                  RunTextDropDown(listOptions: [
-                    RunTextDropDownModel(name: "Male", value: "Male"),
-                    RunTextDropDownModel(name: "Female", value: "Female"),
-                    RunTextDropDownModel(name: "Other", value: "Other")
-                  ], onSelectedValue: ((selectedValue) {})),
+                  RunTextDropDown(
+                      listOptions: [
+                        RunTextDropDownModel(name: "Male", value: "Male"),
+                        RunTextDropDownModel(name: "Female", value: "Female"),
+                        RunTextDropDownModel(name: "Other", value: "Other")
+                      ],
+                      onSelectedValue: ((selectedValue) {
+                        controller.gender = selectedValue;
+                      })),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -105,7 +109,11 @@ class SignUpPage extends GetView<SignUpController> {
                   left: AppDimens.smallSpacingHor,
                   right: AppDimens.smallSpacingHor,
                   top: AppDimens.mediumSpacingVer),
-              child: RunButton(buttonText: "Create Account", onClick: () {}),
+              child: RunButton(
+                  buttonText: "Create Account",
+                  onClick: () {
+                    controller.register();
+                  }),
             ),
             Padding(
               padding:
