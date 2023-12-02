@@ -11,7 +11,7 @@ class User {
   String gender;
   int weight;
   int height;
-  int? distanceGoal;
+  int distanceGoal;
 
   User(
       {this.id = '',
@@ -22,7 +22,7 @@ class User {
       required this.gender,
       required this.weight,
       required this.height,
-      this.distanceGoal});
+      this.distanceGoal = 0});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

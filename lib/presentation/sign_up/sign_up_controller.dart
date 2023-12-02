@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/extensions/email_validator_extension.dart';
 import 'package:running_app_flutter/models/user.dart';
-import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
 
 class SignUpBinding extends Bindings {
@@ -62,22 +61,23 @@ class SignUpController extends BaseController {
       return "You must choose gender !";
     }
     if (!height.isNotEmpty) {
-      return "Height must not empty !";
+      return "Height must not empty ! (cm)";
     }
     if (!height.isNumericOnly) {
-      return "Height must be number !";
+      return "Height must be integer number ! (cm)";
     }
     if (!weight.isNotEmpty) {
-      return "Weight must not empty !";
+      return "Weight must not empty ! (kg)";
     }
     if (!weight.isNumericOnly) {
-      return "Weight must be number !";
+      return "Weight must be integer number ! (kg)";
     }
 
     return "";
   }
 
   register() {
+    showLoading(messaging: "Sign up...");
     var email = textEmailController.text.trim();
     var password = textPasswordController.text.trim();
     var repeatPassword = textRepeatPasswordController.text.trim();
@@ -100,15 +100,17 @@ class SignUpController extends BaseController {
           weight: int.parse(weight),
           height: int.parse(height));
       store.user = user;
+      dismissLoading();
       showAppDialog(
           title: "Sign up",
           button: "OK",
           content: "Sign up successfully !",
           dismissOnTap: false,
           onPressed: () {
-            Get.offNamed(AppRoutes.SignUp);
+            Get.back();
           });
     } else {
+      dismissLoading();
       showAppDialog(title: "Sign up", button: "OK", content: validateStr);
     }
   }

@@ -39,7 +39,9 @@ class EditProfilePage extends GetView<EditProfileController> {
                   fontWeight: FontWeight.w500,
                   color: AppColor.grey),
             ),
-            onCLickWidgetRight: () {},
+            onCLickWidgetRight: () {
+              controller.edit();
+            },
             widgetCenter: const TextTitle(text: "Edit Profile"),
           ),
           Expanded(
@@ -59,11 +61,18 @@ class EditProfilePage extends GetView<EditProfileController> {
                     const TextDescription(text: "Fullname"),
                     RunTextField(controller: controller.fullnameController),
                     const TextDescription(text: "Gender"),
-                    RunTextDropDown(listOptions: [
-                      RunTextDropDownModel(name: "Male", value: "Male"),
-                      RunTextDropDownModel(name: "Female", value: "Female"),
-                      RunTextDropDownModel(name: "Other", value: "Other")
-                    ], onSelectedValue: ((selectedValue) {})),
+                    Obx(() => RunTextDropDown(
+                        initValue: controller.user.value != null
+                            ? controller.user.value!.gender
+                            : null,
+                        listOptions: [
+                          RunTextDropDownModel(name: "Male", value: "Male"),
+                          RunTextDropDownModel(name: "Female", value: "Female"),
+                          RunTextDropDownModel(name: "Other", value: "Other")
+                        ],
+                        onSelectedValue: ((selectedValue) {
+                          controller.gender = selectedValue;
+                        }))),
                     const TextDescription(text: "Height"),
                     RunTextField(
                         controller: controller.heightController,

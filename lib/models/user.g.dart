@@ -15,7 +15,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       gender: json['gender'] as String,
       weight: json['weight'] as int,
       height: json['height'] as int,
-      distanceGoal: json['distanceGoal'] as int?,
+      distanceGoal: json['distanceGoal'] as int,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{

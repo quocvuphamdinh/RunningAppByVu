@@ -51,11 +51,13 @@ class LoginPage extends GetView<LoginController> {
                       padding: EdgeInsets.only(top: 10.h),
                       child: RunButton(
                           buttonText: "Sign In",
-                          onClick: () {
-                            if (controller.login()) {
-                              controller.showLoading(messaging: "Login...");
-                              Get.toNamed(AppRoutes.Run_Main);
+                          onClick: () async {
+                            controller.showLoading(messaging: "Login...");
+                            if (await controller.login()) {
+                              controller.dismissLoading();
+                              Get.offAllNamed(AppRoutes.Run_Main);
                             } else {
+                              controller.dismissLoading();
                               controller.showAppDialog(
                                   title: "Login",
                                   button: "OK",

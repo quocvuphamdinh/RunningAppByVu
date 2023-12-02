@@ -25,11 +25,13 @@ class LoginController extends BaseController {
     passwordController = TextEditingController();
   }
 
-  bool login() {
+  Future<bool> login() async {
     var email = emailController.text.trim();
     var password = passwordController.text.trim();
     var user = store.user;
+    await Future.delayed(const Duration(seconds: 2));
     if (email == user?.userName && password == user?.passWord) {
+      store.isLogin = true;
       return true;
     }
     return false;

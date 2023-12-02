@@ -12,7 +12,7 @@ void main() async {
   DependencyInjection.init();
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 initServices() async {
@@ -22,7 +22,9 @@ initServices() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  final store = Get.find<LocalStorageService>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,8 @@ class MyApp extends StatelessWidget {
         child: ScreenUtilInit(builder: ((context, child) {
           return GetMaterialApp(
             builder: EasyLoading.init(),
-            initialRoute: AppRoutes.Welcome,
+            initialRoute:
+                !store.isLogin ? AppRoutes.Welcome : AppRoutes.Run_Main,
             getPages: AppPages.routes,
             initialBinding: AppBinding(),
             debugShowCheckedModeBanner: false,
