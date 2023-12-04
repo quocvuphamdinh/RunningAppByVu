@@ -1,7 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:running_app_flutter/models/activity.dart';
-import 'package:running_app_flutter/models/run.dart';
-
+import 'package:running_app_flutter/data/models/activity.dart';
+import 'package:running_app_flutter/data/models/run.dart';
 part 'user_activity_detail.g.dart';
 
 @JsonSerializable()

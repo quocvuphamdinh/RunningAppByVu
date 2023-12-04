@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
-import 'package:running_app_flutter/models/user.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
 
 class LoginBinding extends Bindings {

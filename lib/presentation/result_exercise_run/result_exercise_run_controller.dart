@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
-import 'package:running_app_flutter/models/activity.dart';
-import 'package:running_app_flutter/models/run.dart';
-import 'package:running_app_flutter/models/user_activity_detail.dart';
-import 'package:running_app_flutter/models/workout.dart';
+import 'package:running_app_flutter/data/models/activity.dart';
+import 'package:running_app_flutter/data/models/run.dart';
+import 'package:running_app_flutter/data/models/user_activity_detail.dart';
+import 'package:running_app_flutter/data/models/workout.dart';
 
 class ResultExerciseRunBinding extends Bindings {
   @override

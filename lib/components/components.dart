@@ -38,7 +38,7 @@ class Components {
 
   static String convertDateTimeMilliesToString(
       {required int ms, String dateFormat = 'dd-MM-yyyy'}) {
-    var dateTime = DateTime.fromMillisecondsSinceEpoch(ms * 1000, isUtc: true);
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(ms);
     return DateFormat(dateFormat).format(dateTime);
   }
 

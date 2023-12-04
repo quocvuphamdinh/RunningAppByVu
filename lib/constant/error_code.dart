@@ -1,4 +1,5 @@
 class ErrorCode {
+  static const int DEFAULT = 0;
   static const int BAD_REQUEST = 400;
   static const int UNAUTHORIZED = 401;
   static const int FORBIDDEN = 403;

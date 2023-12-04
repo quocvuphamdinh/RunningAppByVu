@@ -1,4 +1,4 @@
-import 'package:running_app_flutter/models/music.dart';
+import 'package:running_app_flutter/data/models/music.dart';
 
 class AppData {
   static final musicList = [

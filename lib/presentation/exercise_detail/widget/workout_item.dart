@@ -4,7 +4,7 @@ import 'package:running_app_flutter/components/components.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
-import 'package:running_app_flutter/models/workout.dart';
+import 'package:running_app_flutter/data/models/workout.dart';
 
 class WorkoutItem extends StatelessWidget {
   const WorkoutItem({super.key, required this.workout});

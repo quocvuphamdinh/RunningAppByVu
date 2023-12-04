@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
-import 'package:running_app_flutter/models/run.dart';
-import 'package:running_app_flutter/models/workout.dart';
+import 'package:running_app_flutter/data/models/run.dart';
+import 'package:running_app_flutter/data/models/workout.dart';
 import 'package:running_app_flutter/presentation/play_music/play_music_controller.dart';
 
 class ExecuteRunExerciseBinding extends Bindings {
@@ -125,7 +125,7 @@ class ExecuteRunExerciseController extends BaseController {
         timeInMillis: currentTimeInMillies,
         caloriesBurned: caloriesBurned,
         img: "",
-        isRunWithExercise: 0);
+        isRunWithExercise: 1);
     if (isShowLoading()) {
       dismissLoading();
     }

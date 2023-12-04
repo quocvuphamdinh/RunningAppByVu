@@ -8,16 +8,24 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
-import 'package:running_app_flutter/models/run.dart';
+import 'package:running_app_flutter/data/models/run.dart';
+import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/run_repository.dart';
+import 'package:running_app_flutter/services/local_storage.dart';
 
 class ExecuteRunBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ExecuteRunController());
+    Get.lazyPut(() => ExecuteRunController(Get.find<RunRepositoryImpl>()));
   }
 }
 
 class ExecuteRunController extends BaseController {
+  final RunRepository _runRepo;
+  ExecuteRunController(this._runRepo);
+
+  final store = Get.find<LocalStorageService>();
+
   StreamSubscription? _locationSubscription;
   final Completer<GoogleMapController> mapController =
       Completer<GoogleMapController>();
@@ -85,12 +93,12 @@ class ExecuteRunController extends BaseController {
                 10)
             .round() /
         10;
+    var user = store.user;
+    var id = "${user!.userName}${DateTime.now().millisecondsSinceEpoch}";
     var dateTimestamp = DateTime.now().millisecondsSinceEpoch;
-    //var caloriesBurned = ((distanceInMeters / 1000) * weight).toInt();
-    var caloriesBurned = ((distanceInMeters / 1000) * 65).toInt();
+    var caloriesBurned = ((distanceInMeters / 1000) * user.weight).toInt();
     var run = Run(
-        // id: "${user?.getUsername()}${user?.getPassword()}$dateTimestamp",
-        id: "$dateTimestamp",
+        id: id,
         timestamp: dateTimestamp,
         averageSpeedInKilometersPerHour: avgSpeed,
         distanceInKilometers: distanceInMeters,
@@ -98,10 +106,12 @@ class ExecuteRunController extends BaseController {
         caloriesBurned: caloriesBurned,
         img: "",
         isRunWithExercise: 0);
+
+    await _runRepo.insertRun(run: run);
+
     if (isShowLoading()) {
       dismissLoading();
     }
-    //showSnackBar("Result run", "$run", bgColor: AppColor.redColor);
   }
 
   addTime() {

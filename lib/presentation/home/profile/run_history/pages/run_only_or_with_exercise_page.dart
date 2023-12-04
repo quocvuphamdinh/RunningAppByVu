@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_controller.dart';
+import 'package:running_app_flutter/presentation/home/profile/run_history/run_history_detail/run_history_detail_controller.dart';
 import 'package:running_app_flutter/presentation/home/profile/run_history/widgets/run_history_item.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/core/run_text_drop_down.dart';
@@ -47,22 +48,26 @@ class RunOnlyOrWithExercisePage extends GetView<RunHistoryController> {
           Expanded(
             child: ScrollConfiguration(
               behavior: const ScrollBehavior().copyWith(overscroll: false),
-              child: Obx(() => ListView.builder(
-                  itemCount: !isRunWithExercise
-                      ? controller.runsOnly.length
-                      : controller.runWithExercises.length,
-                  itemBuilder: ((context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Get.toNamed(AppRoutes.RunHistoryDetail);
-                      },
-                      child: RunHistoryItem(
-                        run: !isRunWithExercise
-                            ? controller.runsOnly[index]
-                            : controller.runWithExercises[index],
-                      ),
-                    );
-                  }))),
+              child: Obx(() {
+                var runs = !isRunWithExercise
+                    ? controller.runsOnly
+                    : controller.runWithExercises;
+                return ListView.builder(
+                    itemCount: runs.length,
+                    itemBuilder: ((context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Get.toNamed(
+                              AppRoutes.RunHistoryDetail,
+                              arguments: {"run_id": runs[index].id});
+                          
+                        },
+                        child: RunHistoryItem(
+                          run: runs[index],
+                        ),
+                      );
+                    }));
+              }),
             ),
           )
         ],

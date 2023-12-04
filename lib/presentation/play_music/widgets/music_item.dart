@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
-import 'package:running_app_flutter/models/music.dart';
+import 'package:running_app_flutter/data/models/music.dart';
 
 class MusicItem extends StatelessWidget {
   const MusicItem({super.key, required this.music});

@@ -7,7 +7,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/constant/constant.dart';
-import 'package:running_app_flutter/models/user_activity_detail.dart';
+import 'package:running_app_flutter/data/models/user_activity_detail.dart';
 
 class RecentActivityItem extends StatelessWidget {
   const RecentActivityItem({super.key, required this.recentActivity});

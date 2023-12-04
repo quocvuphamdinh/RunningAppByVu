@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
+import 'package:running_app_flutter/data/models/user.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/user_repository.dart';
 import 'package:running_app_flutter/extensions/email_validator_extension.dart';
-import 'package:running_app_flutter/models/user.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
 
 class SignUpBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => SignUpController());
+    Get.lazyPut(() => SignUpController(Get.find<UserRepositoryImpl>()));
   }
 }
 
 class SignUpController extends BaseController {
+  final UserRepository _userRepo;
+  SignUpController(this._userRepo);
+
   final store = Get.find<LocalStorageService>();
 
   late TextEditingController textEmailController;
@@ -76,7 +81,7 @@ class SignUpController extends BaseController {
     return "";
   }
 
-  register() {
+  register() async {
     showLoading(messaging: "Sign up...");
     var email = textEmailController.text.trim();
     var password = textPasswordController.text.trim();
@@ -99,6 +104,7 @@ class SignUpController extends BaseController {
           gender: gender,
           weight: int.parse(weight),
           height: int.parse(height));
+      await _userRepo.register(user: user);
       store.user = user;
       dismissLoading();
       showAppDialog(

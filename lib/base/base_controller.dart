@@ -4,11 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:running_app_flutter/data/models/app_error.dart';
 import 'package:running_app_flutter/extensions/app_error_extension.dart';
 import 'package:running_app_flutter/widgets/dialog/app_dialog.dart';
 
 import '../constant/error_code.dart';
-import '../models/app_error.dart';
 
 class BaseController extends GetxController {
   Future<bool> onBackPress() {

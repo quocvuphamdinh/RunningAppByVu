@@ -7,7 +7,7 @@ import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/constant/data_run_types.dart';
-import 'package:running_app_flutter/models/activity.dart';
+import 'package:running_app_flutter/data/models/activity.dart';
 
 class ExerciseItem extends StatelessWidget {
   const ExerciseItem({super.key, required this.exerciseItem});

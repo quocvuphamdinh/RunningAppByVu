@@ -1,5 +1,5 @@
 import 'package:running_app_flutter/constant/error_code.dart';
-import 'package:running_app_flutter/models/app_error.dart';
+import 'package:running_app_flutter/data/models/app_error.dart';
 
 extension AppErrorExtension on AppError {
   AppError badGateway() {

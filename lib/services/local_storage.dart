@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
-import 'package:running_app_flutter/models/user.dart';
+import 'package:running_app_flutter/data/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum _Key { user, isLogin }

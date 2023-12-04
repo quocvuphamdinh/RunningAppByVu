@@ -1,5 +1,5 @@
-import 'package:running_app_flutter/models/run.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:running_app_flutter/data/models/run.dart';
 
 part 'user_activity.g.dart';
 

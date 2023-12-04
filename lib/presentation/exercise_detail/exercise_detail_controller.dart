@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
-import 'package:running_app_flutter/models/workout.dart';
+import 'package:running_app_flutter/data/models/workout.dart';
 
 class ExerciseDetailBinding extends Bindings {
   @override

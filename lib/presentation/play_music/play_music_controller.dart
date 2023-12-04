@@ -2,7 +2,7 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/config/data/app_data.dart';
-import 'package:running_app_flutter/models/music.dart';
+import 'package:running_app_flutter/data/models/music.dart';
 
 class PlayMusicController extends BaseController {
   RxInt duration = 0.obs;

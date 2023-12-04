@@ -27,6 +27,7 @@ class RunHistoryDetailPage extends GetView<RunHistoryDetailController> {
             AppBarThreeSide(
               widgetLeft: Icon(Icons.close, size: AppDimens.iconSmallSize),
               onClickWidgetLeft: () {
+                Get.delete<RunHistoryDetailController>();
                 Get.back();
               },
               widgetCenter: TextTitle(
@@ -55,7 +56,7 @@ class RunHistoryDetailPage extends GetView<RunHistoryDetailController> {
                                 icon: AppImages.icMovingTimeColor,
                                 titleText: "Start Time",
                                 valueText:
-                                    "${Components.getFormattedTimer(ms: run.timestamp - run.timeInMillis, includeHour: true, includeMinute: true, includeSecond: true)} hrs",
+                                    "${Components.convertDateTimeMilliesToString(ms: run.timestamp - run.timeInMillis, dateFormat: "hh:mm:ss")} hrs",
                                 valueTextColor: AppColor.distanceColor,
                               ),
                               ResultRunDataRow(
