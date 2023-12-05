@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:running_app_flutter/data/models/app_error.dart';
+import 'package:running_app_flutter/config/res/app_color.dart';
+import 'package:running_app_flutter/models/app_error.dart';
 import 'package:running_app_flutter/extensions/app_error_extension.dart';
 import 'package:running_app_flutter/widgets/dialog/app_dialog.dart';
 
@@ -72,7 +73,7 @@ class BaseController extends GetxController {
           dismissOnTap: dismissOnTap);
 
       /// DioError
-    } else if (error is DioError) {
+    } else if (error is DioException) {
       var response = error.response;
       if (response != null) {
         log("[${response.statusCode}]: ${response.statusMessage}");
@@ -170,8 +171,11 @@ class BaseController extends GetxController {
 
   void showSnackBar(String title, String content,
       {SnackPosition position = SnackPosition.BOTTOM,
-      Color bgColor = Colors.black12}) {
+      Color bgColor = Colors.black12,
+      Color textColor = AppColor.whiteColor}) {
     Get.snackbar(title, content,
-        snackPosition: position, backgroundColor: bgColor);
+        snackPosition: position,
+        backgroundColor: bgColor,
+        colorText: textColor);
   }
 }

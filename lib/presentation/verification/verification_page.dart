@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -38,10 +39,10 @@ class VerificationPage extends GetView<VerificationController> {
                   padding: EdgeInsets.symmetric(
                       vertical: AppDimens.smallSpacingVer,
                       horizontal: AppDimens.mediumSpacingHor),
-                  child: Text(
-                    "We have sent the OTP code to vuphamdinh22@gmail.com, please check your gmail and enter the OTP code below to verify your account",
-                    style: TextStyle(fontSize: AppDimens.mediumTextSize),
-                  ),
+                  child: Obx(() => Text(
+                        "We have sent the OTP code to ${controller.email.value}, please check your gmail and enter the OTP code below to verify your account",
+                        style: TextStyle(fontSize: AppDimens.mediumTextSize),
+                      )),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -61,7 +62,9 @@ class VerificationPage extends GetView<VerificationController> {
                         disabledBorderColor: AppColor.primaryColor,
                         enabledBorderColor: AppColor.primaryColor,
                         focusBorderColor: AppColor.yellowAppColor3),
-                    onCompleted: (pin) {},
+                    onCompleted: (pin) {
+                      controller.onCheckOTP(pin);
+                    },
                     onChanged: (pin) {},
                   ),
                 ),
@@ -75,23 +78,27 @@ class VerificationPage extends GetView<VerificationController> {
                         style: TextStyle(fontSize: AppDimens.mediumTextSize),
                       ),
                     ),
-                    GestureDetector(
-                      child: Text(
-                        "Please resend",
-                        style: TextStyle(
-                            color: AppColor.primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: AppDimens.mediumTextSize),
-                      ),
-                      onTap: () {},
-                    )
+                    Obx(() => !controller.isSendAgain.value
+                        ? GestureDetector(
+                            child: Text(
+                              "Please resend",
+                              style: TextStyle(
+                                  color: AppColor.primaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: AppDimens.mediumTextSize),
+                            ),
+                            onTap: () {
+                              controller.onSendOTPAgain();
+                            },
+                          )
+                        : const CupertinoActivityIndicator())
                   ],
                 ),
               ],
             ),
           ),
           RunBottomAppBar(onArrowClick: () {
-            Get.back();
+            controller.onBack();
           })
         ],
       )),

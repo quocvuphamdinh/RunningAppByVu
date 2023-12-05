@@ -115,12 +115,14 @@ class ExecuteRunExercisePage extends GetView<ExecuteRunExerciseController> {
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.bold),
                             )),
-                        Text(
-                          "km",
-                          style: TextStyle(
-                              color: AppColor.whiteColor,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            "km",
+                            style: TextStyle(
+                                color: AppColor.whiteColor,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),
@@ -140,12 +142,14 @@ class ExecuteRunExercisePage extends GetView<ExecuteRunExerciseController> {
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.bold),
                             )),
-                        Text(
-                          "km/h",
-                          style: TextStyle(
-                              color: AppColor.whiteColor,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            "km/h",
+                            style: TextStyle(
+                                color: AppColor.whiteColor,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),
@@ -165,12 +169,14 @@ class ExecuteRunExercisePage extends GetView<ExecuteRunExerciseController> {
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.bold),
                             )),
-                        Text(
-                          "kcal",
-                          style: TextStyle(
-                              color: AppColor.whiteColor,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.bold),
+                        Expanded(
+                          child: Text(
+                            "kcal",
+                            style: TextStyle(
+                                color: AppColor.whiteColor,
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     )
@@ -241,7 +247,7 @@ class ExecuteRunExercisePage extends GetView<ExecuteRunExerciseController> {
                 },
                 child: Container(
                     padding: EdgeInsets.symmetric(
-                        vertical: AppDimens.smallSpacingVer),
+                        vertical: AppDimens.aBitSpacingVer),
                     width: Get.width,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

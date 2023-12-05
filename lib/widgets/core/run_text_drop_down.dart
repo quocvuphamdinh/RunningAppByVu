@@ -50,7 +50,7 @@ class _RunTextDropDownState extends State<RunTextDropDown> {
         height: 50.h,
         child: Center(
           child: DropdownButton<String>(
-              itemHeight: 50.h,
+              //itemHeight: 50.h,
               style: TextStyle(fontSize: 16.sp, color: AppColor.primaryColor),
               borderRadius: BorderRadius.circular(10.r),
               isExpanded: true,

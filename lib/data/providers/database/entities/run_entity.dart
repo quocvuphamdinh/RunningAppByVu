@@ -93,4 +93,10 @@ class RunEntity {
     String sql = "DELETE FROM $tableName WHERE $ID = ?";
     await database.rawDelete(sql, [id]);
   }
+
+  static Future<void> deleteAll() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "DELETE FROM $tableName";
+    await database.rawDelete(sql);
+  }
 }

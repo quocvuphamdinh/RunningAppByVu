@@ -5,7 +5,8 @@ import 'package:running_app_flutter/data/models/user.dart';
 import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/user_repository.dart';
 import 'package:running_app_flutter/extensions/email_validator_extension.dart';
-import 'package:running_app_flutter/services/local_storage.dart';
+import 'package:running_app_flutter/models/data_state.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
 
 class SignUpBinding extends Bindings {
   @override
@@ -17,8 +18,6 @@ class SignUpBinding extends Bindings {
 class SignUpController extends BaseController {
   final UserRepository _userRepo;
   SignUpController(this._userRepo);
-
-  final store = Get.find<LocalStorageService>();
 
   late TextEditingController textEmailController;
   late TextEditingController textPasswordController;
@@ -104,21 +103,62 @@ class SignUpController extends BaseController {
           gender: gender,
           weight: int.parse(weight),
           height: int.parse(height));
-      await _userRepo.register(user: user);
-      store.user = user;
+      var userExists =
+          await _userRepo.checkEmailAccount(username: user.userName);
+      if (userExists is DataSuccess) {
+        if (userExists.data!.userName.isNotEmpty) {
+          dismissLoading();
+          showAppDialog(
+              title: "Sign up",
+              button: "OK",
+              content: "This email account has already used !");
+          return;
+        }
+        var sendEmail = await _userRepo.sendOTPToEmail(email: user.userName);
+        if (sendEmail is DataSuccess) {
+          dismissLoading();
+          var otpSuccess = await Get.toNamed(AppRoutes.Verification,
+              arguments: {"email_verification": user.userName}) as bool;
+          if (otpSuccess) {
+            showLoading(messaging: "Sign up...");
+            var register = await _userRepo.register(user: user);
+            if (register is DataSuccess) {
+              dismissLoading();
+              showAppDialog(
+                  title: "Sign up",
+                  button: "OK",
+                  content: "Sign up successfully !",
+                  onPressed: () {
+                    Get.back();
+                  });
+              return;
+            }
+            dismissLoading();
+            var errorRegister = register.error!;
+            showAppDialog(
+                title: errorRegister.errorTitle,
+                button: "OK",
+                content: errorRegister.errorMsg);
+          }
+          dismissLoading();
+          return;
+        }
+        dismissLoading();
+        showAppDialog(
+            title: sendEmail.error!.errorTitle,
+            button: "OK",
+            content: sendEmail.error!.errorMsg);
+        return;
+      }
       dismissLoading();
       showAppDialog(
-          title: "Sign up",
+          title: userExists.error!.errorTitle,
           button: "OK",
-          content: "Sign up successfully !",
-          dismissOnTap: false,
-          onPressed: () {
-            Get.back();
-          });
-    } else {
-      dismissLoading();
-      showAppDialog(title: "Sign up", button: "OK", content: validateStr);
+          content: userExists.error!.errorMsg);
+      return;
     }
+    dismissLoading();
+    showAppDialog(title: "Sign up", button: "OK", content: validateStr);
   }
 
   @override

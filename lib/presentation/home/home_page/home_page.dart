@@ -37,22 +37,24 @@ class HomePage extends GetView<HomeController> {
                     const TextTitle(
                       text: "Running App",
                     ),
-                    RichText(
-                      text: TextSpan(
-                          text: "Let's go ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColor.primaryColor,
-                              fontSize: 16.sp,
-                              fontStyle: FontStyle.italic),
-                          children: [
-                            TextSpan(
-                                text: "Phạm Đình Quốc Vũ",
-                                style: TextStyle(
-                                    color: AppColor.textPrimaryColor,
-                                    fontSize: 16.sp,
-                                    fontStyle: FontStyle.italic))
-                          ]),
+                    Expanded(
+                      child: RichText(
+                        text: TextSpan(
+                            text: "Let's go ",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.primaryColor,
+                                fontSize: 16.sp,
+                                fontStyle: FontStyle.italic),
+                            children: [
+                              TextSpan(
+                                  text: "Phạm Đình Quốc Vũ",
+                                  style: TextStyle(
+                                      color: AppColor.textPrimaryColor,
+                                      fontSize: 16.sp,
+                                      fontStyle: FontStyle.italic))
+                            ]),
+                      ),
                     )
                   ],
                 ),

@@ -49,7 +49,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MediaQuery(
         data: MediaQueryData.fromView(WidgetsBinding.instance.window),
-        child: ScreenUtilInit(builder: ((context, child) {
+        child: ScreenUtilInit(
+          designSize: const Size(360, 690),
+          builder: ((context, child) {
           return GetMaterialApp(
             builder: EasyLoading.init(),
             initialRoute:

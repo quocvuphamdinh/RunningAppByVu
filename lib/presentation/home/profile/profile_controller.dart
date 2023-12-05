@@ -2,17 +2,23 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/models/user.dart';
+import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/run_repository.dart';
+import 'package:running_app_flutter/models/data_state.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
 
 class ProfileBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ProfileController());
+    Get.lazyPut(() => ProfileController(Get.find<RunRepositoryImpl>()));
   }
 }
 
 class ProfileController extends BaseController {
+  final RunRepository _runRepo;
+  ProfileController(this._runRepo);
+
   final store = Get.find<LocalStorageService>();
   Rx<User?> user = (null as User?).obs;
 
@@ -36,7 +42,7 @@ class ProfileController extends BaseController {
     }
   }
 
-  logout() {
+  logout() async {
     showAppDialog(
         title: "Logout ?",
         button: "Yes",
@@ -44,7 +50,21 @@ class ProfileController extends BaseController {
         onPressed: () async {
           showLoading(messaging: "Logout...");
 
-          await Future.delayed(const Duration(seconds: 2));
+          var runs = await _runRepo.getAllRun();
+          for (var run in runs) {
+            var sync = await _runRepo.insertRunToNetwork(
+                run: run, userId: user.value!.id!);
+            if (sync is DataFailed) {
+              dismissLoading();
+              showAppDialog(
+                  title: sync.error!.errorTitle,
+                  content: sync.error!.errorMsg,
+                  button: "OK");
+              return;
+            }
+          }
+          await _runRepo.deleteAllRun();
+          store.user = null;
           store.isLogin = null;
 
           dismissLoading();

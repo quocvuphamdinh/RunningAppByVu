@@ -3,7 +3,7 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
-  String id;
+  int? id;
   String userName;
   String passWord;
   String fullName;
@@ -14,7 +14,7 @@ class User {
   int distanceGoal;
 
   User(
-      {this.id = '',
+      {this.id,
       required this.userName,
       required this.passWord,
       required this.fullName,

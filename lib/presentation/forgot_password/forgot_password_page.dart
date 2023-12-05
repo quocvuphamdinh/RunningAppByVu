@@ -52,7 +52,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
                 RunButton(
                     buttonText: "Reset password",
                     onClick: () {
-                      Get.toNamed(AppRoutes.Verification);
+                      controller.onResetPass();
                     }),
               ],
             ),
