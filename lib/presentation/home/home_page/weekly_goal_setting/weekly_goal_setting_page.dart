@@ -55,7 +55,9 @@ class WeeklyGoalSettingPage extends GetView<WeeklyGoalSettingController> {
                       haptics: true,
                       maxValue: 10000,
                       minValue: 1,
-                      value: controller.selectedGoal.value,
+                      value: controller.selectedGoal.value == 0
+                          ? 1
+                          : controller.selectedGoal.value,
                       onChanged: ((value) =>
                           controller.onSelectedGoalValue(value)),
                     )),

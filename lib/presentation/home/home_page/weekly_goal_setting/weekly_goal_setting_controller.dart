@@ -23,6 +23,7 @@ class WeeklyGoalSettingController extends BaseController {
   }
 
   onBackWithResult() {
+    selectedGoal.value = selectedGoal.value == 0 ? 1 : selectedGoal.value;
     Get.delete<WeeklyGoalSettingController>();
     Get.back(result: selectedGoal.value);
   }

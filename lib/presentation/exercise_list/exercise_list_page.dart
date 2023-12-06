@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:running_app_flutter/presentation/exercise_list/exercise_list_con
 import 'package:running_app_flutter/presentation/home/exercise/widget/exercise_item.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
+import 'package:running_app_flutter/widgets/core/run_text_no_data.dart';
 import 'package:running_app_flutter/widgets/core/text_description.dart';
 import 'package:running_app_flutter/widgets/core/text_title.dart';
 
@@ -27,8 +29,10 @@ class ExerciseListPage extends GetView<ExerciseListController> {
             widgetLeft: const TextTitle(text: "Training plans"),
             widgetRight: Icon(Icons.close, size: AppDimens.iconSmallSize),
             onCLickWidgetRight: () {
-              Get.back();
-              Get.delete<ExerciseListController>();
+              if (!controller.isLoading.value) {
+                Get.back();
+                Get.delete<ExerciseListController>();
+              }
             },
           ),
           Expanded(
@@ -48,26 +52,25 @@ class ExerciseListPage extends GetView<ExerciseListController> {
                       )),
                   SizedBox(height: AppDimens.size20),
                   Expanded(
-                    child: Obx(() {
-                      var exercises =
-                          controller.exerciseType.value == Constant.WALKING
-                              ? controller.walkingExercises
-                              : controller.runningExercises;
-                      return ScrollConfiguration(
-                          behavior: const ScrollBehavior()
-                              .copyWith(overscroll: false),
-                          child: ListView.builder(
-                              itemCount: exercises.length,
-                              itemBuilder: ((context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Get.toNamed(AppRoutes.ExerciseDetail);
-                                  },
-                                  child: ExerciseItem(
-                                      exerciseItem: exercises[index]),
-                                );
-                              })));
-                    }),
+                    child: Obx(() => !controller.isLoading.value
+                        ? (controller.exercises.isNotEmpty
+                            ? ScrollConfiguration(
+                                behavior: const ScrollBehavior()
+                                    .copyWith(overscroll: false),
+                                child: ListView.builder(
+                                    itemCount: controller.exercises.length,
+                                    itemBuilder: ((context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.toNamed(AppRoutes.ExerciseDetail);
+                                        },
+                                        child: ExerciseItem(
+                                            exerciseItem:
+                                                controller.exercises[index]),
+                                      );
+                                    })))
+                            : const RunTextNoData())
+                        : const Center(child: CupertinoActivityIndicator())),
                   )
                 ],
               ),

@@ -56,7 +56,7 @@ class ExerciseItem extends StatelessWidget {
                       color: AppColor.grey,
                     ),
                     Text(
-                      "${Components.getFormattedTimerWithOption(ms: exerciseItem.durationOfWorkouts, option: OptionTimer.MINUTE)} min",
+                      "${exerciseItem.durationOfWorkouts} min",
                       style: TextStyle(fontSize: AppDimens.mediumTextSize),
                     )
                   ],

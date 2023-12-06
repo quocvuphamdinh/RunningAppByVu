@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/user_repository.dart';
 import 'package:running_app_flutter/models/data_state.dart';
@@ -33,7 +34,7 @@ class VerificationController extends BaseController {
     var sendOTP = await _userRepo.sendOTPToEmail(email: email.value);
     if (sendOTP is DataSuccess) {
       var message = sendOTP.data!["message"];
-      showSnackBar("Send OTP", message!);
+      showSnackBar(Constant.TITLE_ALERT, message!);
       isSendAgain.value = false;
       return;
     }
@@ -52,7 +53,7 @@ class VerificationController extends BaseController {
         Get.back(result: true);
         return;
       }
-      showSnackBar("OTP Verification", "OTP is not correct !!");
+      showSnackBar(Constant.TITLE_ALERT, "OTP is not correct !!");
       return;
     }
     var error = checkOTP.error!;

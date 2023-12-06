@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/constant/error_code.dart';
 import 'package:running_app_flutter/models/app_error.dart';
 import 'package:running_app_flutter/data/models/user.dart';
@@ -21,12 +22,12 @@ class UserRepositoryImpl extends UserRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Sign up failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: httpResponse.response.statusMessage ?? "Error Sign up !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }
@@ -42,12 +43,12 @@ class UserRepositoryImpl extends UserRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Sign up failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: httpResponse.response.statusMessage ?? "Error Sign up !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }
@@ -62,12 +63,12 @@ class UserRepositoryImpl extends UserRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Sign up failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: httpResponse.response.statusMessage ?? "Error Sign up !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }
@@ -86,13 +87,13 @@ class UserRepositoryImpl extends UserRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Check OTP failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg:
               httpResponse.response.statusMessage ?? "Error Check OTP !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }
@@ -108,12 +109,12 @@ class UserRepositoryImpl extends UserRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Login failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: httpResponse.response.statusMessage ?? "Error Login !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }
@@ -135,7 +136,7 @@ class UserRepositoryImpl extends UserRepository {
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }
@@ -150,13 +151,13 @@ class UserRepositoryImpl extends UserRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Update user failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg:
               httpResponse.response.statusMessage ?? "Error Update user !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }

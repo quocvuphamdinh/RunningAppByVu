@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/models/user.dart';
 import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/user_repository.dart';
@@ -109,7 +110,7 @@ class SignUpController extends BaseController {
         if (userExists.data!.userName.isNotEmpty) {
           dismissLoading();
           showAppDialog(
-              title: "Sign up",
+              title: Constant.TITLE_ALERT,
               button: "OK",
               content: "This email account has already used !");
           return;
@@ -125,7 +126,7 @@ class SignUpController extends BaseController {
             if (register is DataSuccess) {
               dismissLoading();
               showAppDialog(
-                  title: "Sign up",
+                  title: Constant.TITLE_ALERT,
                   button: "OK",
                   content: "Sign up successfully !",
                   onPressed: () {
@@ -158,7 +159,8 @@ class SignUpController extends BaseController {
       return;
     }
     dismissLoading();
-    showAppDialog(title: "Sign up", button: "OK", content: validateStr);
+    showAppDialog(
+        title: Constant.TITLE_ALERT, button: "OK", content: validateStr);
   }
 
   @override

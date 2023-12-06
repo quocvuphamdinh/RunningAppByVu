@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/constant/error_code.dart';
 import 'package:running_app_flutter/data/models/user_activity_detail.dart';
 import 'package:running_app_flutter/data/providers/network/api_service.dart';
@@ -22,13 +23,13 @@ class UserExerciseRepositoryImpl extends UserExerciseRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Get list user exercise failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: httpResponse.response.statusMessage ??
               "Error Get list user exercise !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }

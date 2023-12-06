@@ -12,16 +12,17 @@ class ProgressWeekly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var percent = (distance == 0 || distance == null)
+        ? 0.0
+        : (distance!) /
+            (((weeklyGoal ?? 0) == 0 || ((weeklyGoal ?? 0) * 1000) <= distance!)
+                ? distance!
+                : (weeklyGoal ?? 0) * 1000);
+    print("Percent: $percent");
     return CircularPercentIndicator(
       radius: 110.0.r,
       lineWidth: 20.0,
-      percent: (distance == 0 || distance == null)
-          ? 0.0
-          : (distance!) /
-              (((weeklyGoal ?? 0) == 0 ||
-                      ((weeklyGoal ?? 0) * 1000) <= distance!)
-                  ? distance!
-                  : (weeklyGoal ?? 0) * 1000),
+      percent: percent,
       center: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -37,7 +38,7 @@ class ProgressWeekly extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: AppDimens.smallSpacingVer),
             child: RichText(
                 text: TextSpan(
-                    text: (distance ?? 0 / 1000).toString(),
+                    text: ((distance ?? 0) / 1000).toString(),
                     style: TextStyle(
                         fontSize: 30.sp,
                         fontWeight: FontWeight.bold,

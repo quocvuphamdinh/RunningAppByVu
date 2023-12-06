@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -82,32 +84,35 @@ class RunHistoryDetailPage extends GetView<RunHistoryDetailController> {
                               ResultRunDataRow(
                                 icon: AppImages.icDurationColor,
                                 titleText: "Duration",
-                                valueText:
-                                    "${Components.getFormattedTimer(ms: run.timeInMillis, includeHour: true, includeMinute: true)} mins",
+                                valueText: Components.getFormattedTimer(
+                                    ms: run.timeInMillis,
+                                    includeHour: true,
+                                    includeMinute: true,
+                                    includeSecond: true),
                                 valueTextColor: AppColor.durationColor,
                               ),
                               SizedBox(height: AppDimens.size10),
                               GestureDetector(
                                 onTap: () {
+                                  if (run.img == null || run.img!.isEmpty) {
+                                    return;
+                                  }
                                   Get.toNamed(AppRoutes.ShowImage);
                                 },
-                                child: Container(
-                                  height: Get.height * 0.4,
-                                  decoration: BoxDecoration(
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurStyle: BlurStyle.solid,
-                                          color: Colors.grey,
-                                          offset: Offset(0.0, 1.0), //(x,y)
-                                          blurRadius: 5.0,
-                                        ),
-                                      ],
-                                      image: const DecorationImage(
-                                          image: AppImages.activityBackground,
-                                          fit: BoxFit.cover),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.r))),
-                                ),
+                                child: (run.img == null || run.img!.isEmpty)
+                                    ? _runImage(AppImages.errorGif)
+                                    : CachedNetworkImage(
+                                        imageUrl: run.img!,
+                                        placeholder: (context, url) =>
+                                            const Center(
+                                                child:
+                                                    CupertinoActivityIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            _runImage(AppImages.errorGif),
+                                        imageBuilder:
+                                            ((context, imageProvider) =>
+                                                _runImage(imageProvider)),
+                                      ),
                               )
                             ],
                           ),
@@ -119,6 +124,23 @@ class RunHistoryDetailPage extends GetView<RunHistoryDetailController> {
           ],
         );
       })),
+    );
+  }
+
+  Widget _runImage(ImageProvider imageProvider) {
+    return Container(
+      height: Get.height * 0.4,
+      decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              blurStyle: BlurStyle.solid,
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 5.0,
+            ),
+          ],
+          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+          borderRadius: BorderRadius.all(Radius.circular(10.r))),
     );
   }
 }

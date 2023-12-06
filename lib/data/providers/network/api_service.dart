@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
@@ -52,7 +50,9 @@ abstract class ApiService {
   //exercise
   @GET("/activity/{type}/{userId}")
   Future<HttpResponse<List<Activity>>> getListExerciseByType(
-      @Path("type") int type, @Path("userId") int userId);
+      @Path("type") int type,
+      @Path("userId") int userId,
+      @Query("size") int size);
 
   @GET("/user-activity/{userId}")
   Future<HttpResponse<List<UserActivityDetail>>> getListUserExercise(

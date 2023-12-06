@@ -16,16 +16,13 @@ class RecentActivityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var dateFormat = DateFormat('MMM');
-    var dateRun = DateTime.fromMillisecondsSinceEpoch(
-        recentActivity.run.timestamp * 1000,
-        isUtc: true);
-    print("dateRun: $dateRun");
+    var dateRun =
+        DateTime.fromMillisecondsSinceEpoch(recentActivity.run.timestamp);
     var runDuration = Components.getFormattedTimer(
         ms: recentActivity.run.timeInMillis,
         includeHour: true,
         includeMinute: true,
         includeSecond: true);
-    print("dateRun: $runDuration");
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.h),
       height: 100.h,
@@ -67,7 +64,7 @@ class RecentActivityItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "${dateFormat.format(dateRun)} ${dateRun.day}, ${Components.convertDateTimeToString(dateTime: dateRun, dateFormat: "HH:mm")}",
+                      "${dateRun.year} ${dateFormat.format(dateRun)} ${dateRun.day}, ${Components.convertDateTimeToString(dateTime: dateRun, dateFormat: "HH:mm")}",
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColor.primaryColor,

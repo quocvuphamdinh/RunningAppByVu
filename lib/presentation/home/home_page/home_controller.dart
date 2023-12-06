@@ -47,6 +47,9 @@ class HomeController extends BaseController {
   RxList<Activity> todayTraninings = <Activity>[].obs;
 
   RxList<UserActivityDetail> recentActivites = <UserActivityDetail>[].obs;
+
+  RxBool isLoadingTodayTraining = false.obs;
+  RxBool isLoadingRecentExercise = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -72,23 +75,31 @@ class HomeController extends BaseController {
   }
 
   onInitRecentActivityList() async {
+    recentActivites.value = [];
+    isLoadingRecentExercise.value = true;
     final data = await _userExerRepo.getListUserExercise(
         userId: user.value!.id!, page: 2);
     if (data is DataSuccess) {
       recentActivites.value = data.data!;
+      isLoadingRecentExercise.value = false;
       return;
     }
     print("Error recent exercise: ${data.error!.errorMsg}");
+    isLoadingRecentExercise.value = false;
   }
 
   onInitTodayTraniningList() async {
+    todayTraninings.value = [];
+    isLoadingTodayTraining.value = true;
     final data = await _exerciseRepo.getListExerciseByType(
-        type: Constant.RUNNING, userId: user.value!.id!);
+        type: Constant.RUNNING, userId: user.value!.id!, size: 4);
     if (data is DataSuccess) {
       todayTraninings.value = data.data!;
+      isLoadingTodayTraining.value = false;
       return;
     }
     print("Error today trainings: ${data.error!.errorMsg}");
+    isLoadingTodayTraining.value = false;
   }
 
   onInitBestRecords() async {

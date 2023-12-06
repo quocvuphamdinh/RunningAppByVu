@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/user_repository.dart';
 import 'package:running_app_flutter/extensions/email_validator_extension.dart';
@@ -31,7 +32,7 @@ class ForgotPasswordController extends BaseController {
     if (email.isEmpty) {
       dismissLoading();
       showAppDialog(
-          title: "Reset password",
+          title: Constant.TITLE_ALERT,
           content: "Email must not empty !",
           button: "OK");
       return;
@@ -39,7 +40,7 @@ class ForgotPasswordController extends BaseController {
     if (!email.isValidEmail()) {
       dismissLoading();
       showAppDialog(
-          title: "Reset password",
+          title: Constant.TITLE_ALERT,
           content: "Email is not valid !",
           button: "OK");
       return;
@@ -57,7 +58,7 @@ class ForgotPasswordController extends BaseController {
     if (user.userName.isEmpty) {
       dismissLoading();
       showAppDialog(
-          title: "Reset password",
+          title: Constant.TITLE_ALERT,
           content: "This email is not registered !",
           button: "OK");
       return;
@@ -74,7 +75,7 @@ class ForgotPasswordController extends BaseController {
     dismissLoading();
     showAppDialog(
         dismissOnTap: false,
-        title: "Reset password",
+        title: Constant.TITLE_ALERT,
         content: resetPass.data!['message']!,
         button: "OK",
         onPressed: () {

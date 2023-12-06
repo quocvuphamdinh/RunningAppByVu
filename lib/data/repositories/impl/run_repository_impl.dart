@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/constant/error_code.dart';
 import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/data/providers/database/entities/run_entity.dart';
@@ -45,13 +46,13 @@ class RunRepositoryImpl extends RunRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Sync data run failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg:
               httpResponse.response.statusMessage ?? "Error Sync data run !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }
@@ -73,13 +74,13 @@ class RunRepositoryImpl extends RunRepository {
       return DataFailed(AppError(
           errorCode: httpResponse.response.statusCode ??
               ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Sync data to server failed",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: httpResponse.response.statusMessage ??
               "Error Sync data to server !!"));
     } on DioException catch (e) {
       return DataFailed(AppError(
           errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
-          errorTitle: "Error",
+          errorTitle: Constant.TITLE_ALERT,
           errorMsg: e.message.toString()));
     }
   }

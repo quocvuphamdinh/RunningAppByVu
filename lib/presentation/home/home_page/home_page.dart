@@ -144,48 +144,51 @@ class HomePage extends GetView<HomeController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const TextDescription(text: "Today's training"),
-                              Obx(() => controller.todayTraninings.isNotEmpty
-                                  ? GestureDetector(
-                                      child: const TextMore(),
-                                      onTap: () {
-                                        Get.toNamed(AppRoutes.ExerciseList,
-                                            arguments: {
-                                              Constant.EXERCISE_TYPE:
-                                                  Constant.RUNNING,
-                                              Constant.EXERCISE_TITLE:
-                                                  "Running for today training"
-                                            });
-                                      },
-                                    )
-                                  : const SizedBox()),
+                              Obx(() => !controller.isLoadingTodayTraining.value
+                                  ? (controller.todayTraninings.isNotEmpty
+                                      ? GestureDetector(
+                                          child: const TextMore(),
+                                          onTap: () {
+                                            Get.toNamed(AppRoutes.ExerciseList,
+                                                arguments: {
+                                                  Constant.EXERCISE_TYPE:
+                                                      Constant.RUNNING,
+                                                  Constant.EXERCISE_TITLE:
+                                                      "Running for today training"
+                                                });
+                                          },
+                                        )
+                                      : const SizedBox())
+                                  : const Center(
+                                      child: CupertinoActivityIndicator())),
                             ],
                           ),
-                          Obx(() => controller.todayTraninings.isNotEmpty
-                              ? Container(
-                                  margin: EdgeInsets.only(
-                                      top: AppDimens.smallSpacingVer,
-                                      bottom: AppDimens.mediumSpacingVer),
-                                  height: 250.h,
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount:
-                                          controller.todayTraninings.length > 4
-                                              ? 4
-                                              : controller
-                                                  .todayTraninings.length,
-                                      itemBuilder: ((context, index) {
-                                        return InkWell(
-                                            onTap: () {
-                                              Get.toNamed(
-                                                  AppRoutes.ExerciseDetail);
-                                            },
-                                            child: TodayTrainingCard(
-                                                exercise: controller
-                                                    .todayTraninings[index],
-                                                index: index));
-                                      })),
-                                )
-                              : const RunTextNoData()),
+                          Obx(() => !controller.isLoadingRecentExercise.value
+                              ? (controller.todayTraninings.isNotEmpty
+                                  ? Container(
+                                      margin: EdgeInsets.only(
+                                          top: AppDimens.smallSpacingVer,
+                                          bottom: AppDimens.mediumSpacingVer),
+                                      height: 250.h,
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount:
+                                              controller.todayTraninings.length,
+                                          itemBuilder: ((context, index) {
+                                            return InkWell(
+                                                onTap: () {
+                                                  Get.toNamed(
+                                                      AppRoutes.ExerciseDetail);
+                                                },
+                                                child: TodayTrainingCard(
+                                                    exercise: controller
+                                                        .todayTraninings[index],
+                                                    index: index));
+                                          })),
+                                    )
+                                  : const RunTextNoData())
+                              : const Center(
+                                  child: CupertinoActivityIndicator())),
                           Padding(
                             padding:
                                 EdgeInsets.only(top: AppDimens.aBitSpacingHor),

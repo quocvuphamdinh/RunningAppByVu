@@ -290,9 +290,10 @@ class _ApiService implements ApiService {
   Future<HttpResponse<List<Activity>>> getListExerciseByType(
     int type,
     int userId,
+    int size,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'size': size};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(

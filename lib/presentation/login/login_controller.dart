@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/run_repository.dart';
@@ -63,7 +64,7 @@ class LoginController extends BaseController {
       }
       dismissLoading();
       showAppDialog(
-          title: "Login",
+          title: Constant.TITLE_ALERT,
           button: "OK",
           content: "Username or password is not correct !");
       return;

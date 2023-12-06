@@ -19,6 +19,7 @@ class AppImages {
   static const walkingBackground = _Image("walking_background.jpg");
   static const recentExerciseBackground = _Image("background_recent.jpg");
   static const blackArrow = _Image("black_arrow.png");
+  static const errorGif = _Image("error_gif.gif");
 
   // Icon
   static const success = "assets/images/success.svg";
