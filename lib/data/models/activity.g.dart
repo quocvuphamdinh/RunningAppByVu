@@ -7,14 +7,14 @@ part of 'activity.dart';
 // **************************************************************************
 
 Activity _$ActivityFromJson(Map<String, dynamic> json) => Activity(
-      id: json['id'] as String? ?? '',
+      id: json['id'] as int?,
       name: json['name'] as String,
       type: json['type'] as int,
       durationOfWorkouts: json['durationOfWorkouts'] as int,
       workouts: (json['workouts'] as List<dynamic>)
           .map((e) => Workout.fromJson(e as Map<String, dynamic>))
           .toList(),
-      isCompleted: json['isCompleted'] as int,
+      isCompleted: json['isCompleted'] != null ? json['isCompleted'] as int : 0,
     );
 
 Map<String, dynamic> _$ActivityToJson(Activity instance) => <String, dynamic>{

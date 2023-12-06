@@ -5,7 +5,7 @@ part 'activity.g.dart';
 
 @JsonSerializable()
 class Activity {
-  String id;
+  int? id;
   String name;
   int type;
   int durationOfWorkouts;
@@ -13,7 +13,7 @@ class Activity {
   int isCompleted;
 
   Activity(
-      {this.id = '',
+      {this.id,
       required this.name,
       required this.type,
       required this.durationOfWorkouts,

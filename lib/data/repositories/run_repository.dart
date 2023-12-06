@@ -10,5 +10,14 @@ abstract class RunRepository {
   Future<List<Run>> getAllRun();
   Future<Run> getRunById({required String id});
   Future<void> deleteAllRun();
+  Future<int> getTotalCaloriesBurnedToDay();
+  Future<int> getTotalTimeInMillisToday();
+  Future<double> getTotalAvgSpeedInKMHToday();
+  Future<int> getCountRunToday();
+  Future<int> getTotalDitanceWeekly();
+  Future<int> getMaxDistance();
+  Future<int> getMaxTimeInMillies();
+  Future<int> getMaxCaloriesBurned();
+  Future<double> getMaxAvgSpeedInKMH();
   Future<DataState<List<Run>>> getRunsFromNetwork({required int userId});
 }

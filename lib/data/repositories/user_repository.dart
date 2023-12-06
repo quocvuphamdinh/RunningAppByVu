@@ -10,4 +10,5 @@ abstract class UserRepository {
   Future<DataState<User>> checkEmailAccount({required String username});
   Future<DataState<bool>> checkOTP({required String otpCode});
   Future<DataState<Map<String, String>>> resetPassword({required User user});
+  Future<DataState<void>> updateUser({required User user});
 }

@@ -12,5 +12,6 @@ class Constant {
   static const EXERCISE_TYPE = "EXERCISE_TYPE";
   static const EXERCISE_TITLE = "EXERCISE_TITLE";
   static const EDIT_PROFILE_SUCCESS = "EDIT_PROFILE_SUCCESS";
+  static const INTENT_SET_MYGOAL = "INTENT_SET_MYGOAL";
   static const BASE_URL = "http://192.168.56.1:8087";
 }

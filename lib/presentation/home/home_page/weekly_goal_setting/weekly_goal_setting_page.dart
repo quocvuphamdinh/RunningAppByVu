@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,7 +24,7 @@ class WeeklyGoalSettingPage extends GetView<WeeklyGoalSettingController> {
               AppBarThreeSide(
                 widgetLeft: Icon(Icons.close, size: AppDimens.iconSmallSize),
                 onClickWidgetLeft: () {
-                  Get.back();
+                  controller.onBack();
                 },
                 widgetCenter: const TextTitle(text: "Weekly goal setting"),
               ),
@@ -65,7 +63,11 @@ class WeeklyGoalSettingPage extends GetView<WeeklyGoalSettingController> {
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: AppDimens.mediumSpacingHor),
-                child: RunButton(buttonText: "Set as my goal", onClick: () {}),
+                child: RunButton(
+                    buttonText: "Set as my goal",
+                    onClick: () {
+                      controller.onBackWithResult();
+                    }),
               )
             ],
           )),

@@ -5,14 +5,23 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 
 class ProgressWeekly extends StatelessWidget {
-  const ProgressWeekly({super.key});
+  const ProgressWeekly({super.key, this.distance = 0, this.weeklyGoal = 0});
+
+  final int? distance;
+  final int? weeklyGoal;
 
   @override
   Widget build(BuildContext context) {
     return CircularPercentIndicator(
       radius: 110.0.r,
       lineWidth: 20.0,
-      percent: 0.8,
+      percent: (distance == 0 || distance == null)
+          ? 0.0
+          : (distance!) /
+              (((weeklyGoal ?? 0) == 0 ||
+                      ((weeklyGoal ?? 0) * 1000) <= distance!)
+                  ? distance!
+                  : (weeklyGoal ?? 0) * 1000),
       center: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -28,7 +37,7 @@ class ProgressWeekly extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: AppDimens.smallSpacingVer),
             child: RichText(
                 text: TextSpan(
-                    text: "0.0",
+                    text: (distance ?? 0 / 1000).toString(),
                     style: TextStyle(
                         fontSize: 30.sp,
                         fontWeight: FontWeight.bold,
@@ -46,7 +55,7 @@ class ProgressWeekly extends StatelessWidget {
                 ])),
           ),
           Text(
-            "Weekly goal 1km",
+            "Weekly goal ${weeklyGoal}km",
             style: TextStyle(fontSize: AppDimens.smallTextSize),
           )
         ],

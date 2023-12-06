@@ -139,4 +139,25 @@ class UserRepositoryImpl extends UserRepository {
           errorMsg: e.message.toString()));
     }
   }
+
+  @override
+  Future<DataState<void>> updateUser({required User user}) async {
+    try {
+      final httpResponse = await apiService.updateUser(user, user.id!);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      }
+      return DataFailed(AppError(
+          errorCode: httpResponse.response.statusCode ??
+              ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: "Update user failed",
+          errorMsg:
+              httpResponse.response.statusMessage ?? "Error Update user !!"));
+    } on DioException catch (e) {
+      return DataFailed(AppError(
+          errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: "Error",
+          errorMsg: e.message.toString()));
+    }
+  }
 }

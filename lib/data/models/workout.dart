@@ -3,11 +3,11 @@ part 'workout.g.dart';
 
 @JsonSerializable()
 class Workout {
-  String id;
+  int? id;
   String name;
   int duration;
 
-  Workout({this.id = '', required this.name, required this.duration});
+  Workout({this.id, required this.name, required this.duration});
 
   factory Workout.fromJson(Map<String, dynamic> json) =>
       _$WorkoutFromJson(json);

@@ -1,71 +1,130 @@
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
+import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/models/activity.dart';
-import 'package:running_app_flutter/data/models/run.dart';
+import 'package:running_app_flutter/data/models/user.dart';
 import 'package:running_app_flutter/data/models/user_activity_detail.dart';
-import 'package:running_app_flutter/data/models/workout.dart';
+import 'package:running_app_flutter/data/repositories/exercise_repository.dart';
+import 'package:running_app_flutter/data/repositories/impl/exercise_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_exercise_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/run_repository.dart';
+import 'package:running_app_flutter/data/repositories/user_exercise_repository.dart';
+import 'package:running_app_flutter/models/data_state.dart';
+import 'package:running_app_flutter/routes/app_routes.dart';
+import 'package:running_app_flutter/services/local_storage.dart';
 
 class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => HomeController(
+        Get.find<RunRepositoryImpl>(),
+        Get.find<ExerciseRepositoryImpl>(),
+        Get.find<UserExerciseRepositoryImpl>()));
   }
 }
 
 class HomeController extends BaseController {
-  final List<UserActivityDetail> recentActivites = [
-    UserActivityDetail(
-        run: Run(
-            timestamp: 1699866049,
-            averageSpeedInKilometersPerHour: 16.7,
-            distanceInKilometers: 2222,
-            timeInMillis: 60000,
-            caloriesBurned: 10,
-            isRunWithExercise: 1),
-        comment: "hi vũ",
-        mood: 1,
-        activity: Activity(
-            name: "Week 1 Day 1",
-            type: 0,
-            durationOfWorkouts: 60000,
-            workouts: [Workout(name: "Run", duration: 60000)],
-            isCompleted: 1)),
-    UserActivityDetail(
-        run: Run(
-            timestamp: 1699866049,
-            averageSpeedInKilometersPerHour: 18,
-            distanceInKilometers: 2500,
-            timeInMillis: 120000,
-            caloriesBurned: 15,
-            isRunWithExercise: 1),
-        comment: "hi vũ 2",
-        mood: 2,
-        activity: Activity(
-            name: "Week 1 Day 2",
-            type: 1,
-            durationOfWorkouts: 60000,
-            workouts: [Workout(name: "Run", duration: 60000)],
-            isCompleted: 1)),
-    UserActivityDetail(
-        run: Run(
-            timestamp: 1699866049,
-            averageSpeedInKilometersPerHour: 20.65,
-            distanceInKilometers: 3000,
-            timeInMillis: 180000,
-            caloriesBurned: 20,
-            isRunWithExercise: 1),
-        comment: "hi vũ 3",
-        mood: 3,
-        activity: Activity(
-            name: "Week 1 Day 3",
-            type: 0,
-            durationOfWorkouts: 60000,
-            workouts: [Workout(name: "Run", duration: 60000)],
-            isCompleted: 1))
-  ];
+  final RunRepository _runRepo;
+  final ExerciseRepository _exerciseRepo;
+  final UserExerciseRepository _userExerRepo;
+  HomeController(this._runRepo, this._exerciseRepo, this._userExerRepo);
+
+  final store = Get.find<LocalStorageService>();
+  final refreshController = RefreshController(initialRefresh: false);
+
+  Rx<User?> user = (null as User?).obs;
+  RxInt totalDistanceWeekly = 0.obs;
+  RxInt totalCalories = 0.obs;
+  RxInt totalRunMillies = 0.obs;
+  RxDouble totalAvgSpeed = 0.0.obs;
+  RxInt totalRun = 0.obs;
+  RxInt longestDistance = 0.obs;
+  RxInt longestDuration = 0.obs;
+  RxInt bestCalories = 0.obs;
+
+  RxList<Activity> todayTraninings = <Activity>[].obs;
+
+  RxList<UserActivityDetail> recentActivites = <UserActivityDetail>[].obs;
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+
+    onInitUser();
+    onInitTotalDistanceWeekly();
+    onInitProgressToday();
+    onInitTodayTraniningList();
+    onInitRecentActivityList();
+    onInitBestRecords();
+    refreshController.refreshCompleted();
+  }
+
+  goToSetMyGoal() async {
+    final weeklyGoal = await Get.toNamed(AppRoutes.WeeklyGoalSetting,
+            arguments: {Constant.INTENT_SET_MYGOAL: user.value!.distanceGoal})
+        as int?;
+    if (weeklyGoal != null) {
+      user.value!.distanceGoal = weeklyGoal;
+      store.user = user.value!;
+      user.refresh();
+    }
+  }
+
+  onInitRecentActivityList() async {
+    final data = await _userExerRepo.getListUserExercise(
+        userId: user.value!.id!, page: 2);
+    if (data is DataSuccess) {
+      recentActivites.value = data.data!;
+      return;
+    }
+    print("Error recent exercise: ${data.error!.errorMsg}");
+  }
+
+  onInitTodayTraniningList() async {
+    final data = await _exerciseRepo.getListExerciseByType(
+        type: Constant.RUNNING, userId: user.value!.id!);
+    if (data is DataSuccess) {
+      todayTraninings.value = data.data!;
+      return;
+    }
+    print("Error today trainings: ${data.error!.errorMsg}");
+  }
+
+  onInitBestRecords() async {
+    longestDistance.value = await _runRepo.getMaxDistance();
+    longestDuration.value = await _runRepo.getMaxTimeInMillies();
+    bestCalories.value = await _runRepo.getMaxCaloriesBurned();
+  }
+
+  onInitTotalDistanceWeekly() async {
+    totalDistanceWeekly.value = await _runRepo.getTotalDitanceWeekly();
+  }
+
+  onInitProgressToday() async {
+    totalCalories.value = await _runRepo.getTotalCaloriesBurnedToDay();
+    totalRunMillies.value = await _runRepo.getTotalTimeInMillisToday();
+    totalAvgSpeed.value = await _runRepo.getTotalAvgSpeedInKMHToday();
+    totalRun.value = await _runRepo.getCountRunToday();
+  }
+
+  onInitUser() {
+    user.value = store.user;
+  }
+
+  onRefresh() async {
+    onInitUser();
+    onInitTotalDistanceWeekly();
+    onInitProgressToday();
+    onInitBestRecords();
+    onInitTodayTraniningList();
+    onInitRecentActivityList();
+    refreshController.refreshCompleted();
+  }
+
+  @override
+  void onClose() {
+    refreshController.dispose();
+    super.onClose();
   }
 }

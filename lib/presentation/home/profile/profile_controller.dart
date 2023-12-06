@@ -3,7 +3,9 @@ import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/models/user.dart';
 import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/run_repository.dart';
+import 'package:running_app_flutter/data/repositories/user_repository.dart';
 import 'package:running_app_flutter/models/data_state.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
@@ -11,13 +13,15 @@ import 'package:running_app_flutter/services/local_storage.dart';
 class ProfileBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ProfileController(Get.find<RunRepositoryImpl>()));
+    Get.lazyPut(() => ProfileController(
+        Get.find<RunRepositoryImpl>(), Get.find<UserRepositoryImpl>()));
   }
 }
 
 class ProfileController extends BaseController {
   final RunRepository _runRepo;
-  ProfileController(this._runRepo);
+  final UserRepository _userRepo;
+  ProfileController(this._runRepo, this._userRepo);
 
   final store = Get.find<LocalStorageService>();
   Rx<User?> user = (null as User?).obs;
@@ -50,6 +54,15 @@ class ProfileController extends BaseController {
         onPressed: () async {
           showLoading(messaging: "Logout...");
 
+          var syncUser = await _userRepo.updateUser(user: store.user!);
+          if (syncUser is DataFailed) {
+            dismissLoading();
+            showAppDialog(
+                title: syncUser.error!.errorTitle,
+                content: syncUser.error!.errorMsg,
+                button: "OK");
+            return;
+          }
           var runs = await _runRepo.getAllRun();
           for (var run in runs) {
             var sync = await _runRepo.insertRunToNetwork(

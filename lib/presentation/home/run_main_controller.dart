@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
+import 'package:running_app_flutter/data/repositories/impl/exercise_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_exercise_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/presentation/home/analysis/analysis_controller.dart';
 import 'package:running_app_flutter/presentation/home/exercise/exercise_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
@@ -11,10 +14,14 @@ class RunMainBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => RunMainController());
 
-    Get.lazyPut(() => HomeController());
+    Get.lazyPut(() => HomeController(
+        Get.find<RunRepositoryImpl>(),
+        Get.find<ExerciseRepositoryImpl>(),
+        Get.find<UserExerciseRepositoryImpl>()));
     Get.lazyPut(() => ExerciseController());
     Get.lazyPut(() => AnalysisController());
-    Get.lazyPut(() => ProfileController(Get.find<RunRepositoryImpl>()));
+    Get.lazyPut(() => ProfileController(
+        Get.find<RunRepositoryImpl>(), Get.find<UserRepositoryImpl>()));
   }
 }
 

@@ -7,7 +7,7 @@ part of 'workout.dart';
 // **************************************************************************
 
 Workout _$WorkoutFromJson(Map<String, dynamic> json) => Workout(
-      id: json['id'] as String? ?? '',
+      id: json['id'] as int?,
       name: json['name'] as String,
       duration: json['duration'] as int,
     );

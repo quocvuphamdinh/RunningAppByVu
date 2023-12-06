@@ -99,4 +99,82 @@ class RunEntity {
     String sql = "DELETE FROM $tableName";
     await database.rawDelete(sql);
   }
+
+  static Future<int> getTotalCaloriesBurnedToDay() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT SUM($CALORIES_BURNED) AS result FROM $tableName WHERE DATE(DATETIME($TIMESTAMP/1000, 'unixepoch')) = DATE('now')";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<int> getTotalTimeInMillisToday() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT SUM($TIME_IN_MILLIS) AS result FROM $tableName WHERE DATE(DATETIME(timestamp/1000, 'unixepoch')) = DATE('now')";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<double> getTotalAvgSpeedInKMHToday() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT SUM($AVG_SPEED) AS result FROM $tableName WHERE DATE(DATETIME(timestamp/1000, 'unixepoch')) = DATE('now')";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as double?;
+    return result ?? 0.0;
+  }
+
+  static Future<int> getCountRunToday() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT COUNT(*) AS result FROM $tableName WHERE DATE(DATETIME(timestamp/1000, 'unixepoch')) = DATE('now')";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<int> getTotalDitanceWeekly() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT SUM($DISTANCE_IN_KILOMETERS) AS result FROM $tableName WHERE strftime('%W',DATE(DATETIME($TIMESTAMP/1000, 'unixepoch'))) = strftime('%W',DATE('now'))";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<int> getMaxDistance() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT MAX($DISTANCE_IN_KILOMETERS) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<int> getMaxTimeInMillies() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "SELECT MAX($TIME_IN_MILLIS) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<int> getMaxCaloriesBurned() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "SELECT MAX($CALORIES_BURNED) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<double> getMaxAvgSpeedInKMH() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "SELECT MAX($AVG_SPEED) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as double?;
+    return result ?? 0;
+  }
 }

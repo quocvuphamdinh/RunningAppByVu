@@ -88,4 +88,49 @@ class RunRepositoryImpl extends RunRepository {
   Future<void> deleteAllRun() {
     return RunEntity.deleteAll();
   }
+
+  @override
+  Future<int> getTotalCaloriesBurnedToDay() {
+    return RunEntity.getTotalCaloriesBurnedToDay();
+  }
+
+  @override
+  Future<int> getCountRunToday() {
+    return RunEntity.getCountRunToday();
+  }
+
+  @override
+  Future<double> getTotalAvgSpeedInKMHToday() {
+    return RunEntity.getTotalAvgSpeedInKMHToday();
+  }
+
+  @override
+  Future<int> getTotalTimeInMillisToday() {
+    return RunEntity.getTotalTimeInMillisToday();
+  }
+
+  @override
+  Future<int> getTotalDitanceWeekly() {
+    return RunEntity.getTotalDitanceWeekly();
+  }
+
+  @override
+  Future<double> getMaxAvgSpeedInKMH() {
+    return RunEntity.getMaxAvgSpeedInKMH();
+  }
+
+  @override
+  Future<int> getMaxCaloriesBurned() {
+    return RunEntity.getMaxCaloriesBurned();
+  }
+
+  @override
+  Future<int> getMaxDistance() {
+    return RunEntity.getMaxDistance();
+  }
+
+  @override
+  Future<int> getMaxTimeInMillies() {
+    return RunEntity.getMaxTimeInMillies();
+  }
 }

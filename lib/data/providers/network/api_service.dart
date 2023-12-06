@@ -1,9 +1,13 @@
+import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import 'package:retrofit/http.dart';
 import 'package:running_app_flutter/constant/constant.dart';
+import 'package:running_app_flutter/data/models/activity.dart';
 import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/data/models/user.dart';
+import 'package:running_app_flutter/data/models/user_activity_detail.dart';
 
 part 'api_service.g.dart';
 
@@ -34,6 +38,9 @@ abstract class ApiService {
   @PUT("/user/resetpassword")
   Future<HttpResponse<Map<String, String>>> resetPassword(@Body() User user);
 
+  @PUT("/user/{id}")
+  Future<HttpResponse<void>> updateUser(@Body() User user, @Path("id") int id);
+
   //run
   @GET("/run/{userId}")
   Future<HttpResponse<List<Run>>> getRuns(@Path("userId") int userId);
@@ -41,4 +48,13 @@ abstract class ApiService {
   @POST("/run/{userId}/{userActivitesId}")
   Future<HttpResponse<void>> insertRun(@Body() Run run,
       @Path("userId") int userId, @Path("userActivitesId") int userActivitesId);
+
+  //exercise
+  @GET("/activity/{type}/{userId}")
+  Future<HttpResponse<List<Activity>>> getListExerciseByType(
+      @Path("type") int type, @Path("userId") int userId);
+
+  @GET("/user-activity/{userId}")
+  Future<HttpResponse<List<UserActivityDetail>>> getListUserExercise(
+      @Path("userId") int userId, @Query("page") int page);
 }
