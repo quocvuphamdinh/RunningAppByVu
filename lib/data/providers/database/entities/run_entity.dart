@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:running_app_flutter/constant/data_run_types.dart';
 import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/data/providers/database/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -176,5 +177,107 @@ class RunEntity {
     final rows = await database.rawQuery(sql);
     final result = rows.first['result'] as double?;
     return result ?? 0;
+  }
+
+  static Future<List<dynamic>> getTotalRunDataInEachDay(
+      int date, DataRunTypes type) async {
+    String column = "";
+    if (type == DataRunTypes.DISTANCE) {
+      column = DISTANCE_IN_KILOMETERS;
+    } else if (type == DataRunTypes.DURATION) {
+      column = TIME_IN_MILLIS;
+    } else if (type == DataRunTypes.CALORIESBURNED) {
+      column = CALORIES_BURNED;
+    } else {
+      column = AVG_SPEED;
+    }
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "with \n" +
+        " days as (\n" +
+        "    select 1 nr, 'Monday' day union all\n" +
+        "    select 2, 'Tuesday' union all\n" +
+        "    select 3, 'Wednesday' union all\n" +
+        "    select 4, 'Thursday' union all\n" +
+        "    select 5, 'Friday' union all\n" +
+        "    select 6, 'Saturday' union all\n" +
+        "    select 7, 'Sunday'\n" +
+        "  ),\n" +
+        "  weekMonday as (\n" +
+        "    select date(\n" +
+        "        strftime('%Y-%m-%d', $date / 1000, 'unixepoch'), \n" +
+        "        case when strftime('%w', strftime('%Y-%m-%d', $date / 1000, 'unixepoch')) <> '1' then '-7 day' else '0 day' end, \n" +
+        "        'weekday 1'\n" +
+        "      ) monday\n" +
+        "  )\n" +
+        "select coalesce(sum($column), 0) as result\n" +
+        "from days d cross join weekMonday wm\n" +
+        "left join $tableName\n" +
+        "on strftime('%w', strftime('%Y-%m-%d', $TIMESTAMP / 1000, 'unixepoch')) + 0 = d.nr % 7\n" +
+        "and date(strftime('%Y-%m-%d', $TIMESTAMP / 1000, 'unixepoch')) between wm.monday and date(wm.monday, '6 day')\n" +
+        "group by d.nr\n" +
+        "order by d.nr";
+    final results = await database.rawQuery(sql);
+    if (type == DataRunTypes.AVGSPEED) {
+      List<double> listFinal = [];
+      for (var result in results) {
+        listFinal.add(result['result'] == 0 ? 0.0 : result['result'] as double);
+      }
+      return listFinal;
+    }
+    List<int> listFinal = [];
+    for (var result in results) {
+      listFinal.add(result['result'] as int);
+    }
+    return listFinal;
+  }
+
+  static Future<List<dynamic>> getTotalRunDataInEachMonth(
+      int date, DataRunTypes type) async {
+    String column = "";
+    if (type == DataRunTypes.DISTANCE) {
+      column = DISTANCE_IN_KILOMETERS;
+    } else if (type == DataRunTypes.DURATION) {
+      column = TIME_IN_MILLIS;
+    } else if (type == DataRunTypes.CALORIESBURNED) {
+      column = CALORIES_BURNED;
+    } else {
+      column = AVG_SPEED;
+    }
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "with \n" +
+        "  months as (\n" +
+        "    select 1 nr, 'JAN' month union all\n" +
+        "    select 2 nr, 'FEB' union all\n" +
+        "    select 3 nr, 'MAR' union all\n" +
+        "    select 4 nr, 'APR' union all\n" +
+        "    select 5 nr, 'MAY' union all\n" +
+        "    select 6 nr, 'JUN' union all\n" +
+        "    select 7 nr, 'JUL' union all\n" +
+        "    select 8 nr, 'AUG' union all\n" +
+        "    select 9 nr, 'SEP' union all\n" +
+        "    select 10 nr, 'OCT' union all\n" +
+        "    select 11 nr, 'NOV' union all\n" +
+        "    select 12 nr, 'DEC'\n" +
+        "  )\n" +
+        "select coalesce(sum($column), 0) as result\n" +
+        "from months m\n" +
+        "left join $tableName\n" +
+        "on strftime('%m', strftime('%Y-%m-%d', $TIMESTAMP / 1000, 'unixepoch')) + 0 = m.nr\n" +
+        "and date(strftime('%Y-%m-%d', $TIMESTAMP / 1000, 'unixepoch')) between date(strftime('%Y-%m-%d', $date / 1000, 'unixepoch'),'start of year') and date(strftime('%Y-%m-%d', $date / 1000, 'unixepoch'),'start of year', '1 year', '-1 day')\n" +
+        "group by m.nr, m.month\n" +
+        "order by m.nr";
+    final results = await database.rawQuery(sql);
+    if (type == DataRunTypes.AVGSPEED) {
+      List<double> listFinal = [];
+      for (var result in results) {
+        listFinal.add(result['result'] == 0 ? 0.0 : result['result'] as double);
+      }
+      return listFinal;
+    }
+    List<int> listFinal = [];
+    for (var result in results) {
+      listFinal.add(result['result'] as int);
+    }
+    return listFinal;
   }
 }

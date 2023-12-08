@@ -1,5 +1,7 @@
+import 'package:running_app_flutter/constant/data_run_types.dart';
 import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/models/data_state.dart';
+import 'package:running_app_flutter/presentation/home/analysis/models/analysis_bar_model.dart';
 
 abstract class RunRepository {
   Future<int> insertRun({required Run run});
@@ -19,5 +21,9 @@ abstract class RunRepository {
   Future<int> getMaxTimeInMillies();
   Future<int> getMaxCaloriesBurned();
   Future<double> getMaxAvgSpeedInKMH();
+  Future<List<AnalysisBarModel>> getTotalRunDataInEachDay(
+      int date, DataRunTypes type);
+  Future<List<AnalysisBarModel>> getTotalRunDataInEachMonth(
+      int date, DataRunTypes type);
   Future<DataState<List<Run>>> getRunsFromNetwork({required int userId});
 }

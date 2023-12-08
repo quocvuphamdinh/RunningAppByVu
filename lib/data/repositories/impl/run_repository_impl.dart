@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/constant/constant.dart';
+import 'package:running_app_flutter/constant/data_run_types.dart';
 import 'package:running_app_flutter/constant/error_code.dart';
 import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/data/providers/database/entities/run_entity.dart';
@@ -10,6 +11,7 @@ import 'package:running_app_flutter/data/providers/network/api_service.dart';
 import 'package:running_app_flutter/data/repositories/run_repository.dart';
 import 'package:running_app_flutter/models/app_error.dart';
 import 'package:running_app_flutter/models/data_state.dart';
+import 'package:running_app_flutter/presentation/home/analysis/models/analysis_bar_model.dart';
 
 class RunRepositoryImpl extends RunRepository {
   final apiService = Get.find<ApiService>();
@@ -133,5 +135,41 @@ class RunRepositoryImpl extends RunRepository {
   @override
   Future<int> getMaxTimeInMillies() {
     return RunEntity.getMaxTimeInMillies();
+  }
+
+  @override
+  Future<List<AnalysisBarModel>> getTotalRunDataInEachDay(
+      int date, DataRunTypes type) async {
+    final resultFromDB = await RunEntity.getTotalRunDataInEachDay(date, type);
+    return resultFromDB
+        .asMap()
+        .map((i, e) => MapEntry(
+            i,
+            AnalysisBarModel(
+                id: i,
+                name: AnalysisBarModel.getDayTitle(i + 1),
+                y: type == DataRunTypes.DURATION
+                    ? Duration(milliseconds: e).inMinutes.toDouble()
+                    : e.toDouble())))
+        .values
+        .toList();
+  }
+
+  @override
+  Future<List<AnalysisBarModel>> getTotalRunDataInEachMonth(
+      int date, DataRunTypes type) async {
+    final resultFromDB = await RunEntity.getTotalRunDataInEachMonth(date, type);
+    return resultFromDB
+        .asMap()
+        .map((i, e) => MapEntry(
+            i,
+            AnalysisBarModel(
+                id: i,
+                name: (i + 1).toString(),
+                y: type == DataRunTypes.DURATION
+                    ? Duration(milliseconds: e).inMinutes.toDouble()
+                    : e.toDouble())))
+        .values
+        .toList();
   }
 }

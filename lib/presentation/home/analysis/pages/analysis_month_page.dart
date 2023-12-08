@@ -20,30 +20,40 @@ class AnalysisMonthPage extends GetView<AnalysisController> {
             children: [
               AnalysisCard(
                   topTitle: "Distance (meter)",
-                  datas: controller.analysisMonthBars,
                   type: DataRunTypes.DISTANCE,
                   analysisTypes: DataAnalysisTypes.MONTH,
                   onSelectedDate: (selectedDate) {
-                    print(selectedDate);
+                    controller.onSelectedDistance(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.MONTH);
                   }),
               AnalysisCard(
                   topTitle: "Duration (minute)",
-                  datas: controller.analysisMonthBars,
                   type: DataRunTypes.DURATION,
                   analysisTypes: DataAnalysisTypes.MONTH,
-                  onSelectedDate: (selectedDate) {}),
+                  onSelectedDate: (selectedDate) {
+                    controller.onSelectedDuration(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.MONTH);
+                  }),
               AnalysisCard(
                   topTitle: "Calories Burned (kcal)",
-                  datas: controller.analysisMonthBars,
                   type: DataRunTypes.CALORIESBURNED,
                   analysisTypes: DataAnalysisTypes.MONTH,
-                  onSelectedDate: (selectedDate) {}),
+                  onSelectedDate: (selectedDate) {
+                    controller.onSelectedCalories(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.MONTH);
+                  }),
               AnalysisCard(
                   topTitle: "Average Speed (km/h)",
-                  datas: controller.analysisMonthBars,
                   type: DataRunTypes.AVGSPEED,
                   analysisTypes: DataAnalysisTypes.MONTH,
-                  onSelectedDate: (selectedDate) {})
+                  onSelectedDate: (selectedDate) {
+                    controller.onSelectedAvgSpeed(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.MONTH);
+                  })
             ],
           ),
         ),

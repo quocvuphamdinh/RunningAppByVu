@@ -20,30 +20,42 @@ class AnalysisDayPage extends GetView<AnalysisController> {
             children: [
               AnalysisCard(
                   topTitle: "Distance (meter)",
-                  datas: controller.analysisDayBars,
                   type: DataRunTypes.DISTANCE,
                   analysisTypes: DataAnalysisTypes.DAY,
                   onSelectedDate: (selectedDate) {
-                    print(selectedDate);
+                    print("MONTH 1: $selectedDate");
+                    print("MONTH 1: ${selectedDate.millisecondsSinceEpoch}");
+                    controller.onSelectedDistance(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.DAY);
                   }),
               AnalysisCard(
                   topTitle: "Duration (minute)",
-                  datas: controller.analysisDayBars,
                   type: DataRunTypes.DURATION,
                   analysisTypes: DataAnalysisTypes.DAY,
-                  onSelectedDate: (selectedDate) {}),
+                  onSelectedDate: (selectedDate) {
+                    controller.onSelectedDuration(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.DAY);
+                  }),
               AnalysisCard(
                   topTitle: "Calories Burned (kcal)",
-                  datas: controller.analysisDayBars,
                   type: DataRunTypes.CALORIESBURNED,
                   analysisTypes: DataAnalysisTypes.DAY,
-                  onSelectedDate: (selectedDate) {}),
+                  onSelectedDate: (selectedDate) {
+                    controller.onSelectedCalories(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.DAY);
+                  }),
               AnalysisCard(
                   topTitle: "Average Speed (km/h)",
-                  datas: controller.analysisDayBars,
                   type: DataRunTypes.AVGSPEED,
                   analysisTypes: DataAnalysisTypes.DAY,
-                  onSelectedDate: (selectedDate) {})
+                  onSelectedDate: (selectedDate) {
+                    controller.onSelectedAvgSpeed(
+                        selectedDate.millisecondsSinceEpoch,
+                        DataAnalysisTypes.DAY);
+                  })
             ],
           ),
         ),

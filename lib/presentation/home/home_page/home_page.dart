@@ -144,23 +144,20 @@ class HomePage extends GetView<HomeController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const TextDescription(text: "Today's training"),
-                              Obx(() => !controller.isLoadingTodayTraining.value
-                                  ? (controller.todayTraninings.isNotEmpty
-                                      ? GestureDetector(
-                                          child: const TextMore(),
-                                          onTap: () {
-                                            Get.toNamed(AppRoutes.ExerciseList,
-                                                arguments: {
-                                                  Constant.EXERCISE_TYPE:
-                                                      Constant.RUNNING,
-                                                  Constant.EXERCISE_TITLE:
-                                                      "Running for today training"
-                                                });
-                                          },
-                                        )
-                                      : const SizedBox())
-                                  : const Center(
-                                      child: CupertinoActivityIndicator())),
+                              Obx(() => controller.todayTraninings.isNotEmpty
+                                  ? GestureDetector(
+                                      child: const TextMore(),
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.ExerciseList,
+                                            arguments: {
+                                              Constant.EXERCISE_TYPE:
+                                                  Constant.RUNNING,
+                                              Constant.EXERCISE_TITLE:
+                                                  "Running for today training"
+                                            });
+                                      },
+                                    )
+                                  : const SizedBox()),
                             ],
                           ),
                           Obx(() => !controller.isLoadingRecentExercise.value

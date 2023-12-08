@@ -52,7 +52,7 @@ class WeeklyGoalSettingPage extends GetView<WeeklyGoalSettingController> {
                       textStyle: TextStyle(
                           fontSize: AppDimens.largeTextSize,
                           color: AppColor.primaryColor),
-                      haptics: true,
+                      //haptics: true,
                       maxValue: 10000,
                       minValue: 1,
                       value: controller.selectedGoal.value == 0

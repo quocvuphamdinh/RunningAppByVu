@@ -20,6 +20,8 @@ class WeeklyGoalSettingController extends BaseController {
 
   onSelectedGoalValue(int value) {
     selectedGoal.value = value;
+    print("hi1" + selectedGoal.value.toString());
+    print("hi2" + value.toString());
   }
 
   onBackWithResult() {

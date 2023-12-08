@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,11 +55,37 @@ class ProfilePage extends GetView<ProfileController> {
                                   Padding(
                                     padding: EdgeInsets.only(
                                         bottom: AppDimens.smallSpacingVer),
-                                    child: CircleAvatar(
-                                      backgroundImage:
-                                          AppImages.activityBackground,
-                                      radius: 60.r,
-                                    ),
+                                    child: (controller.user.value!.avartar ==
+                                                null ||
+                                            controller
+                                                .user.value!.avartar!.isEmpty)
+                                        ? CircleAvatar(
+                                            backgroundImage:
+                                                AppImages.defaultAvatar,
+                                            radius: 50.r,
+                                          )
+                                        : CachedNetworkImage(
+                                            imageUrl:
+                                                controller.user.value!.avartar!,
+                                            placeholder: (context, url) =>
+                                                const Center(
+                                                    child:
+                                                        CupertinoActivityIndicator()),
+                                            errorWidget:
+                                                (context, url, error) =>
+                                                    CircleAvatar(
+                                              backgroundImage:
+                                                  AppImages.defaultAvatar,
+                                              radius: 50.r,
+                                            ),
+                                            imageBuilder:
+                                                ((context, imageProvider) =>
+                                                    CircleAvatar(
+                                                      backgroundImage:
+                                                          imageProvider,
+                                                      radius: 50.r,
+                                                    )),
+                                          ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
@@ -66,7 +93,7 @@ class ProfilePage extends GetView<ProfileController> {
                                     child: Obx(() => Text(
                                           controller.user.value!.fullName,
                                           style: TextStyle(
-                                              fontSize: 25.sp,
+                                              fontSize: 20.sp,
                                               fontWeight: FontWeight.bold,
                                               color: AppColor.primaryColor),
                                         )),

@@ -7,6 +7,7 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/constant/data_run_types.dart';
+import 'package:running_app_flutter/presentation/home/analysis/analysis_controller.dart';
 import 'package:running_app_flutter/presentation/home/analysis/models/analysis_bar_model.dart';
 import 'package:running_app_flutter/presentation/home/analysis/widgets/bar_titles.dart';
 
@@ -16,13 +17,11 @@ class AnalysisCard extends StatefulWidget {
       required this.topTitle,
       required this.type,
       required this.analysisTypes,
-      required this.datas,
       required this.onSelectedDate});
 
   final String topTitle;
   final DataRunTypes type;
   final DataAnalysisTypes analysisTypes;
-  final List<AnalysisBarModel> datas;
   final Function(DateTime selectedDate) onSelectedDate;
 
   @override
@@ -47,6 +46,30 @@ class _AnalysisCardState extends State<AnalysisCard> {
     } else {
       return [AppColor.avgSpeedColor, AppColor.teal200];
     }
+  }
+
+  final analysisController = Get.find<AnalysisController>();
+
+  RxList<AnalysisBarModel> getDatas() {
+    if (widget.type == DataRunTypes.DISTANCE) {
+      return widget.analysisTypes == DataAnalysisTypes.DAY
+          ? analysisController.analysisDistanceDay
+          : analysisController.analysisDistanceMonth;
+    }
+    if (widget.type == DataRunTypes.DURATION) {
+      return widget.analysisTypes == DataAnalysisTypes.DAY
+          ? analysisController.analysisDurationDay
+          : analysisController.analysisDurationMonth;
+    }
+
+    if (widget.type == DataRunTypes.CALORIESBURNED) {
+      return widget.analysisTypes == DataAnalysisTypes.DAY
+          ? analysisController.analysisCaloriesDay
+          : analysisController.analysisCaloriesMonth;
+    }
+    return widget.analysisTypes == DataAnalysisTypes.DAY
+        ? analysisController.analysisAvgSpeedDay
+        : analysisController.analysisAvgSpeedMonth;
   }
 
   @override
@@ -94,7 +117,14 @@ class _AnalysisCardState extends State<AnalysisCard> {
                                 onDateTimeChanged: ((value) {
                                   setState(() {
                                     dateTime = value;
-                                    widget.onSelectedDate(dateTime);
+                                    widget.onSelectedDate(widget
+                                                .analysisTypes ==
+                                            DataAnalysisTypes.MONTH
+                                        ? dateTime.add(const Duration(days: 1))
+                                        : (dateTime.weekday == DateTime.monday
+                                            ? dateTime
+                                                .add(const Duration(days: 1))
+                                            : dateTime));
                                   });
                                 })),
                           ));
@@ -103,40 +133,49 @@ class _AnalysisCardState extends State<AnalysisCard> {
             ],
           ),
           Expanded(
-            child: BarChart(
-              BarChartData(
-                  maxY: 100.0,
-                  minY: 0,
-                  titlesData: FlTitlesData(
-                    show: true,
-                    bottomTitles: AxisTitles(
-                      sideTitles: BarTitles.getTopBottomTitles(widget.datas),
-                    ),
-                    topTitles: AxisTitles(
-                      sideTitles: BarTitles.getTopBottomTitles(widget.datas),
-                    ),
-                  ),
-                  barGroups: widget.datas
-                      .map((e) => BarChartGroupData(x: e.id, barRods: [
-                            BarChartRodData(
-                                toY: e.y,
-                                width: widget.analysisTypes ==
-                                        DataAnalysisTypes.DAY
-                                    ? AppDimens.size20
-                                    : AppDimens.size10,
-                                gradient: LinearGradient(
-                                    begin: Alignment.bottomCenter,
-                                    end: Alignment.topCenter,
-                                    colors: getListColorByType(widget.type)),
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(6.r),
-                                    topRight: Radius.circular(6.r))),
-                          ]))
-                      .toList()),
-              swapAnimationDuration:
-                  const Duration(milliseconds: 150), // Optional
-              swapAnimationCurve: Curves.linear, // Optional
-            ),
+            child: Obx(() => BarChart(
+                  BarChartData(
+                      maxY: getDatas().isNotEmpty
+                          ? getDatas()
+                              .reduce((previousValue, element) =>
+                                  previousValue.y > element.y
+                                      ? previousValue
+                                      : element)
+                              .y
+                          : 0.0,
+                      minY: 0,
+                      titlesData: FlTitlesData(
+                        show: true,
+                        bottomTitles: AxisTitles(
+                          sideTitles: BarTitles.getTopBottomTitles(getDatas()),
+                        ),
+                        topTitles: AxisTitles(
+                          sideTitles: BarTitles.getTopBottomTitles(getDatas()),
+                        ),
+                      ),
+                      barGroups: //widget.datas
+                          getDatas()
+                              .map((e) => BarChartGroupData(x: e.id, barRods: [
+                                    BarChartRodData(
+                                        toY: e.y,
+                                        width: widget.analysisTypes ==
+                                                DataAnalysisTypes.DAY
+                                            ? AppDimens.size20
+                                            : AppDimens.size10,
+                                        gradient: LinearGradient(
+                                            begin: Alignment.bottomCenter,
+                                            end: Alignment.topCenter,
+                                            colors: getListColorByType(
+                                                widget.type)),
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(6.r),
+                                            topRight: Radius.circular(6.r))),
+                                  ]))
+                              .toList()),
+                  swapAnimationDuration:
+                      const Duration(milliseconds: 150), // Optional
+                  swapAnimationCurve: Curves.linear, // Optional
+                )),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
