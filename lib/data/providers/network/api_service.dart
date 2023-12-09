@@ -57,4 +57,8 @@ abstract class ApiService {
   @GET("/user-activity/{userId}")
   Future<HttpResponse<List<UserActivityDetail>>> getListUserExercise(
       @Path("userId") int userId, @Query("page") int page);
+
+  @GET("/user-activity/calculate-recent-activity/{userId}")
+  Future<HttpResponse<Map<String, String>>> calculateDataRecentActivity(
+      @Path("userId") int userId);
 }

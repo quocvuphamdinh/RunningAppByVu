@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,7 +8,6 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/constant/constant.dart';
-import 'package:running_app_flutter/constant/data_run_types.dart';
 import 'package:running_app_flutter/presentation/result_exercise_run/result_exercise_run_controller.dart';
 import 'package:running_app_flutter/presentation/result_exercise_run/widgets/result_run_data_row.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
@@ -17,6 +18,23 @@ import 'package:running_app_flutter/widgets/core/text_title.dart';
 
 class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
   const ResultExerciseRunPage({super.key});
+
+  Widget _runImage(ImageProvider imageProvider) {
+    return Container(
+      height: Get.height * 0.4,
+      decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              blurStyle: BlurStyle.solid,
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0), //(x,y)
+              blurRadius: 5.0,
+            ),
+          ],
+          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+          borderRadius: BorderRadius.all(Radius.circular(10.r))),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +49,12 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                       widgetLeft:
                           Icon(Icons.close, size: AppDimens.iconSmallSize),
                       onClickWidgetLeft: () {
+                        Get.delete<ResultExerciseRunController>();
                         Get.back();
                       },
                       widgetCenter: TextTitle(
                           text:
-                              "${controller.userActivityDetail.value!.activity.name} - ${Components.getFormattedTimerWithOption(ms: controller.userActivityDetail.value!.activity.durationOfWorkouts, option: OptionTimer.MINUTE)} mins - ${controller.userActivityDetail.value!.activity.type == Constant.WALKING ? "Walking" : "Running"} Exercise"),
+                              "${controller.userActivityDetail.value!.activity.name} - ${controller.userActivityDetail.value!.activity.type == Constant.WALKING ? "Walking" : "Running"} Exercise"),
                     ),
                     Expanded(
                         child: ScrollConfiguration(
@@ -55,30 +74,35 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                                     onTap: () {
                                       Get.toNamed(AppRoutes.ShowImage);
                                     },
-                                    child: Container(
-                                      height: Get.height * 0.3,
-                                      decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              blurStyle: BlurStyle.solid,
-                                              color: Colors.grey,
-                                              offset: Offset(0.0, 1.0), //(x,y)
-                                              blurRadius: 5.0,
-                                            ),
-                                          ],
-                                          image: const DecorationImage(
-                                              image:
-                                                  AppImages.activityBackground,
-                                              fit: BoxFit.cover),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.r))),
-                                    ),
+                                    child: (controller.userActivityDetail.value!
+                                                    .run.img ==
+                                                null ||
+                                            controller.userActivityDetail.value!
+                                                .run.img!.isEmpty)
+                                        ? _runImage(AppImages.errorGif)
+                                        : CachedNetworkImage(
+                                            imageUrl: controller
+                                                .userActivityDetail
+                                                .value!
+                                                .run
+                                                .img!,
+                                            placeholder: (context, url) =>
+                                                const Center(
+                                                    child:
+                                                        CupertinoActivityIndicator()),
+                                            errorWidget: (context, url,
+                                                    error) =>
+                                                _runImage(AppImages.errorGif),
+                                            imageBuilder:
+                                                ((context, imageProvider) =>
+                                                    _runImage(imageProvider)),
+                                          ),
                                   ),
                                   ResultRunDataRow(
                                     icon: AppImages.icMovingTimeColor,
                                     titleText: "Start Time",
                                     valueText:
-                                        "${Components.getFormattedTimer(ms: controller.userActivityDetail.value!.run.timestamp - controller.userActivityDetail.value!.run.timeInMillis, includeHour: true, includeMinute: true, includeSecond: true)} hrs",
+                                        "${Components.convertDateTimeMilliesToString(ms: controller.userActivityDetail.value!.run.timestamp - controller.userActivityDetail.value!.run.timeInMillis, dateFormat: "hh:mm:ss")} hrs",
                                     valueTextColor: AppColor.distanceColor,
                                   ),
                                   ResultRunDataRow(
@@ -105,8 +129,12 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                                   ResultRunDataRow(
                                     icon: AppImages.icDurationColor,
                                     titleText: "Duration",
-                                    valueText:
-                                        "${Components.getFormattedTimer(ms: controller.userActivityDetail.value!.run.timeInMillis, includeHour: true, includeMinute: true)} mins",
+                                    valueText: Components.getFormattedTimer(
+                                        ms: controller.userActivityDetail.value!
+                                            .run.timeInMillis,
+                                        includeHour: true,
+                                        includeMinute: true,
+                                        includeSecond: true),
                                     valueTextColor: AppColor.durationColor,
                                   ),
                                   ResultRunDataRow(

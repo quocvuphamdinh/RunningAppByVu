@@ -25,5 +25,11 @@ abstract class RunRepository {
       int date, DataRunTypes type);
   Future<List<AnalysisBarModel>> getTotalRunDataInEachMonth(
       int date, DataRunTypes type);
+  Future<int> getTotalTimeInMillies();
+  Future<double> getTotalAvgSpeedInKMH();
+  Future<int> getTotalCaloriesBurned();
+  Future<int> getTotalDistance();
+  Future<List<Run>> getAllRunsSortedByType(
+      {required int isRunWithExercise, required SortType sortType});
   Future<DataState<List<Run>>> getRunsFromNetwork({required int userId});
 }

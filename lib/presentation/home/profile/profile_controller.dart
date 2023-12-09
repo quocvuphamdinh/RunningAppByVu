@@ -28,17 +28,30 @@ class ProfileController extends BaseController {
 
   final store = Get.find<LocalStorageService>();
   Rx<User?> user = (null as User?).obs;
+  RxInt totalDistance = 0.obs;
+  RxInt totalDuration = 0.obs;
+  RxInt totalCalories = 0.obs;
+  RxDouble avgSpeed = 0.0.obs;
 
   @override
   void onInit() {
     super.onInit();
 
     onInitUser();
+    onInitMyProgress();
   }
 
   onRefresh() {
     onInitUser();
+    onInitMyProgress();
     refreshController.refreshCompleted();
+  }
+
+  onInitMyProgress() async {
+    totalDistance.value = await _runRepo.getTotalDistance();
+    totalDuration.value = await _runRepo.getTotalTimeInMillies();
+    totalCalories.value = await _runRepo.getTotalCaloriesBurned();
+    avgSpeed.value = await _runRepo.getTotalAvgSpeedInKMH();
   }
 
   onInitUser() {

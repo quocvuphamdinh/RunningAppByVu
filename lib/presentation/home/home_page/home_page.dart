@@ -212,8 +212,11 @@ class HomePage extends GetView<HomeController> {
                                   itemBuilder: ((context, index) {
                                     return InkWell(
                                       onTap: () {
-                                        Get.toNamed(
-                                            AppRoutes.ResultExerciseRun);
+                                        Get.toNamed(AppRoutes.ResultExerciseRun,
+                                            arguments: {
+                                              'result_exercise_run': controller
+                                                  .recentActivites[index]
+                                            });
                                       },
                                       child: RecentActivityItem(
                                           recentActivity: controller

@@ -23,8 +23,6 @@ class AnalysisDayPage extends GetView<AnalysisController> {
                   type: DataRunTypes.DISTANCE,
                   analysisTypes: DataAnalysisTypes.DAY,
                   onSelectedDate: (selectedDate) {
-                    print("MONTH 1: $selectedDate");
-                    print("MONTH 1: ${selectedDate.millisecondsSinceEpoch}");
                     controller.onSelectedDistance(
                         selectedDate.millisecondsSinceEpoch,
                         DataAnalysisTypes.DAY);

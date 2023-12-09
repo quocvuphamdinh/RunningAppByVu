@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:running_app_flutter/components/components.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
@@ -243,16 +244,20 @@ class ProfilePage extends GetView<ProfileController> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "0.759",
-                                                style: TextStyle(
-                                                    fontSize: AppDimens
-                                                        .biggestTextSize,
-                                                    color: AppColor.yellow,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontStyle:
-                                                        FontStyle.italic),
-                                              ),
+                                              Obx(() => Text(
+                                                    (controller.totalDistance
+                                                                .value /
+                                                            1000)
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: AppDimens
+                                                            .biggestTextSize,
+                                                        color: AppColor.yellow,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontStyle:
+                                                            FontStyle.italic),
+                                                  )),
                                               Text(
                                                 "TOTAL KM",
                                                 style: TextStyle(
@@ -270,17 +275,23 @@ class ProfilePage extends GetView<ProfileController> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  "00",
-                                                  style: TextStyle(
-                                                      fontSize: AppDimens
-                                                          .headerTitleSize,
-                                                      color: AppColor.yellow,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontStyle:
-                                                          FontStyle.italic),
-                                                ),
+                                                Obx(() => Text(
+                                                      Components
+                                                          .convertDateTimeMilliesToString(
+                                                              ms: controller
+                                                                  .totalDuration
+                                                                  .value,
+                                                              dateFormat: "hh"),
+                                                      style: TextStyle(
+                                                          fontSize: AppDimens
+                                                              .headerTitleSize,
+                                                          color:
+                                                              AppColor.yellow,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontStyle:
+                                                              FontStyle.italic),
+                                                    )),
                                                 Text(
                                                   "TOTAL HOURS",
                                                   style: TextStyle(
@@ -293,17 +304,18 @@ class ProfilePage extends GetView<ProfileController> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  "57",
-                                                  style: TextStyle(
-                                                      fontSize: AppDimens
-                                                          .headerTitleSize,
-                                                      color: AppColor.yellow,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontStyle:
-                                                          FontStyle.italic),
-                                                ),
+                                                Obx(() => Text(
+                                                      "${controller.totalCalories.value}",
+                                                      style: TextStyle(
+                                                          fontSize: AppDimens
+                                                              .headerTitleSize,
+                                                          color:
+                                                              AppColor.yellow,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontStyle:
+                                                              FontStyle.italic),
+                                                    )),
                                                 Text(
                                                   "TOTAL KCAL",
                                                   style: TextStyle(
@@ -316,17 +328,19 @@ class ProfilePage extends GetView<ProfileController> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  "5.9",
-                                                  style: TextStyle(
-                                                      fontSize: AppDimens
-                                                          .headerTitleSize,
-                                                      color: AppColor.yellow,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontStyle:
-                                                          FontStyle.italic),
-                                                ),
+                                                Obx(() => Text(
+                                                      controller.avgSpeed.value
+                                                          .toStringAsFixed(2),
+                                                      style: TextStyle(
+                                                          fontSize: AppDimens
+                                                              .headerTitleSize,
+                                                          color:
+                                                              AppColor.yellow,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontStyle:
+                                                              FontStyle.italic),
+                                                    )),
                                                 Text(
                                                   "AVG SPEED",
                                                   style: TextStyle(

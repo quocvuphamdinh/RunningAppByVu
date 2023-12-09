@@ -280,4 +280,64 @@ class RunEntity {
     }
     return listFinal;
   }
+
+  static Future<int> getTotalTimeInMillies() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "SELECT SUM($TIME_IN_MILLIS) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<double> getTotalAvgSpeedInKMH() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "SELECT AVG($AVG_SPEED) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as double?;
+    return result ?? 0;
+  }
+
+  static Future<int> getTotalCaloriesBurned() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql = "SELECT SUM($CALORIES_BURNED) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<int> getTotalDistance() async {
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT SUM($DISTANCE_IN_KILOMETERS) AS result FROM $tableName";
+    final rows = await database.rawQuery(sql);
+    final result = rows.first['result'] as int?;
+    return result ?? 0;
+  }
+
+  static Future<List<Run>> getAllRunsSortedByType(
+      int isRunWithExercise, SortType sortType) async {
+    String orderByColumn = "";
+    switch (sortType) {
+      case SortType.DISTANCE:
+        orderByColumn = DISTANCE_IN_KILOMETERS;
+        break;
+      case SortType.DATE:
+        orderByColumn = TIMESTAMP;
+        break;
+      case SortType.RUNNING_TIME:
+        orderByColumn = TIME_IN_MILLIS;
+        break;
+      case SortType.CALORIES_BURNED:
+        orderByColumn = CALORIES_BURNED;
+        break;
+      case SortType.AVG_SPEED:
+        orderByColumn = AVG_SPEED;
+        break;
+    }
+    final database = await Get.find<DatabaseService>().database;
+    String sql =
+        "SELECT * FROM $tableName WHERE isRunWithExercise = ? ORDER BY $orderByColumn DESC";
+    final runs = await database.rawQuery(sql, [isRunWithExercise]);
+    return runs.map((run) => Run.fromJson(run)).toList();
+  }
 }

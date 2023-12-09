@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/
 import 'package:running_app_flutter/presentation/home/home_page/widget/recent_activity_item.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/appbar/app_bar_two_side.dart';
+import 'package:running_app_flutter/widgets/core/run_text_no_data.dart';
 
 class RecentExercisePage extends GetView<RecentExerciseController> {
   const RecentExercisePage({super.key});
@@ -39,39 +41,47 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                 widgetLeft: Icon(Icons.close,
                     size: AppDimens.iconSmallSize, color: AppColor.whiteColor),
                 onClickWidgetLeft: () {
-                  Get.back();
+                  if (!controller.isLoading.value) {
+                    Get.delete<RecentExerciseController>();
+                    Get.back();
+                  }
+                },
+                widgetRight: Icon(Icons.refresh_rounded,
+                    size: AppDimens.iconSmallSize, color: AppColor.whiteColor),
+                onCLickWidgetRight: () {
+                  controller.onRefresh();
                 },
               ),
-              Obx(() => Container(
-                    padding: EdgeInsets.only(
-                        left: AppDimens.mediumSpacingHor,
-                        right: AppDimens.mediumSpacingHor,
-                        bottom: AppDimens.smallSpacingVer),
-                    height: Get.height * 0.3 - 65.h,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
+              Container(
+                padding: EdgeInsets.only(
+                    left: AppDimens.mediumSpacingHor,
+                    right: AppDimens.mediumSpacingHor,
+                    bottom: AppDimens.smallSpacingVer),
+                height: Get.height * 0.3 - 65.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Obx(() => Text(
                           "${controller.totalKm.value}",
                           style: TextStyle(
                               fontSize: 25.sp,
                               fontWeight: FontWeight.bold,
                               color: AppColor.whiteColor),
-                        ),
-                        Text("TOTAL KM",
-                            style: TextStyle(
-                                color: AppColor.whiteColor,
-                                fontSize: AppDimens.mediumTextSize)),
-                        SizedBox(height: AppDimens.size10),
-                        Expanded(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        )),
+                    Text("TOTAL KM",
+                        style: TextStyle(
+                            color: AppColor.whiteColor,
+                            fontSize: AppDimens.mediumTextSize)),
+                    SizedBox(height: AppDimens.size10),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
+                              Obx(() => Text(
                                     Components.getFormattedTimer(
                                         ms: controller.totalDuration.value,
                                         includeHour: true,
@@ -81,69 +91,77 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                                         fontSize: 25.sp,
                                         fontWeight: FontWeight.bold,
                                         color: AppColor.whiteColor),
-                                  ),
-                                  Text("TOTAL\nDURATIONS",
-                                      style: TextStyle(
-                                          color: AppColor.whiteColor,
-                                          fontSize: AppDimens.mediumTextSize))
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
+                                  )),
+                              Text("TOTAL\nDURATIONS",
+                                  style: TextStyle(
+                                      color: AppColor.whiteColor,
+                                      fontSize: AppDimens.mediumTextSize))
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Obx(() => Text(
                                     "${controller.totalCalories.value}",
                                     style: TextStyle(
                                         fontSize: 25.sp,
                                         fontWeight: FontWeight.bold,
                                         color: AppColor.whiteColor),
-                                  ),
-                                  Text("TOTAL\nKCAL",
-                                      style: TextStyle(
-                                          color: AppColor.whiteColor,
-                                          fontSize: AppDimens.mediumTextSize))
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
+                                  )),
+                              Text("TOTAL\nKCAL",
+                                  style: TextStyle(
+                                      color: AppColor.whiteColor,
+                                      fontSize: AppDimens.mediumTextSize))
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Obx(() => Text(
                                     "${controller.totalAvgSpeed.value}",
                                     style: TextStyle(
                                         fontSize: 25.sp,
                                         fontWeight: FontWeight.bold,
                                         color: AppColor.whiteColor),
-                                  ),
-                                  Text("TOTAL AVG\nSPEED",
-                                      style: TextStyle(
-                                          color: AppColor.whiteColor,
-                                          fontSize: AppDimens.mediumTextSize))
-                                ],
-                              ),
+                                  )),
+                              Text("TOTAL AVG\nSPEED",
+                                  style: TextStyle(
+                                      color: AppColor.whiteColor,
+                                      fontSize: AppDimens.mediumTextSize))
                             ],
                           ),
-                        )
-                      ],
-                    ),
-                  )),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
               Expanded(
                   child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
                 child: ScrollConfiguration(
                   behavior: const ScrollBehavior().copyWith(overscroll: false),
-                  child: ListView.builder(
-                      itemCount: controller.recentActivites.length,
-                      itemBuilder: ((context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.ResultExerciseRun);
-                          },
-                          child: RecentActivityItem(
-                              recentActivity:
-                                  controller.recentActivites[index]),
-                        );
-                      })),
+                  child: Obx(() => !controller.isLoading.value
+                      ? (controller.recentActivites.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: controller.recentActivites.length,
+                              itemBuilder: ((context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.ResultExerciseRun,
+                                        arguments: {
+                                          'result_exercise_run':
+                                              controller.recentActivites[index]
+                                        });
+                                  },
+                                  child: RecentActivityItem(
+                                      recentActivity:
+                                          controller.recentActivites[index]),
+                                );
+                              }))
+                          : const RunTextNoData())
+                      : const Center(child: CupertinoActivityIndicator())),
                 ),
               ))
             ],

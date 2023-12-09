@@ -33,4 +33,26 @@ class UserExerciseRepositoryImpl extends UserExerciseRepository {
           errorMsg: e.message.toString()));
     }
   }
+
+  @override
+  Future<DataState<Map<String, String>>> calculateDataRecentActivity(
+      {required int userId}) async {
+    try {
+      final httpResponse = await apiService.calculateDataRecentActivity(userId);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      }
+      return DataFailed(AppError(
+          errorCode: httpResponse.response.statusCode ??
+              ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg: httpResponse.response.statusMessage ??
+              "Error calculate data run !!"));
+    } on DioException catch (e) {
+      return DataFailed(AppError(
+          errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg: e.message.toString()));
+    }
+  }
 }

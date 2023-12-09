@@ -71,15 +71,18 @@ class RecentActivityItem extends StatelessWidget {
                           fontSize: AppDimens.largeTextSize),
                     ),
                     recentActivity.mood != null
-                        ? Image(
-                            image: recentActivity.mood! == Constant.SMILING_MOOD
-                                ? AppImages.icSmiling
-                                : (recentActivity.mood! ==
-                                        Constant.NOT_SMILING_MOOD
-                                    ? AppImages.icNotSmiling
-                                    : AppImages.icTired),
-                            width: AppDimens.iconSmallSize,
-                          )
+                        ? (recentActivity.mood! != 0
+                            ? Image(
+                                image: recentActivity.mood! ==
+                                        Constant.SMILING_MOOD
+                                    ? AppImages.icSmiling
+                                    : (recentActivity.mood! ==
+                                            Constant.NOT_SMILING_MOOD
+                                        ? AppImages.icNotSmiling
+                                        : AppImages.icTired),
+                                width: AppDimens.iconSmallSize,
+                              )
+                            : const SizedBox())
                         : const SizedBox()
                   ],
                 ),

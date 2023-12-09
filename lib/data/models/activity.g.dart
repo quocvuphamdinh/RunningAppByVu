@@ -14,7 +14,8 @@ Activity _$ActivityFromJson(Map<String, dynamic> json) => Activity(
       workouts: (json['workouts'] as List<dynamic>)
           .map((e) => Workout.fromJson(e as Map<String, dynamic>))
           .toList(),
-      isCompleted: json['isCompleted'] != null ? json['isCompleted'] as int : 0,
+      isCompleted:
+          json['isCompleted'] == null ? 0 : json['isCompleted']! as int,
     );
 
 Map<String, dynamic> _$ActivityToJson(Activity instance) => <String, dynamic>{

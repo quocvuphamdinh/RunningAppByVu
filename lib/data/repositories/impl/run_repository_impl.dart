@@ -172,4 +172,30 @@ class RunRepositoryImpl extends RunRepository {
         .values
         .toList();
   }
+
+  @override
+  Future<double> getTotalAvgSpeedInKMH() {
+    return RunEntity.getTotalAvgSpeedInKMH();
+  }
+
+  @override
+  Future<int> getTotalCaloriesBurned() {
+    return RunEntity.getTotalCaloriesBurned();
+  }
+
+  @override
+  Future<int> getTotalDistance() {
+    return RunEntity.getTotalDistance();
+  }
+
+  @override
+  Future<int> getTotalTimeInMillies() {
+    return RunEntity.getTotalTimeInMillies();
+  }
+
+  @override
+  Future<List<Run>> getAllRunsSortedByType(
+      {required int isRunWithExercise, required SortType sortType}) {
+    return RunEntity.getAllRunsSortedByType(isRunWithExercise, sortType);
+  }
 }

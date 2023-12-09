@@ -1,110 +1,76 @@
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
-import 'package:running_app_flutter/data/models/activity.dart';
-import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/data/models/user_activity_detail.dart';
-import 'package:running_app_flutter/data/models/workout.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_exercise_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/user_exercise_repository.dart';
+import 'package:running_app_flutter/models/data_state.dart';
+import 'package:running_app_flutter/services/local_storage.dart';
 
 class RecentExerciseBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => RecentExerciseController());
+    Get.lazyPut(
+        () => RecentExerciseController(Get.find<UserExerciseRepositoryImpl>()),
+        fenix: true);
   }
 }
 
 class RecentExerciseController extends BaseController {
-  final List<UserActivityDetail> recentActivites = [
-    UserActivityDetail(
-        run: Run(
-            timestamp: 1699843990,
-            averageSpeedInKilometersPerHour: 16.7,
-            distanceInKilometers: 2222,
-            timeInMillis: 60000,
-            caloriesBurned: 10,
-            isRunWithExercise: 1),
-        comment: "hi vũ",
-        mood: 1,
-        activity: Activity(
-            name: "Week 1 Day 1",
-            type: 0,
-            durationOfWorkouts: 60000,
-            workouts: [Workout(name: "Run", duration: 60000)],
-            isCompleted: 1)),
-    UserActivityDetail(
-        run: Run(
-            timestamp: 1699843990,
-            averageSpeedInKilometersPerHour: 18,
-            distanceInKilometers: 2500,
-            timeInMillis: 120000,
-            caloriesBurned: 15,
-            isRunWithExercise: 1),
-        comment: "hi vũ 2",
-        mood: 2,
-        activity: Activity(
-            name: "Week 1 Day 2",
-            type: 1,
-            durationOfWorkouts: 60000,
-            workouts: [Workout(name: "Run", duration: 60000)],
-            isCompleted: 1)),
-    UserActivityDetail(
-        run: Run(
-            timestamp: 1699843990,
-            averageSpeedInKilometersPerHour: 20.65,
-            distanceInKilometers: 3000,
-            timeInMillis: 180000,
-            caloriesBurned: 20,
-            isRunWithExercise: 1),
-        comment: "hi vũ 3",
-        mood: 3,
-        activity: Activity(
-            name: "Week 1 Day 3",
-            type: 0,
-            durationOfWorkouts: 60000,
-            workouts: [Workout(name: "Run", duration: 60000)],
-            isCompleted: 1)),
-    UserActivityDetail(
-        run: Run(
-            timestamp: 1699843990,
-            averageSpeedInKilometersPerHour: 20.65,
-            distanceInKilometers: 3000,
-            timeInMillis: 180000,
-            caloriesBurned: 20,
-            isRunWithExercise: 1),
-        activity: Activity(
-            name: "Week 1 Day 3",
-            type: 0,
-            durationOfWorkouts: 60000,
-            workouts: [Workout(name: "Run", duration: 60000)],
-            isCompleted: 1))
-  ];
+  final UserExerciseRepository _userExerRepo;
+  RecentExerciseController(this._userExerRepo);
 
-  final RxDouble totalKm = 0.0.obs;
-  final RxInt totalDuration = 0.obs;
-  final RxInt totalCalories = 0.obs;
-  final RxDouble totalAvgSpeed = 0.0.obs;
+  final store = Get.find<LocalStorageService>();
+
+  final refreshController = RefreshController(initialRefresh: false);
+
+  RxList<UserActivityDetail> recentActivites = <UserActivityDetail>[].obs;
+
+  RxDouble totalKm = 0.0.obs;
+  RxInt totalDuration = 0.obs;
+  RxInt totalCalories = 0.obs;
+  RxDouble totalAvgSpeed = 0.0.obs;
+
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
 
     onInitTotalData();
+    onInitList();
   }
 
-  onInitTotalData() {
-    var km = 0;
-    var duration = 0;
-    var calories = 0;
-    var avgSpeed = 0.0;
-    for (var element in recentActivites) {
-      km += element.run.distanceInKilometers;
-      duration += element.run.timeInMillis;
-      calories += element.run.caloriesBurned;
-      avgSpeed += element.run.averageSpeedInKilometersPerHour;
-    }
+  onRefresh() {
+    onInitTotalData();
+    onInitList();
+    refreshController.refreshCompleted();
+  }
 
-    totalKm.value = km / 1000;
-    totalDuration.value = duration;
-    totalCalories.value = calories;
-    totalAvgSpeed.value = avgSpeed;
+  onInitTotalData() async {
+    final data = await _userExerRepo.calculateDataRecentActivity(
+        userId: store.user!.id!);
+    if (data is DataSuccess) {
+      totalKm.value = (int.parse(data.data!['distance'] as String)) / 1000;
+      totalDuration.value = int.parse(data.data!['duration'] as String);
+      totalCalories.value = int.parse(data.data!['caloriesBurned'] as String);
+      totalAvgSpeed.value = double.parse(data.data!['avgSpeed'] as String);
+      return;
+    }
+    print("Error calculate exercise: ${data.error!.errorMsg}");
+  }
+
+  onInitList() async {
+    recentActivites.value = [];
+    isLoading.value = true;
+    final data =
+        await _userExerRepo.getListUserExercise(userId: store.user!.id!);
+    if (data is DataSuccess) {
+      recentActivites.value = data.data!;
+      isLoading.value = false;
+      return;
+    }
+    print("Error recent exercise: ${data.error!.errorMsg}");
+    isLoading.value = false;
   }
 }
