@@ -89,7 +89,11 @@ class ExercisePage extends GetView<ExerciseController> {
                                         return InkWell(
                                           onTap: () {
                                             Get.toNamed(
-                                                AppRoutes.ExerciseDetail);
+                                                AppRoutes.ExerciseDetail,
+                                                arguments: {
+                                                  'exercise': controller
+                                                      .walkingExercises[index]
+                                                });
                                           },
                                           child: ExerciseItem(
                                               exerciseItem: controller
@@ -137,7 +141,11 @@ class ExercisePage extends GetView<ExerciseController> {
                                         return InkWell(
                                           onTap: () {
                                             Get.toNamed(
-                                                AppRoutes.ExerciseDetail);
+                                                AppRoutes.ExerciseDetail,
+                                                arguments: {
+                                                  'exercise': controller
+                                                      .runningExercises[index]
+                                                });
                                           },
                                           child: ExerciseItem(
                                               exerciseItem: controller

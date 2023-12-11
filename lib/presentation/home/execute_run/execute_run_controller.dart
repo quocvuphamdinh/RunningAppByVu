@@ -11,7 +11,10 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/run_repository.dart';
+import 'package:running_app_flutter/presentation/play_music/play_music_controller.dart';
+import 'package:running_app_flutter/services/firebase_storage.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
+import 'package:running_app_flutter/utils/map_utils.dart';
 
 class ExecuteRunBinding extends Bindings {
   @override
@@ -25,6 +28,7 @@ class ExecuteRunController extends BaseController {
   ExecuteRunController(this._runRepo);
 
   final store = Get.find<LocalStorageService>();
+  final firebaseStorage = Get.find<FirebaseStorageService>();
 
   StreamSubscription? _locationSubscription;
   final Completer<GoogleMapController> mapController =
@@ -81,9 +85,14 @@ class ExecuteRunController extends BaseController {
     stopRun();
     showLoading(messaging: "Saving...");
     var controller = await mapController.future;
-    var img = await controller.takeSnapshot();
     var firstLatLng = latlngs.first;
     var lastLatLng = latlngs.last;
+    await controller.moveCamera(
+      CameraUpdate.newLatLngBounds(
+        MapUtils.boundsFromLatLngList(latlngs),
+        10.0,
+      ),
+    );
     var currentTimeInMillies = runDuration.value.inMilliseconds;
     var distanceInMeters = Geolocator.distanceBetween(firstLatLng.latitude,
             firstLatLng.longitude, lastLatLng.latitude, lastLatLng.longitude)
@@ -106,12 +115,24 @@ class ExecuteRunController extends BaseController {
         caloriesBurned: caloriesBurned,
         img: "",
         isRunWithExercise: 0);
+    await const Duration(seconds: 3).delay();
+    var img = await controller.takeSnapshot();
+    firebaseStorage.uploadImage("run$id", img!, (url) async {
+      run.img = url;
+      await _runRepo.insertRun(run: run);
 
-    await _runRepo.insertRun(run: run);
+      if (isShowLoading()) {
+        dismissLoading();
+      }
+      onBack();
+    }, (message) async {
+      await _runRepo.insertRun(run: run);
 
-    if (isShowLoading()) {
-      dismissLoading();
-    }
+      if (isShowLoading()) {
+        dismissLoading();
+      }
+      onBack();
+    });
   }
 
   addTime() {
@@ -121,7 +142,7 @@ class ExecuteRunController extends BaseController {
   }
 
   startTimer() {
-    timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       addTime();
     });
   }
@@ -252,6 +273,11 @@ class ExecuteRunController extends BaseController {
     isGoogleMapDisposed = true;
     var controller = await mapController.future;
     controller.dispose();
+  }
+
+  onBack() {
+    Get.find<PlayMusicController>().onStopAudioPlayer();
+    Get.back();
   }
 
   @override

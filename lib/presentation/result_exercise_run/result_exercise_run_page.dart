@@ -31,7 +31,7 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
               blurRadius: 5.0,
             ),
           ],
-          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+          image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
           borderRadius: BorderRadius.all(Radius.circular(10.r))),
     );
   }
@@ -54,7 +54,7 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                       },
                       widgetCenter: TextTitle(
                           text:
-                              "${controller.userActivityDetail.value!.activity.name} - ${controller.userActivityDetail.value!.activity.type == Constant.WALKING ? "Walking" : "Running"} Exercise"),
+                              "${controller.userActivityDetail.value!.activity.name} - ${Components.convertDateTimeMilliesToString(ms: controller.userActivityDetail.value!.run.timestamp, dateFormat: 'dd/MM/yyyy')}"),
                     ),
                     Expanded(
                         child: ScrollConfiguration(

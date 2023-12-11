@@ -62,7 +62,11 @@ class ExerciseListPage extends GetView<ExerciseListController> {
                                     itemBuilder: ((context, index) {
                                       return InkWell(
                                         onTap: () {
-                                          Get.toNamed(AppRoutes.ExerciseDetail);
+                                          Get.toNamed(AppRoutes.ExerciseDetail,
+                                              arguments: {
+                                                'exercise':
+                                                    controller.exercises[index]
+                                              });
                                         },
                                         child: ExerciseItem(
                                             exerciseItem:

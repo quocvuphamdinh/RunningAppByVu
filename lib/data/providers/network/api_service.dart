@@ -5,6 +5,7 @@ import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/models/activity.dart';
 import 'package:running_app_flutter/data/models/run.dart';
 import 'package:running_app_flutter/data/models/user.dart';
+import 'package:running_app_flutter/data/models/user_activity.dart';
 import 'package:running_app_flutter/data/models/user_activity_detail.dart';
 
 part 'api_service.g.dart';
@@ -61,4 +62,8 @@ abstract class ApiService {
   @GET("/user-activity/calculate-recent-activity/{userId}")
   Future<HttpResponse<Map<String, String>>> calculateDataRecentActivity(
       @Path("userId") int userId);
+
+  @POST("/user-activity/{userId}")
+  Future<HttpResponse<UserActivity>> insertUserExercise(
+      @Body() UserActivity userActivity, @Path("userId") int userId);
 }

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,8 +7,10 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/app/app_binding.dart';
 import 'package:running_app_flutter/data/providers/database/database_service.dart';
 import 'package:running_app_flutter/data/providers/network/api_service.dart';
+import 'package:running_app_flutter/firebase_options.dart';
 import 'package:running_app_flutter/routes/app_pages.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
+import 'package:running_app_flutter/services/firebase_storage.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
 import 'package:running_app_flutter/utils/dependency.dart';
 
@@ -17,7 +20,17 @@ void main() async {
   initApiService();
   await initServices();
   DependencyInjection.init();
+  initFirebase();
   runApp(MyApp());
+}
+
+initFirebase() async {
+  print("Init firebase...");
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Get.put(FirebaseStorageService(), permanent: true);
+  print("Firebase init successfully...");
 }
 
 initApiService() {
@@ -50,21 +63,21 @@ class MyApp extends StatelessWidget {
     return MediaQuery(
         data: MediaQueryData.fromView(WidgetsBinding.instance.window),
         child: ScreenUtilInit(
-          designSize: const Size(360, 690),
-          builder: ((context, child) {
-          return GetMaterialApp(
-            builder: EasyLoading.init(),
-            initialRoute:
-                !store.isLogin ? AppRoutes.Welcome : AppRoutes.Run_Main,
-            getPages: AppPages.routes,
-            initialBinding: AppBinding(),
-            debugShowCheckedModeBanner: false,
-            title: 'Vũ Running App',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            //home: const SignUpPage(),
-          );
-        })));
+            designSize: const Size(360, 690),
+            builder: ((context, child) {
+              return GetMaterialApp(
+                builder: EasyLoading.init(),
+                initialRoute:
+                    !store.isLogin ? AppRoutes.Welcome : AppRoutes.Run_Main,
+                getPages: AppPages.routes,
+                initialBinding: AppBinding(),
+                debugShowCheckedModeBanner: false,
+                title: 'Vũ Running App',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                //home: const SignUpPage(),
+              );
+            })));
   }
 }

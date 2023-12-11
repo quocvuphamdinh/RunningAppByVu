@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "209966601380",
+    "firebase_url": "https://runningappseminar-default-rtdb.firebaseio.com",
+    "project_id": "runningappseminar",
+    "storage_bucket": "runningappseminar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209966601380:android:d694492f0dd1622f208231",
+        "android_client_info": {
+          "package_name": "com.example.running_app_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209966601380-g5cqjjqieoqpmav9pl3ac9itmhc04uds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvxRPfnBmVFxWJSos27P_i5FbwtzXD9MM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209966601380-g5cqjjqieoqpmav9pl3ac9itmhc04uds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209966601380:android:34a7cd7af7f475b1208231",
+        "android_client_info": {
+          "package_name": "vu.pham.runningappseminar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209966601380-g5cqjjqieoqpmav9pl3ac9itmhc04uds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvxRPfnBmVFxWJSos27P_i5FbwtzXD9MM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209966601380-g5cqjjqieoqpmav9pl3ac9itmhc04uds.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

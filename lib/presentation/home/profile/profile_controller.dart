@@ -4,8 +4,10 @@ import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/data/models/user.dart';
 import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_exercise_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/impl/user_repository_impl.dart';
 import 'package:running_app_flutter/data/repositories/run_repository.dart';
+import 'package:running_app_flutter/data/repositories/user_exercise_repository.dart';
 import 'package:running_app_flutter/data/repositories/user_repository.dart';
 import 'package:running_app_flutter/models/data_state.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
@@ -15,14 +17,17 @@ class ProfileBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => ProfileController(
-        Get.find<RunRepositoryImpl>(), Get.find<UserRepositoryImpl>()));
+        Get.find<RunRepositoryImpl>(),
+        Get.find<UserRepositoryImpl>(),
+        Get.find<UserExerciseRepositoryImpl>()));
   }
 }
 
 class ProfileController extends BaseController {
   final RunRepository _runRepo;
   final UserRepository _userRepo;
-  ProfileController(this._runRepo, this._userRepo);
+  final UserExerciseRepository _userExerciseRepo;
+  ProfileController(this._runRepo, this._userRepo, this._userExerciseRepo);
 
   final refreshController = RefreshController(initialRefresh: false);
 
@@ -88,6 +93,16 @@ class ProfileController extends BaseController {
         return;
       }
     }
+    var userExercises = await _userExerciseRepo.getAll();
+    for (var userExer in userExercises) {
+      var sync = await _userExerciseRepo.insertUserExerciseToNetwork(
+          userActivity: userExer, userId: user.value!.id!);
+      if (sync is DataFailed) {
+        dismissLoading();
+        showSnackBar(sync.error!.errorTitle, sync.error!.errorMsg);
+        return;
+      }
+    }
     showSnackBar(Constant.TITLE_ALERT, "Sync data completed !");
   }
 
@@ -121,7 +136,21 @@ class ProfileController extends BaseController {
               return;
             }
           }
+          var userExercises = await _userExerciseRepo.getAll();
+          for (var userExer in userExercises) {
+            var sync = await _userExerciseRepo.insertUserExerciseToNetwork(
+                userActivity: userExer, userId: user.value!.id!);
+            if (sync is DataFailed) {
+              dismissLoading();
+              showAppDialog(
+                  title: sync.error!.errorTitle,
+                  content: sync.error!.errorMsg,
+                  button: "OK");
+              return;
+            }
+          }
           await _runRepo.deleteAllRun();
+          await _userExerciseRepo.deleteAll();
           store.user = null;
           store.isLogin = null;
 

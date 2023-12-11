@@ -202,7 +202,6 @@ class ExecuteRunExercisePage extends GetView<ExecuteRunExerciseController> {
                                 color: AppColor.whiteColor),
                             onClick: () async {
                               await controller.saveRun();
-                              controller.onBack();
                             }),
                         SizedBox(
                           width: AppDimens.size30,

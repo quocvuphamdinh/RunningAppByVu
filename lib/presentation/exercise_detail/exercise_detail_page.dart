@@ -23,12 +23,16 @@ class ExerciseDetailPage extends GetView<ExerciseDetailController> {
           AppBarThreeSide(
             widgetLeft: Icon(Icons.close, size: AppDimens.iconSmallSize),
             onClickWidgetLeft: () {
-              Get.back();
+              controller.onBack();
             },
-            widgetCenter: const TextTitle(text: "Week 1 Day 1"),
+            widgetCenter: Obx(() => TextTitle(
+                text: controller.exercise.value != null
+                    ? controller.exercise.value!.name
+                    : "Exercise name")),
             widgetRight: Icon(Icons.play_arrow, size: AppDimens.iconSmallSize),
             onCLickWidgetRight: () {
-              Get.toNamed(AppRoutes.ExecuteRunExercise);
+              Get.toNamed(AppRoutes.ExecuteRunExercise,
+                  arguments: {'exercise': controller.exercise.value!});
             },
           ),
           Padding(
@@ -52,12 +56,12 @@ class ExerciseDetailPage extends GetView<ExerciseDetailController> {
                 ),
                 ScrollConfiguration(
                   behavior: const ScrollBehavior().copyWith(overscroll: false),
-                  child: ListView.builder(
+                  child: Obx(() => ListView.builder(
                       shrinkWrap: true,
                       itemCount: controller.workouts.length,
                       itemBuilder: ((context, index) {
                         return WorkoutItem(workout: controller.workouts[index]);
-                      })),
+                      }))),
                 )
               ],
             ),

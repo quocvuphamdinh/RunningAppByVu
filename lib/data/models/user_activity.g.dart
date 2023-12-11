@@ -7,11 +7,11 @@ part of 'user_activity.dart';
 // **************************************************************************
 
 UserActivity _$UserActivityFromJson(Map<String, dynamic> json) => UserActivity(
-      id: json['id'] as String? ?? '',
+      id: json['id'] as int?,
       run: json['run'] == null
           ? null
           : Run.fromJson(json['run'] as Map<String, dynamic>),
-      activityId: json['activityId'] as String,
+      activityId: json['activityId'] as int,
       comment: json['comment'] as String,
       mood: json['mood'] as int,
     );

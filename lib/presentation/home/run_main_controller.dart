@@ -21,7 +21,9 @@ class RunMainBinding extends Bindings {
     Get.lazyPut(() => ExerciseController(Get.find<ExerciseRepositoryImpl>()));
     Get.lazyPut(() => AnalysisController(Get.find<RunRepositoryImpl>()));
     Get.lazyPut(() => ProfileController(
-        Get.find<RunRepositoryImpl>(), Get.find<UserRepositoryImpl>()));
+        Get.find<RunRepositoryImpl>(),
+        Get.find<UserRepositoryImpl>(),
+        Get.find<UserExerciseRepositoryImpl>()));
   }
 }
 

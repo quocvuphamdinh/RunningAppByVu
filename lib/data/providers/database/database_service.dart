@@ -1,5 +1,6 @@
 import 'package:path/path.dart';
 import 'package:running_app_flutter/data/providers/database/entities/run_entity.dart';
+import 'package:running_app_flutter/data/providers/database/entities/user_activity_entity.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseService {
@@ -20,8 +21,10 @@ class DatabaseService {
     return database;
   }
 
-  Future<void> create(Database database, int version) async =>
-      await RunEntity.createTable(database);
+  Future<void> create(Database database, int version) async {
+    await RunEntity.createTable(database);
+    await UserActivityEntity.createTable(database);
+  }
 
   Future<String> get fullPath async {
     const name = 'vurunningapp.db';

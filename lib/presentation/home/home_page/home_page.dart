@@ -116,22 +116,18 @@ class HomePage extends GetView<HomeController> {
                                     unitType: "Kcl")),
                                 Obx(() => ProgressTodayCard(
                                     image: AppImages.icMilies,
-                                    value: Duration(
-                                            milliseconds: controller
-                                                .totalRunMillies.value)
-                                        .inMinutes,
-                                    unitType: Duration(
-                                                    milliseconds: controller
-                                                        .totalRunMillies.value)
-                                                .inMinutes <=
-                                            1
-                                        ? "Minute"
-                                        : "Minutes")),
+                                    value: Components.getFormattedTimer(
+                                        ms: controller.totalRunMillies.value,
+                                        includeHour: true,
+                                        includeMinute: true,
+                                        includeSecond: true),
+                                    unitType: "H:M:S")),
                                 Obx(() => ProgressTodayCard(
                                     image: AppImages.icRun,
                                     value: controller.totalAvgSpeed.value == 0
                                         ? 0
-                                        : controller.totalAvgSpeed.value,
+                                        : controller.totalAvgSpeed.value
+                                            .toStringAsFixed(2),
                                     unitType: "Km/h")),
                                 Obx(() => ProgressTodayCard(
                                     image: AppImages.icRunCount,
@@ -160,7 +156,7 @@ class HomePage extends GetView<HomeController> {
                                   : const SizedBox()),
                             ],
                           ),
-                          Obx(() => !controller.isLoadingRecentExercise.value
+                          Obx(() => !controller.isLoadingTodayTraining.value
                               ? (controller.todayTraninings.isNotEmpty
                                   ? Container(
                                       margin: EdgeInsets.only(
@@ -175,7 +171,12 @@ class HomePage extends GetView<HomeController> {
                                             return InkWell(
                                                 onTap: () {
                                                   Get.toNamed(
-                                                      AppRoutes.ExerciseDetail);
+                                                      AppRoutes.ExerciseDetail,
+                                                      arguments: {
+                                                        'exercise': controller
+                                                                .todayTraninings[
+                                                            index]
+                                                      });
                                                 },
                                                 child: TodayTrainingCard(
                                                     exercise: controller

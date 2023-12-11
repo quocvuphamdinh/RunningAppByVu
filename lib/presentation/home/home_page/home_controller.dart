@@ -123,7 +123,7 @@ class HomeController extends BaseController {
     user.value = store.user;
   }
 
-  onRefresh() async {
+  onRefresh() {
     onInitUser();
     onInitTotalDistanceWeekly();
     onInitProgressToday();

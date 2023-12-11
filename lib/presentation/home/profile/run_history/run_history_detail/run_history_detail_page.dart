@@ -139,7 +139,7 @@ class RunHistoryDetailPage extends GetView<RunHistoryDetailController> {
               blurRadius: 5.0,
             ),
           ],
-          image: DecorationImage(image: imageProvider, fit: BoxFit.cover),
+          image: DecorationImage(image: imageProvider, fit: BoxFit.fill),
           borderRadius: BorderRadius.all(Radius.circular(10.r))),
     );
   }

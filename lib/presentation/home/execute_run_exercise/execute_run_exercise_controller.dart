@@ -8,18 +8,36 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
+import 'package:running_app_flutter/constant/constant.dart';
+import 'package:running_app_flutter/data/models/activity.dart';
 import 'package:running_app_flutter/data/models/run.dart';
+import 'package:running_app_flutter/data/models/user_activity.dart';
 import 'package:running_app_flutter/data/models/workout.dart';
+import 'package:running_app_flutter/data/repositories/impl/run_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/impl/user_exercise_repository_impl.dart';
+import 'package:running_app_flutter/data/repositories/run_repository.dart';
+import 'package:running_app_flutter/data/repositories/user_exercise_repository.dart';
+import 'package:running_app_flutter/models/data_state.dart';
 import 'package:running_app_flutter/presentation/play_music/play_music_controller.dart';
+import 'package:running_app_flutter/services/firebase_storage.dart';
+import 'package:running_app_flutter/services/local_storage.dart';
+import 'package:running_app_flutter/utils/map_utils.dart';
 
 class ExecuteRunExerciseBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ExecuteRunExerciseController());
+    Get.lazyPut(() => ExecuteRunExerciseController(
+        Get.find<RunRepositoryImpl>(), Get.find<UserExerciseRepositoryImpl>()));
   }
 }
 
 class ExecuteRunExerciseController extends BaseController {
+  final RunRepository _runRepo;
+  final UserExerciseRepository _userExerciseRepo;
+  ExecuteRunExerciseController(this._runRepo, this._userExerciseRepo);
+
+  final store = Get.find<LocalStorageService>();
+  final firebaseStorage = Get.find<FirebaseStorageService>();
   final Completer<GoogleMapController> mapController =
       Completer<GoogleMapController>();
   StreamSubscription? _locationSubscription;
@@ -37,6 +55,7 @@ class ExecuteRunExerciseController extends BaseController {
   bool isGoogleMapDisposed = false;
 
   RxList<Workout> workouts = <Workout>[].obs;
+  Activity? exercise;
   RxInt timeLeft = 0.obs;
   RxInt currentWorkoutIndex = 0.obs;
 
@@ -52,11 +71,8 @@ class ExecuteRunExerciseController extends BaseController {
   void onInit() {
     super.onInit();
 
-    workouts = [
-      Workout(name: "Run", duration: 5000),
-      Workout(name: "Walk", duration: 5000),
-      Workout(name: "Cool down", duration: 5000)
-    ].obs;
+    exercise = Get.arguments['exercise'];
+    workouts = exercise!.workouts.obs;
     workouts.refresh();
     int total = 0;
     for (var workout in workouts) {
@@ -101,9 +117,14 @@ class ExecuteRunExerciseController extends BaseController {
     stopRun();
     showLoading(messaging: "Saving...");
     var controller = await mapController.future;
-    var img = await controller.takeSnapshot();
     var firstLatLng = latlngs.first;
     var lastLatLng = latlngs.last;
+    await controller.moveCamera(
+      CameraUpdate.newLatLngBounds(
+        MapUtils.boundsFromLatLngList(latlngs),
+        10.0,
+      ),
+    );
     var currentTimeInMillies = runDuration.value.inMilliseconds;
     var distanceInMeters = Geolocator.distanceBetween(firstLatLng.latitude,
             firstLatLng.longitude, lastLatLng.latitude, lastLatLng.longitude)
@@ -113,12 +134,12 @@ class ExecuteRunExerciseController extends BaseController {
                 10)
             .round() /
         10;
+    var user = store.user;
+    var id = "${user!.userName}${DateTime.now().millisecondsSinceEpoch}";
     var dateTimestamp = DateTime.now().millisecondsSinceEpoch;
-    //var caloriesBurned = ((distanceInMeters / 1000) * weight).toInt();
-    var caloriesBurned = ((distanceInMeters / 1000) * 65).toInt();
+    var caloriesBurned = ((distanceInMeters / 1000) * user.weight).toInt();
     var run = Run(
-        // id: "${user?.getUsername()}${user?.getPassword()}$dateTimestamp",
-        id: "$dateTimestamp",
+        id: id,
         timestamp: dateTimestamp,
         averageSpeedInKilometersPerHour: avgSpeed,
         distanceInKilometers: distanceInMeters,
@@ -126,10 +147,84 @@ class ExecuteRunExerciseController extends BaseController {
         caloriesBurned: caloriesBurned,
         img: "",
         isRunWithExercise: 1);
-    if (isShowLoading()) {
-      dismissLoading();
-    }
-    //showSnackBar("Result run", "$run", bgColor: AppColor.redColor);
+    var userActivity = UserActivity(
+        id: DateTime.now().millisecondsSinceEpoch,
+        run: run,
+        activityId: exercise!.id!,
+        comment: "",
+        mood: 0);
+    await const Duration(seconds: 3).delay();
+    var img = await controller.takeSnapshot();
+    firebaseStorage.uploadImage("run$id", img!, (url) async {
+      bool isInsertExerciseSuccess = false;
+      bool isInsertRunSuccess = false;
+      run.img = url;
+      final dataRun =
+          await _runRepo.insertRunToNetwork(run: run, userId: user.id!);
+      if (dataRun is DataSuccess) {
+        isInsertRunSuccess = true;
+      }
+      final data = await _userExerciseRepo.insertUserExerciseToNetwork(
+          userActivity: userActivity, userId: user.id!);
+      if (data is DataSuccess) {
+        isInsertExerciseSuccess = true;
+      }
+      await _runRepo.insertRun(run: run);
+      await _userExerciseRepo.insertUserExercise(userActivity: userActivity);
+
+      if (isShowLoading()) {
+        dismissLoading();
+      }
+      var message = "";
+      if (!isInsertExerciseSuccess || !isInsertRunSuccess) {
+        message =
+            "Some thing went wrong. Your run data will be send to the server later !";
+      } else {
+        message = "Your run is finished !!";
+      }
+      showAppDialog(
+          title: Constant.TITLE_ALERT,
+          content: message,
+          button: "OK",
+          dismissOnTap: false,
+          onPressed: () {
+            onBack();
+          });
+    }, (message) async {
+      bool isInsertExerciseSuccess = false;
+      bool isInsertRunSuccess = false;
+      final dataRun =
+          await _runRepo.insertRunToNetwork(run: run, userId: user.id!);
+      if (dataRun is DataSuccess) {
+        isInsertRunSuccess = true;
+      }
+      final data = await _userExerciseRepo.insertUserExerciseToNetwork(
+          userActivity: userActivity, userId: user.id!);
+      if (data is DataSuccess) {
+        isInsertExerciseSuccess = true;
+      }
+      await _runRepo.insertRun(run: run);
+      await _userExerciseRepo.insertUserExercise(userActivity: userActivity);
+
+      if (isShowLoading()) {
+        dismissLoading();
+      }
+      var message = "";
+      if (!isInsertExerciseSuccess || !isInsertRunSuccess) {
+        message =
+            "Some thing went wrong. Your run data will be send to the server later !";
+      } else {
+        message = "Your run is finished !!";
+      }
+      showAppDialog(
+          title: Constant.TITLE_ALERT,
+          content: message,
+          button: "OK",
+          dismissOnTap: false,
+          onPressed: () {
+            onBack();
+          });
+    });
   }
 
   addTime() async {
@@ -148,21 +243,13 @@ class ExecuteRunExerciseController extends BaseController {
     }
     if (milliSeconds == totalWorkoutsDuration) {
       await saveRun();
-      showAppDialog(
-          title: "Finish",
-          content: "Your run is finished !!",
-          button: "OK",
-          dismissOnTap: false,
-          onPressed: () {
-            Get.back();
-          });
     }
     timeLeft.value = timeLeft.value - addMilliSecond;
     runDuration.value = Duration(milliseconds: milliSeconds);
   }
 
   startTimer() {
-    timer = Timer.periodic(const Duration(milliseconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
       addTime();
     });
   }
