@@ -48,6 +48,9 @@ abstract class ApiService {
   Future<HttpResponse<void>> insertRun(@Body() Run run,
       @Path("userId") int userId, @Path("userActivitesId") int userActivitesId);
 
+  @DELETE("/run/delete")
+  Future<HttpResponse<Map<String, String>>> deleteRunRemote(@Body() Run run);
+
   //exercise
   @GET("/activity/{type}/{userId}")
   Future<HttpResponse<List<Activity>>> getListExerciseByType(
@@ -66,4 +69,12 @@ abstract class ApiService {
   @POST("/user-activity/{userId}")
   Future<HttpResponse<UserActivity>> insertUserExercise(
       @Body() UserActivity userActivity, @Path("userId") int userId);
+
+  @PUT("/user-activity/{userId}")
+  Future<HttpResponse<UserActivity>> updateUserExercise(
+      @Body() UserActivity userActivity, @Path("userId") int userId);
+
+  @DELETE("/user-activity/{userActivityId}")
+  Future<HttpResponse<Map<String, bool>>> deleteUserExercise(
+      @Path("userActivityId") int userActivityId);
 }

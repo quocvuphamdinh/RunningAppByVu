@@ -40,7 +40,9 @@ class RunHistoryDetailPage extends GetView<RunHistoryDetailController> {
                   ? Icon(Icons.delete,
                       size: AppDimens.iconSmallSize, color: AppColor.redColor)
                   : const SizedBox(),
-              onCLickWidgetRight: () {},
+              onCLickWidgetRight: () {
+                controller.onDeleteRun();
+              },
             ),
             Expanded(
               child: run != null
@@ -97,7 +99,8 @@ class RunHistoryDetailPage extends GetView<RunHistoryDetailController> {
                                   if (run.img == null || run.img!.isEmpty) {
                                     return;
                                   }
-                                  Get.toNamed(AppRoutes.ShowImage);
+                                  Get.toNamed(AppRoutes.ShowImage,
+                                      arguments: {"image_url": run.img});
                                 },
                                 child: (run.img == null || run.img!.isEmpty)
                                     ? _runImage(AppImages.errorGif)

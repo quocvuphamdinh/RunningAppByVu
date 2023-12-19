@@ -72,7 +72,21 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                                   SizedBox(height: AppDimens.size10),
                                   GestureDetector(
                                     onTap: () {
-                                      Get.toNamed(AppRoutes.ShowImage);
+                                      if (controller.userActivityDetail.value!
+                                                  .run.img ==
+                                              null ||
+                                          controller.userActivityDetail.value!
+                                              .run.img!.isEmpty) {
+                                        return;
+                                      }
+                                      Get.toNamed(AppRoutes.ShowImage,
+                                          arguments: {
+                                            "image_url": controller
+                                                .userActivityDetail
+                                                .value!
+                                                .run
+                                                .img
+                                          });
                                     },
                                     child: (controller.userActivityDetail.value!
                                                     .run.img ==
@@ -321,14 +335,18 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                                   ),
                                   RunButton(
                                       buttonText: "Save",
-                                      onClick: () {},
+                                      onClick: () {
+                                        controller.onSave();
+                                      },
                                       backgroundColor: AppColor.grey80),
                                   SizedBox(
                                     height: AppDimens.size10,
                                   ),
                                   RunButton(
                                       buttonText: "Delete",
-                                      onClick: () {},
+                                      onClick: () {
+                                        controller.onDeleteExercise();
+                                      },
                                       backgroundColor: AppColor.redColor)
                                 ],
                               ),

@@ -12,4 +12,8 @@ abstract class UserExerciseRepository {
       {required int userId});
   Future<DataState<UserActivity>> insertUserExerciseToNetwork(
       {required UserActivity userActivity, required int userId});
+  Future<DataState<UserActivity>> updateUserExercise(
+      {required UserActivity userActivity, required int userId});
+  Future<DataState<Map<String, bool>>> deleteUserExercise(
+      {required int userActivityId});
 }

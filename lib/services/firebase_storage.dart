@@ -5,6 +5,19 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
 
 class FirebaseStorageService extends GetxService {
+  deleteImage(String imageName, Function() onSuccess,
+      Function(String message) onError) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final mountainsRef = storageRef.child("$imageName.png");
+    try {
+      await mountainsRef.delete();
+      onSuccess();
+    } on FirebaseException catch (e) {
+      onError(e.message.toString());
+      print("Failed with error '${e.code}': ${e.message}");
+    }
+  }
+
   uploadImage(String imageName, Uint8List image, Function(String url) onSuccess,
       Function(String message) onError) async {
     final storageRef = FirebaseStorage.instance.ref();

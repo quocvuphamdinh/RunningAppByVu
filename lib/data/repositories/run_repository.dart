@@ -11,6 +11,7 @@ abstract class RunRepository {
   Future<List<Run>> getAllByType({required int type});
   Future<List<Run>> getAllRun();
   Future<Run> getRunById({required String id});
+  Future<void> deleteRun({required String id});
   Future<void> deleteAllRun();
   Future<int> getTotalCaloriesBurnedToDay();
   Future<int> getTotalTimeInMillisToday();
@@ -32,4 +33,5 @@ abstract class RunRepository {
   Future<List<Run>> getAllRunsSortedByType(
       {required int isRunWithExercise, required SortType sortType});
   Future<DataState<List<Run>>> getRunsFromNetwork({required int userId});
+  Future<DataState<Map<String, String>>> deleteRunRemote({required Run run});
 }

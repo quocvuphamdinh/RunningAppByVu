@@ -82,6 +82,51 @@ class UserExerciseRepositoryImpl extends UserExerciseRepository {
   }
 
   @override
+  Future<DataState<UserActivity>> updateUserExercise(
+      {required UserActivity userActivity, required int userId}) async {
+    try {
+      final httpResponse =
+          await apiService.updateUserExercise(userActivity, userId);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      }
+      return DataFailed(AppError(
+          errorCode: httpResponse.response.statusCode ??
+              ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg: httpResponse.response.statusMessage ??
+              "Error update user exercise !!"));
+    } on DioException catch (e) {
+      return DataFailed(AppError(
+          errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg: e.message.toString()));
+    }
+  }
+
+  @override
+  Future<DataState<Map<String, bool>>> deleteUserExercise(
+      {required int userActivityId}) async {
+    try {
+      final httpResponse = await apiService.deleteUserExercise(userActivityId);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      }
+      return DataFailed(AppError(
+          errorCode: httpResponse.response.statusCode ??
+              ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg: httpResponse.response.statusMessage ??
+              "Error update user exercise !!"));
+    } on DioException catch (e) {
+      return DataFailed(AppError(
+          errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg: e.message.toString()));
+    }
+  }
+
+  @override
   Future<void> insertUserExercise({required UserActivity userActivity}) {
     return UserActivityEntity.create(userActivity: userActivity);
   }

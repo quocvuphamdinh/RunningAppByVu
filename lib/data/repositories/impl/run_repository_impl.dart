@@ -88,6 +88,36 @@ class RunRepositoryImpl extends RunRepository {
   }
 
   @override
+  Future<DataState<Map<String, String>>> deleteRunRemote(
+      {required Run run}) async {
+    try {
+      final httpResponse = await apiService.deleteRunRemote(run);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        if (httpResponse.data["message"]!.contains("successfully")) {
+          return DataSuccess(httpResponse.data);
+        }
+        return DataFailed(AppError(
+            errorCode:
+                httpResponse.response.statusCode ?? ErrorCode.NOT_ACCEPTABLE,
+            errorTitle: Constant.TITLE_ALERT,
+            errorMsg: httpResponse.response.data["message"] ??
+                "Error delete run !!"));
+      }
+      return DataFailed(AppError(
+          errorCode: httpResponse.response.statusCode ??
+              ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg:
+              httpResponse.response.statusMessage ?? "Error delete run !!"));
+    } on DioException catch (e) {
+      return DataFailed(AppError(
+          errorCode: ErrorCode.INTERNAL_SERVER_ERROR,
+          errorTitle: Constant.TITLE_ALERT,
+          errorMsg: e.message.toString()));
+    }
+  }
+
+  @override
   Future<void> deleteAllRun() {
     return RunEntity.deleteAll();
   }
@@ -197,5 +227,10 @@ class RunRepositoryImpl extends RunRepository {
   Future<List<Run>> getAllRunsSortedByType(
       {required int isRunWithExercise, required SortType sortType}) {
     return RunEntity.getAllRunsSortedByType(isRunWithExercise, sortType);
+  }
+
+  @override
+  Future<void> deleteRun({required String id}) {
+    return RunEntity.delete(id: id);
   }
 }

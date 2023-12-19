@@ -6,6 +6,7 @@ import 'package:running_app_flutter/components/components.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
+import 'package:running_app_flutter/presentation/home/home_page/home_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/recent_exercise/recent_exercise_controller.dart';
 import 'package:running_app_flutter/presentation/home/home_page/widget/recent_activity_item.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
@@ -160,12 +161,22 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                               itemCount: controller.recentActivites.length,
                               itemBuilder: ((context, index) {
                                 return InkWell(
-                                  onTap: () {
-                                    Get.toNamed(AppRoutes.ResultExerciseRun,
+                                  onTap: () async {
+                                    final result = await Get.toNamed(
+                                        AppRoutes.ResultExerciseRun,
                                         arguments: {
                                           'result_exercise_run':
                                               controller.recentActivites[index]
-                                        });
+                                        }) as Map<String, bool>?;
+                                    if (result != null) {
+                                      final isUpdate =
+                                          result["update_result_exercise"];
+                                      if (isUpdate != null && isUpdate) {
+                                        controller.onRefresh();
+                                        Get.find<HomeController>()
+                                            .onInitRecentActivityList();
+                                      }
+                                    }
                                   },
                                   child: RecentActivityItem(
                                       recentActivity:
