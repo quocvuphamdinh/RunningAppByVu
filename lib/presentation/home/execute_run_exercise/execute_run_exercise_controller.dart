@@ -84,8 +84,8 @@ class ExecuteRunExerciseController extends BaseController {
     if (defaultTargetPlatform == TargetPlatform.android) {
       locationSettings = AndroidSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 100,
-          forceLocationManager: true,
+          distanceFilter: 10,
+          forceLocationManager: false,
           intervalDuration: const Duration(milliseconds: 200),
           foregroundNotificationConfig: const ForegroundNotificationConfig(
             notificationIcon: AndroidResource(name: "runner"),
@@ -98,13 +98,13 @@ class ExecuteRunExerciseController extends BaseController {
       locationSettings = AppleSettings(
         accuracy: LocationAccuracy.high,
         activityType: ActivityType.fitness,
-        distanceFilter: 100,
+        distanceFilter: 10,
         pauseLocationUpdatesAutomatically: true,
         showBackgroundLocationIndicator: false,
       );
     } else {
       locationSettings = const LocationSettings(
-          accuracy: LocationAccuracy.high, distanceFilter: 100);
+          accuracy: LocationAccuracy.high, distanceFilter: 10);
     }
   }
 
@@ -293,11 +293,11 @@ class ExecuteRunExerciseController extends BaseController {
     latlngs.add(latlng);
 
     polyline.add(Polyline(
-      polylineId: PolylineId(newLocalData.toString()),
-      visible: true,
-      points: latlngs,
-      color: AppColor.grey,
-    ));
+        polylineId: PolylineId(newLocalData.toString()),
+        visible: true,
+        points: latlngs,
+        color: AppColor.grey,
+        width: 5));
     polyline.refresh();
   }
 

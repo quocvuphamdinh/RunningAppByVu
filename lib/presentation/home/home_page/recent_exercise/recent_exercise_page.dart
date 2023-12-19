@@ -57,7 +57,7 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                     left: AppDimens.mediumSpacingHor,
                     right: AppDimens.mediumSpacingHor,
                     bottom: AppDimens.smallSpacingVer),
-                height: Get.height * 0.3 - 65.h,
+                height: Get.height * 0.3 - 50.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -72,7 +72,7 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                         style: TextStyle(
                             color: AppColor.whiteColor,
                             fontSize: AppDimens.mediumTextSize)),
-                    SizedBox(height: AppDimens.size10),
+                    SizedBox(height: AppDimens.size5),
                     Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,53 +81,65 @@ class RecentExercisePage extends GetView<RecentExerciseController> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Obx(() => Text(
-                                    Components.getFormattedTimer(
-                                        ms: controller.totalDuration.value,
-                                        includeHour: true,
-                                        includeMinute: true,
-                                        includeSecond: true),
+                              Expanded(
+                                child: Obx(() => Text(
+                                      Components.getFormattedTimer(
+                                          ms: controller.totalDuration.value,
+                                          includeHour: true,
+                                          includeMinute: true,
+                                          includeSecond: true),
+                                      style: TextStyle(
+                                          fontSize: 25.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColor.whiteColor),
+                                    )),
+                              ),
+                              Expanded(
+                                child: Text("TOTAL\nDURATIONS",
                                     style: TextStyle(
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.whiteColor),
-                                  )),
-                              Text("TOTAL\nDURATIONS",
-                                  style: TextStyle(
-                                      color: AppColor.whiteColor,
-                                      fontSize: AppDimens.mediumTextSize))
+                                        color: AppColor.whiteColor,
+                                        fontSize: AppDimens.mediumTextSize)),
+                              )
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Obx(() => Text(
-                                    "${controller.totalCalories.value}",
+                              Expanded(
+                                child: Obx(() => Text(
+                                      "${controller.totalCalories.value}",
+                                      style: TextStyle(
+                                          fontSize: 25.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColor.whiteColor),
+                                    )),
+                              ),
+                              Expanded(
+                                child: Text("TOTAL\nKCAL",
                                     style: TextStyle(
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.whiteColor),
-                                  )),
-                              Text("TOTAL\nKCAL",
-                                  style: TextStyle(
-                                      color: AppColor.whiteColor,
-                                      fontSize: AppDimens.mediumTextSize))
+                                        color: AppColor.whiteColor,
+                                        fontSize: AppDimens.mediumTextSize)),
+                              )
                             ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Obx(() => Text(
-                                    "${controller.totalAvgSpeed.value}",
+                              Expanded(
+                                child: Obx(() => Text(
+                                      "${controller.totalAvgSpeed.value}",
+                                      style: TextStyle(
+                                          fontSize: 25.sp,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColor.whiteColor),
+                                    )),
+                              ),
+                              Expanded(
+                                child: Text("TOTAL AVG\nSPEED",
                                     style: TextStyle(
-                                        fontSize: 25.sp,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppColor.whiteColor),
-                                  )),
-                              Text("TOTAL AVG\nSPEED",
-                                  style: TextStyle(
-                                      color: AppColor.whiteColor,
-                                      fontSize: AppDimens.mediumTextSize))
+                                        color: AppColor.whiteColor,
+                                        fontSize: AppDimens.mediumTextSize)),
+                              )
                             ],
                           ),
                         ],

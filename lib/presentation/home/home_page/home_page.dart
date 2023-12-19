@@ -80,10 +80,13 @@ class HomePage extends GetView<HomeController> {
                     complete: Icon(Icons.check, color: AppColor.grey),
                   ),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppDimens.aBitSpacingHor),
+                    padding: EdgeInsets.only(
+                        left: AppDimens.aBitSpacingHor,
+                        right: AppDimens.aBitSpacingHor,
+                        bottom: 50.h),
                     child: SingleChildScrollView(
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Center(
@@ -185,8 +188,11 @@ class HomePage extends GetView<HomeController> {
                                           })),
                                     )
                                   : const RunTextNoData())
-                              : const Center(
-                                  child: CupertinoActivityIndicator())),
+                              : SizedBox(
+                                  height: 250.h,
+                                  child: const Center(
+                                      child: CupertinoActivityIndicator()),
+                                )),
                           Padding(
                             padding:
                                 EdgeInsets.only(top: AppDimens.aBitSpacingHor),
@@ -205,26 +211,37 @@ class HomePage extends GetView<HomeController> {
                               ],
                             ),
                           ),
-                          Obx(() => controller.recentActivites.isNotEmpty
-                              ? ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  itemCount: controller.recentActivites.length,
-                                  itemBuilder: ((context, index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Get.toNamed(AppRoutes.ResultExerciseRun,
-                                            arguments: {
-                                              'result_exercise_run': controller
-                                                  .recentActivites[index]
-                                            });
-                                      },
-                                      child: RecentActivityItem(
-                                          recentActivity: controller
-                                              .recentActivites[index]),
-                                    );
-                                  }))
-                              : const RunTextNoData()),
+                          Obx(() => !controller.isLoadingRecentExercise.value
+                              ? (controller.recentActivites.isNotEmpty
+                                  ? ListView.builder(
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          controller.recentActivites.length,
+                                      itemBuilder: ((context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            Get.toNamed(
+                                                AppRoutes.ResultExerciseRun,
+                                                arguments: {
+                                                  'result_exercise_run':
+                                                      controller
+                                                              .recentActivites[
+                                                          index]
+                                                });
+                                          },
+                                          child: RecentActivityItem(
+                                              recentActivity: controller
+                                                  .recentActivites[index]),
+                                        );
+                                      }))
+                                  : const RunTextNoData())
+                              : SizedBox(
+                                  height: 250.h,
+                                  child: const Center(
+                                      child: CupertinoActivityIndicator()),
+                                )),
                           Text(
                             "Best records",
                             style: TextStyle(

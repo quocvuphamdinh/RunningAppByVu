@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
@@ -23,7 +25,19 @@ class ShowImagePage extends GetView<ShowImageController> {
                   panEnabled: true,
                   minScale: 0.5,
                   maxScale: 2,
-                  child: Image(image: AppImages.activityBackground),
+                  child: Obx(() => CachedNetworkImage(
+                        imageUrl: controller.imageUrl.value,
+                        placeholder: (context, url) =>
+                            const Center(child: CupertinoActivityIndicator()),
+                        errorWidget: (context, url, error) => Image(
+                            image: AppImages.defaultAvatar,
+                            width: Get.width,
+                            fit: BoxFit.fitWidth),
+                        imageBuilder: ((context, imageProvider) => Image(
+                            image: imageProvider,
+                            width: Get.width,
+                            fit: BoxFit.fitWidth)),
+                      )),
                 ),
               )
             ],
@@ -32,6 +46,7 @@ class ShowImagePage extends GetView<ShowImageController> {
             backgroundColor: Colors.transparent,
             widgetLeft: const Icon(Icons.arrow_back_ios, color: AppColor.grey),
             onClickWidgetLeft: () {
+              Get.delete<ShowImageController>();
               Get.back();
             },
           ),

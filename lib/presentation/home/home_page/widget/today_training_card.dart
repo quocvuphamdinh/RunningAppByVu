@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:running_app_flutter/components/components.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
@@ -47,8 +48,9 @@ class TodayTrainingCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(Icons.timer, size: AppDimens.iconSmallSize),
+                SizedBox(width: AppDimens.aBitSpacingHor),
                 Text(
-                  "${exercise.durationOfWorkouts} min",
+                  Components.getFormattedTimer(ms: exercise.durationOfWorkouts),
                   style: TextStyle(fontSize: AppDimens.largeTextSize),
                 )
               ],

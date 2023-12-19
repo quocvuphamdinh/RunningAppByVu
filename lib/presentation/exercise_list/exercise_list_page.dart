@@ -1,11 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
-import 'package:running_app_flutter/constant/constant.dart';
 import 'package:running_app_flutter/presentation/exercise_list/exercise_list_controller.dart';
 import 'package:running_app_flutter/presentation/home/exercise/widget/exercise_item.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';

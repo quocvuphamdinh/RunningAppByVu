@@ -52,8 +52,8 @@ class ExecuteRunController extends BaseController {
     if (defaultTargetPlatform == TargetPlatform.android) {
       locationSettings = AndroidSettings(
           accuracy: LocationAccuracy.high,
-          distanceFilter: 100,
-          forceLocationManager: true,
+          distanceFilter: 10,
+          forceLocationManager: false,
           intervalDuration: const Duration(milliseconds: 200),
           foregroundNotificationConfig: const ForegroundNotificationConfig(
             notificationIcon: AndroidResource(name: "runner"),
@@ -66,13 +66,13 @@ class ExecuteRunController extends BaseController {
       locationSettings = AppleSettings(
         accuracy: LocationAccuracy.high,
         activityType: ActivityType.fitness,
-        distanceFilter: 100,
+        distanceFilter: 10,
         pauseLocationUpdatesAutomatically: true,
         showBackgroundLocationIndicator: false,
       );
     } else {
       locationSettings = const LocationSettings(
-          accuracy: LocationAccuracy.high, distanceFilter: 100);
+          accuracy: LocationAccuracy.high, distanceFilter: 10);
     }
   }
 
@@ -190,6 +190,7 @@ class ExecuteRunController extends BaseController {
       visible: true,
       points: latlngs,
       color: AppColor.grey,
+      width: 5
     ));
     polyline.refresh();
   }
@@ -215,7 +216,9 @@ class ExecuteRunController extends BaseController {
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }
-    return await Geolocator.getCurrentPosition();
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.best,
+        timeLimit: const Duration(milliseconds: 5000));
   }
 
   getCurrentLocation(BuildContext context) async {
@@ -224,6 +227,7 @@ class ExecuteRunController extends BaseController {
       if (!isToggleRun.value) {
         showLoading(messaging: "Processing...");
         var location = await determinePosition();
+        print('Location: $location');
 
         updateMarkerAndPolylines(location, imageData);
       }
@@ -238,7 +242,9 @@ class ExecuteRunController extends BaseController {
       _locationSubscription ??=
           Geolocator.getPositionStream(locationSettings: locationSettings)
               .listen((Position? position) {
-        if (position != null && !isGoogleMapDisposed && isRunning.value) {
+        print(
+            'Location stream: Position: $position, isGoogleMapDisposed: $isGoogleMapDisposed, isRunning: ${isRunning.value}');
+        if (position != null && isRunning.value) {
           controller.animateCamera(CameraUpdate.newCameraPosition(
               CameraPosition(
                   bearing: 192.8334901395799,
@@ -250,7 +256,7 @@ class ExecuteRunController extends BaseController {
         if (isShowLoading()) {
           dismissLoading();
         }
-      });
+      }, onError: (e) => print("Error location: $e"));
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         debugPrint("Permission Denied");

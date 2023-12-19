@@ -18,6 +18,7 @@ class RunMainPage extends GetView<RunMainController> {
     return Obx(() => Scaffold(
         extendBody: true,
         floatingActionButton: FloatingActionButton(
+            shape: const CircleBorder(),
             backgroundColor: AppColor.grey100,
             onPressed: () {
               Get.toNamed(AppRoutes.ExecuteRun);
@@ -25,6 +26,8 @@ class RunMainPage extends GetView<RunMainController> {
             child: const Image(image: AppImages.icRun)),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
+          padding: EdgeInsets.all(0),
+          elevation: 0,
           color: AppColor.grey300,
           shape: const CircularNotchedRectangle(),
           notchMargin: 5,
@@ -84,7 +87,6 @@ class RunMainPage extends GetView<RunMainController> {
             ],
           ),
         ),
-        backgroundColor: AppColor.appBackgroundColor,
         body: ScrollConfiguration(
           behavior: const ScrollBehavior().copyWith(overscroll: false),
           child: IndexedStack(

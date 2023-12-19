@@ -101,8 +101,11 @@ class ExercisePage extends GetView<ExerciseController> {
                                         );
                                       })
                                   : const RunTextNoData())
-                              : const Center(
-                                  child: CupertinoActivityIndicator())),
+                              : SizedBox(
+                                  height: 380.h,
+                                  child: const Center(
+                                      child: CupertinoActivityIndicator()),
+                                )),
                           Padding(
                             padding: EdgeInsets.only(
                               bottom: AppDimens.smallSpacingVer,
@@ -153,8 +156,11 @@ class ExercisePage extends GetView<ExerciseController> {
                                         );
                                       })
                                   : const RunTextNoData())
-                              : const Center(
-                                  child: CupertinoActivityIndicator()))
+                              : SizedBox(
+                                  height: 380.h,
+                                  child: const Center(
+                                      child: CupertinoActivityIndicator()),
+                                ))
                         ],
                       ),
                     ),

@@ -58,8 +58,9 @@ class ExecuteRunPage extends GetView<ExecuteRunController> {
                 size: AppDimens.iconSmallSize, color: AppColor.grey),
             onCLickWidgetRight: () {
               if (controller.isToggleRun.value) {
-                controller.showExitRunningDialog(
-                    onPressOK: controller.onBack());
+                controller.showExitRunningDialog(onPressOK: () {
+                  controller.onBack();
+                });
               } else {
                 controller.onBack();
               }

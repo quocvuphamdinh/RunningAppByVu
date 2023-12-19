@@ -27,7 +27,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                     fontWeight: FontWeight.w500,
                     color: AppColor.grey)),
             onClickWidgetLeft: () {
-              Get.back();
+              controller.onBack();
             },
             widgetCenter: const TextTitle(text: "Change Password"),
             widgetRight: Text("Save",
@@ -35,6 +35,9 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w500,
                     color: AppColor.grey)),
+            onCLickWidgetRight: () {
+              controller.onSave();
+            },
           ),
           Expanded(
               child: Padding(

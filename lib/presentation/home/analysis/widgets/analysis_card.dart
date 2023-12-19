@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:running_app_flutter/components/components.dart';
@@ -99,7 +100,13 @@ class _AnalysisCardState extends State<AnalysisCard> {
                   width: AppDimens.iconSmallSize,
                 ),
                 onTap: () {
-                  showCupertinoModalPopup(
+                  showModalBottomSheet(
+                      backgroundColor: AppColor.appBackgroundColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.0.r),
+                            topRight: Radius.circular(10.0.r)),
+                      ),
                       context: context,
                       builder: (context) => SizedBox(
                             width: Get.width,
@@ -113,7 +120,6 @@ class _AnalysisCardState extends State<AnalysisCard> {
                                     ? CupertinoDatePickerMode.date
                                     : CupertinoDatePickerMode.monthYear,
                                 initialDateTime: dateTime,
-                                backgroundColor: AppColor.appBackgroundColor,
                                 onDateTimeChanged: ((value) {
                                   setState(() {
                                     dateTime = value;

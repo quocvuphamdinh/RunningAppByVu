@@ -6,7 +6,7 @@ import 'package:running_app_flutter/data/models/user_activity_detail.dart';
 class ResultExerciseRunBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => ResultExerciseRunController(), fenix: true);
+    Get.lazyPut(() => ResultExerciseRunController());
   }
 }
 
@@ -39,6 +39,7 @@ class ResultExerciseRunController extends BaseController {
 
   @override
   void onClose() {
+    textAddNoteController.clear();
     textAddNoteController.dispose();
     super.onClose();
   }

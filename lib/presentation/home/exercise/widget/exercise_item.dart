@@ -6,7 +6,6 @@ import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/config/res/app_image.dart';
 import 'package:running_app_flutter/constant/constant.dart';
-import 'package:running_app_flutter/constant/data_run_types.dart';
 import 'package:running_app_flutter/data/models/activity.dart';
 
 class ExerciseItem extends StatelessWidget {
@@ -56,7 +55,8 @@ class ExerciseItem extends StatelessWidget {
                       color: AppColor.grey,
                     ),
                     Text(
-                      "${exerciseItem.durationOfWorkouts} min",
+                      Components.getFormattedTimer(
+                          ms: exerciseItem.durationOfWorkouts),
                       style: TextStyle(fontSize: AppDimens.mediumTextSize),
                     )
                   ],

@@ -49,8 +49,8 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                       widgetLeft:
                           Icon(Icons.close, size: AppDimens.iconSmallSize),
                       onClickWidgetLeft: () {
-                        Get.delete<ResultExerciseRunController>();
                         Get.back();
+                        //Get.delete<ResultExerciseRunController>();
                       },
                       widgetCenter: TextTitle(
                           text:
@@ -142,12 +142,13 @@ class ResultExerciseRunPage extends GetView<ResultExerciseRunController> {
                                     titleText: "Completed",
                                     isValueTextWidget: true,
                                     valueTextWidget: Image(
-                                        image: controller
+                                        image: controller.userActivityDetail
+                                                    .value!.run.timeInMillis >=
+                                                controller
                                                     .userActivityDetail
                                                     .value!
                                                     .activity
-                                                    .isCompleted ==
-                                                1
+                                                    .durationOfWorkouts
                                             ? AppImages.icCompleted
                                             : AppImages.icNotCompleted,
                                         width: AppDimens.iconSmallSize),

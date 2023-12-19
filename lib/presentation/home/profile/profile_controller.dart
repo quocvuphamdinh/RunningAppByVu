@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:running_app_flutter/base/base_controller.dart';
@@ -11,6 +14,7 @@ import 'package:running_app_flutter/data/repositories/user_exercise_repository.d
 import 'package:running_app_flutter/data/repositories/user_repository.dart';
 import 'package:running_app_flutter/models/data_state.dart';
 import 'package:running_app_flutter/routes/app_routes.dart';
+import 'package:running_app_flutter/services/firebase_storage.dart';
 import 'package:running_app_flutter/services/local_storage.dart';
 
 class ProfileBinding extends Bindings {
@@ -32,6 +36,7 @@ class ProfileController extends BaseController {
   final refreshController = RefreshController(initialRefresh: false);
 
   final store = Get.find<LocalStorageService>();
+  final firebaseStorage = Get.find<FirebaseStorageService>();
   Rx<User?> user = (null as User?).obs;
   RxInt totalDistance = 0.obs;
   RxInt totalDuration = 0.obs;
@@ -44,6 +49,25 @@ class ProfileController extends BaseController {
 
     onInitUser();
     onInitMyProgress();
+  }
+
+  uploadAvatar(File fileImage) {
+    showLoading(messaging: "Change avatar...");
+    final image = fileImage.readAsBytesSync() as Uint8List;
+    firebaseStorage.uploadImage("avatar${user.value!.userName}", image, (url) {
+      user.value!.avartar = url;
+      store.user = user.value;
+      user.refresh();
+      if (isShowLoading()) {
+        dismissLoading();
+      }
+      showSnackBar(Constant.TITLE_ALERT, "Upload avatar successfully !");
+    }, (message) {
+      if (isShowLoading()) {
+        dismissLoading();
+      }
+      showSnackBar(Constant.TITLE_ALERT, message);
+    });
   }
 
   onRefresh() {
