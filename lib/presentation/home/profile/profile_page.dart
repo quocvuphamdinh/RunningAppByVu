@@ -63,8 +63,8 @@ class ProfilePage extends GetView<ProfileController> {
               controller.user.value != null
                   ? (Expanded(
                       child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: AppDimens.mediumSpacingVer),
+                        padding:
+                            EdgeInsets.only(bottom: AppDimens.mediumSpacingVer),
                         child: SmartRefresher(
                             onRefresh: controller.onRefresh,
                             controller: controller.refreshController,

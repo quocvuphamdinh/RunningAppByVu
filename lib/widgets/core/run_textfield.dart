@@ -45,6 +45,7 @@ class _RunTextFieldState extends State<RunTextField> {
         width: Get.size.width,
         child: Center(
           child: TextFormField(
+            scrollPadding: EdgeInsets.only(bottom: 100),
             textAlignVertical: TextAlignVertical.center,
             enabled: widget.isEnabled,
             style: TextStyle(fontSize: 16.sp),

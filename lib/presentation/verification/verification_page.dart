@@ -15,6 +15,7 @@ class VerificationPage extends GetView<VerificationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
           child: Column(

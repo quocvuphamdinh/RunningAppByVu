@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.3
   flutter_easyloading: ^3.0.5
-  flutter_screenutil: ^5.5.3+1
+  flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.5
   intl: ^0.18.1
   dio: ^5.3.3
@@ -63,6 +63,17 @@ dependencies:
   firebase_core: ^2.24.2
   firebase_storage: ^11.5.5
   image_picker: ^1.0.5
+  flutter_native_splash: ^2.3.8
+  flutter_launcher_icons: ^0.13.1
+
+flutter_native_splash:
+  color: "#191919"
+  image: assets/images/runner_white.png
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/ic_launcher.png"
 
 dev_dependencies:
   flutter_test:

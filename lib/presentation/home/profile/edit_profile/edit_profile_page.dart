@@ -16,6 +16,7 @@ class EditProfilePage extends GetView<EditProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
           child: Column(
@@ -49,8 +50,10 @@ class EditProfilePage extends GetView<EditProfileController> {
             behavior: const ScrollBehavior().copyWith(overscroll: false),
             child: SingleChildScrollView(
               child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
+                padding: EdgeInsets.only(
+                    left: AppDimens.smallSpacingHor,
+                    right: AppDimens.smallSpacingHor,
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

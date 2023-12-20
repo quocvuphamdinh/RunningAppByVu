@@ -14,136 +14,144 @@ class SignUpPage extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
           child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(top: 10.h, right: 20.w, left: 20.w),
-              child: Text(
-                "Let's start with some facts about you.",
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+        child: Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10.h, right: 20.w, left: 20.w),
+                child: Text(
+                  "Let's start with some facts about you.",
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400),
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 20.h, bottom: 10.h, right: 20.w, left: 20.w),
-              child: Text(
-                "LOGIN",
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: 20.h, bottom: 10.h, right: 20.w, left: 20.w),
+                child: Text(
+                  "LOGIN",
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+                ),
               ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RunTextField(
+                          hintText: "Email",
+                          controller: controller.textEmailController),
+                      RunTextField(
+                          hintText: "Password",
+                          controller: controller.textPasswordController,
+                          isObscureText: true),
+                      RunTextField(
+                          hintText: "Repeat password",
+                          controller: controller.textRepeatPasswordController,
+                          isObscureText: true),
+                    ]),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    top: 20.h, bottom: 10.h, right: 20.w, left: 20.w),
+                child: Text(
+                  "PERSONAL DATA",
+                  style:
+                      TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
+                ),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
+                child: Column(
                   children: [
                     RunTextField(
-                        hintText: "Email",
-                        controller: controller.textEmailController),
-                    RunTextField(
-                        hintText: "Password",
-                        controller: controller.textPasswordController,
-                        isObscureText: true),
-                    RunTextField(
-                        hintText: "Repeat password",
-                        controller: controller.textRepeatPasswordController,
-                        isObscureText: true),
-                  ]),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 20.h, bottom: 10.h, right: 20.w, left: 20.w),
-              child: Text(
-                "PERSONAL DATA",
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w700),
-              ),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
-              child: Column(
-                children: [
-                  RunTextField(
-                      hintText: "Full name",
-                      controller: controller.textFullNameController),
-                  RunTextDropDown(
-                      listOptions: [
-                        RunTextDropDownModel(name: "Male", value: "Male"),
-                        RunTextDropDownModel(name: "Female", value: "Female"),
-                        RunTextDropDownModel(name: "Other", value: "Other")
+                        hintText: "Full name",
+                        controller: controller.textFullNameController),
+                    RunTextDropDown(
+                        listOptions: [
+                          RunTextDropDownModel(name: "Male", value: "Male"),
+                          RunTextDropDownModel(name: "Female", value: "Female"),
+                          RunTextDropDownModel(name: "Other", value: "Other")
+                        ],
+                        onSelectedValue: ((selectedValue) {
+                          controller.gender = selectedValue;
+                        })),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: RunTextField(
+                              controller: controller.textHeightController,
+                              suffixIcon: const Icon(Icons.height),
+                              hintText: "Height",
+                              textInputType: TextInputType.number),
+                        ),
+                        const Spacer(flex: 1),
+                        Expanded(
+                          flex: 10,
+                          child: RunTextField(
+                              controller: controller.textWeightController,
+                              suffixIcon: const Icon(Icons.line_weight),
+                              hintText: "Weight",
+                              textInputType: TextInputType.number),
+                        )
                       ],
-                      onSelectedValue: ((selectedValue) {
-                        controller.gender = selectedValue;
-                      })),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: RunTextField(
-                            controller: controller.textHeightController,
-                            suffixIcon: const Icon(Icons.height),
-                            hintText: "Height",
-                            textInputType: TextInputType.number),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppDimens.smallSpacingHor,
+                    right: AppDimens.smallSpacingHor,
+                    top: AppDimens.mediumSpacingVer),
+                child: RunButton(
+                    buttonText: "Create Account",
+                    onClick: () {
+                      controller.register();
+                    }),
+              ),
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(vertical: AppDimens.mediumSpacingHor),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 10.w),
+                      child: Text(
+                        "Already have an Account?",
+                        style: TextStyle(fontSize: AppDimens.mediumTextSize),
                       ),
-                      const Spacer(flex: 1),
-                      Expanded(
-                        flex: 10,
-                        child: RunTextField(
-                            controller: controller.textWeightController,
-                            suffixIcon: const Icon(Icons.line_weight),
-                            hintText: "Weight",
-                            textInputType: TextInputType.number),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: AppDimens.smallSpacingHor,
-                  right: AppDimens.smallSpacingHor,
-                  top: AppDimens.mediumSpacingVer),
-              child: RunButton(
-                  buttonText: "Create Account",
-                  onClick: () {
-                    controller.register();
-                  }),
-            ),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: AppDimens.mediumSpacingHor),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(right: 10.w),
-                    child: Text(
-                      "Already have an Account?",
-                      style: TextStyle(fontSize: AppDimens.mediumTextSize),
                     ),
-                  ),
-                  GestureDetector(
-                    child: Text(
-                      "Go back",
-                      style: TextStyle(
-                          color: AppColor.primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: AppDimens.mediumTextSize),
-                    ),
-                    onTap: () {
-                      Get.back();
-                    },
-                  )
-                ],
-              ),
-            )
-          ],
+                    GestureDetector(
+                      child: Text(
+                        "Go back",
+                        style: TextStyle(
+                            color: AppColor.primaryColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: AppDimens.mediumTextSize),
+                      ),
+                      onTap: () {
+                        Get.back();
+                      },
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       )),
     );

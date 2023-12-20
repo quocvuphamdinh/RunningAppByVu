@@ -63,8 +63,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-        data: MediaQueryData.fromView(WidgetsBinding.instance.window),
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: ScreenUtilInit(
+            useInheritedMediaQuery: true,
             designSize: const Size(360, 690),
             builder: ((context, child) {
               return GetMaterialApp(

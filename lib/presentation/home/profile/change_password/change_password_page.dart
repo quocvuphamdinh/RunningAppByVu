@@ -15,6 +15,7 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
           child: Column(
@@ -40,31 +41,35 @@ class ChangePasswordPage extends GetView<ChangePasswordController> {
             },
           ),
           Expanded(
-              child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: AppDimens.smallSpacingHor),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TextDescription(text: "Old password"),
-                RunTextField(
-                  controller: controller.oldPasswordController,
-                  hintText: 'Enter old password here',
-                  isObscureText: true,
-                ),
-                const TextDescription(text: "New password"),
-                RunTextField(
-                  controller: controller.newPasswordController,
-                  hintText: 'Enter new password here',
-                  isObscureText: true,
-                ),
-                const TextDescription(text: "Confirm password"),
-                RunTextField(
-                  controller: controller.confirmPasswordController,
-                  hintText: 'Enter confirm password here',
-                  isObscureText: true,
-                )
-              ],
+              child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: AppDimens.smallSpacingHor,
+                  right: AppDimens.smallSpacingHor,
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const TextDescription(text: "Old password"),
+                  RunTextField(
+                    controller: controller.oldPasswordController,
+                    hintText: 'Enter old password here',
+                    isObscureText: true,
+                  ),
+                  const TextDescription(text: "New password"),
+                  RunTextField(
+                    controller: controller.newPasswordController,
+                    hintText: 'Enter new password here',
+                    isObscureText: true,
+                  ),
+                  const TextDescription(text: "Confirm password"),
+                  RunTextField(
+                    controller: controller.confirmPasswordController,
+                    hintText: 'Enter confirm password here',
+                    isObscureText: true,
+                  )
+                ],
+              ),
             ),
           ))
         ],

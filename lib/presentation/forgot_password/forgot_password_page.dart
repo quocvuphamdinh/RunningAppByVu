@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:running_app_flutter/config/res/app_color.dart';
 import 'package:running_app_flutter/config/res/app_dimen.dart';
 import 'package:running_app_flutter/presentation/forgot_password/forgot_password_controller.dart';
-import 'package:running_app_flutter/routes/app_routes.dart';
 import 'package:running_app_flutter/widgets/core/run_bottom_app_bar.dart';
 import 'package:running_app_flutter/widgets/core/run_button.dart';
 import 'package:running_app_flutter/widgets/core/run_textfield.dart';
@@ -14,6 +13,7 @@ class ForgotPasswordPage extends GetView<ForgotPasswordController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.appBackgroundColor,
       body: SafeArea(
           child: Column(
